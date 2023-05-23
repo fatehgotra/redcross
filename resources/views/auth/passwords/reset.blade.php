@@ -1,65 +1,105 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<head>
+    <meta charset="utf-8" />
+    <title>Reset Password| User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Cloudinc" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+    <!-- App css -->
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
+</head>
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+<body>
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <!-- Logo -->
+                        <div class="card-header pt-1 pb-1 text-center">
+                            <a href="{{ route('login') }}">
+                                <span><img src="{{ asset('assets/images/logo.png') }}" alt=""
+                                        height="150" class="img-fluid"></span>
+                            </a>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                        <div class="card-body">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center mt-0 mb-3 font-weight-bold">Reset Password</h4>
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                            <form action="{{ route('password.update') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="token" value="{{ $token }}">
+                                <div class="mb-2">
+                                    <label for="emailaddress" class="form-label">Email address</label>
+                                    <input class="form-control" type="email" name="email" id="emailaddress"
+                                        placeholder="Enter your email" value="{{ $email ?? old('email') }}">
+                                    @error('email')
+                                        <code id="email-error" class="text-danger">{{ $message }}</code>
+                                    @enderror
+                                </div>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+                                <div class="mb-2">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password" name="password" class="form-control"
+                                            placeholder="Enter your password">
+                                        <div class="input-group-append" data-password="false">
+                                            <div class="input-group-text">
+                                                <span class="password-eye"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @error('password')
+                                        <code id="password-error" class="text-danger">{{ $message }}</code>
+                                    @enderror
+                                </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
+                                <div class="mb-2">
+                                    <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password_confirmation" name="password_confirmation"
+                                            class="form-control" placeholder="Confirm your password">
+                                        <div class="input-group-append" data-password="false">
+                                            <div class="input-group-text">
+                                                <span class="password-eye"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-0 text-center">
+                                    <button class="btn btn-info" type="submit">Reset Password </button>
+                                </div>
+
+                            </form>
                         </div>
-                    </form>
+                    </div>
+
                 </div>
             </div>
+
         </div>
+
     </div>
-</div>
-@endsection
+
+
+    <footer class="footer footer-alt">
+        <script>
+            document.write(new Date().getFullYear())
+        </script> Copyright © Fiji Red Cross Society 2023.
+    </footer>
+
+</body>
+
+</html>

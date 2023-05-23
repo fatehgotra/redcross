@@ -17,12 +17,13 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable =  [
         'name',
         'email',
         'phone',
-        'avatar',
         'password',
+        'avatar',
+        'country'
     ];
 
     /**
@@ -43,4 +44,24 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'user_id', 'id');
+    }
+
+    public function exhibitor()
+    {
+        return $this->hasOne(UserExhibitor::class, 'user_id', 'id');
+    }
+    
+    public function bank()
+    {
+        return $this->hasOne(UserBankDetail::class, 'user_id', 'id');
+    }
+
+    public function lineItems()
+    {
+        return $this->hasMany(SaleItem::class, 'user_id', 'id');
+    }
 }

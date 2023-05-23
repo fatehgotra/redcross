@@ -9,16 +9,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array<int, class-string<Throwable>>
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
+     * The list of the inputs that are never flashed to the session on validation exceptions.
      *
      * @var array<int, string>
      */
@@ -30,10 +21,8 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //
@@ -47,8 +36,8 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        if ($request->is('superadmin') || $request->is('superadmin/*')) {
-            return redirect()->guest(route('superadmin.login'));
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return redirect()->guest(route('admin.login'));
         }
 
         return redirect()->guest(route('login'));
