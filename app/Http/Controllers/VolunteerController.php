@@ -183,7 +183,7 @@ class VolunteerController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        return redirect()->route('special-information.form')->with('success', 'Lodgement Information saved successfully');
+        return redirect()->route('special-information.form')->with('success', 'Education Background saved successfully');
     }
 
      // Tab 6
@@ -222,7 +222,7 @@ class VolunteerController extends Controller
  
          $this->validate($request, $rules, $messages);
  
-         return redirect()->route('service-interest.form')->with('success', 'Lodgement Information saved successfully');
+         return redirect()->route('service-interest.form')->with('success', 'Special Information saved successfully');
      }
 
       // Tab 7
@@ -247,7 +247,79 @@ class VolunteerController extends Controller
   
           $this->validate($request, $rules, $messages);
   
-          return redirect()->route('service-interest.form')->with('success', 'Lodgement Information saved successfully');
+          return redirect()->route('banking-information.form')->with('success', 'Service Interest saved successfully');
+      }
+
+      // Tab 8
+      public function bankingInformationForm()
+      {
+          return view('volunteer.banking-information');
+      }
+  
+      public function bankingInformation(Request $request)
+      {
+          $rules = [
+              'bank'                        => 'required',  
+              'account_number'              => 'required',
+              'name_bank_account'           => 'required',
+              'mobile_bank'                 => 'required',  
+              'mobile_bank_number'          => 'required',
+              'name_mobile_bank_account'    => 'required'
+         ];
+ 
+          $messages = [
+              'bank.required'                       => 'Please select your Bank',
+              'account_number.required'             => 'Please enter your Account Number', 
+              'name_bank_account.required'          => 'Please enter Name as used with Bank Account',  
+              'mobile_bank.required'                => 'Please select your Mobile Bank',
+              'mobile_bank_number.required'         => 'Please enter Mobile Number registered with Mobile banking Service', 
+              'name_mobile_bank_account.required'   => 'Please enter Name as registered with Mobile banking Service',             
+          ];
+  
+          $this->validate($request, $rules, $messages);
+  
+          return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
+      }
+
+      // Tab 9
+      public function consentsAndChecksForm()
+      {
+          return view('volunteer.consents-and-checks');
+      }
+  
+      public function consentsAndChecks(Request $request)
+      {
+          $rules = [
+              'consent_to_be_contacted'                 => 'required',  
+              'consent_to_background_check'             => 'required',
+              'parental_consent'                        => 'required',
+              'media_consent'                           => 'required',  
+              'agree_to_code_of_conduct'                => 'required',
+              'agree_to_child_protection_policy'        => 'required',
+              'statutory_declaration_attached'          => 'required',  
+              'code_of_conduct_attached'                => 'required',
+              'signed_child_protection_policy_attached' => 'required',
+              'cv_attached'                             => 'required',  
+              'base_location'                           => 'required',  
+         ];
+ 
+          $messages = [
+              'consent_to_be_contacted.required'                 => 'Please select Consent to be contacted',
+              'consent_to_background_check.required'             => 'Please select Consent to Background Check', 
+              'parental_consent.required'                        => 'Please select Parental Consent',  
+              'media_consent.required'                           => 'Please select Media Consent',
+              'agree_to_code_of_conduct.required'                => 'Please select if agree to code of conduct', 
+              'agree_to_child_protection_policy.required'        => 'Please select if agree to child protection policy',  
+              'statutory_declaration_attached.required'          => 'Please select if Statutory declaration attached',  
+              'code_of_conduct_attached.required'                => 'Please select if code of conduct attached',
+              'signed_child_protection_policy_attached.required' => 'Please select if signed child protection policy attached',
+              'cv_attached.required'                             => 'Please select if CV attached',  
+              'base_location.required'                           => 'Please select base location',             
+          ];
+  
+          $this->validate($request, $rules, $messages);
+  
+          return redirect()->route('service-interest.form')->with('success', 'Consents and Checks saved successfully');
       }
 
 }

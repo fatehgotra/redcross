@@ -64,3 +64,11 @@ Route::post('volunteer-registration/special-information', [VolunteerController::
 /* Volunteer Registration Service Interest (Tab 7)*/
 Route::get('volunteer-registration/service-interest', [VolunteerController::class, 'serviceInterestForm'])->name('service-interest.form');
 Route::post('volunteer-registration/service-interest', [VolunteerController::class, 'serviceInterest'])->name('service-interest');
+
+/* Volunteer Registration Banking Information (Tab 8)*/
+Route::get('volunteer-registration/banking-information', [VolunteerController::class, 'bankingInformationForm'])->name('banking-information.form');
+Route::post('volunteer-registration/banking-information', [VolunteerController::class, 'bankingInformation'])->name('banking-information');
+
+/* Volunteer Registration Consent and checks (Tab 9)*/
+Route::get('volunteer-registration/consents-and-checks', [VolunteerController::class, 'consentsAndChecksForm'])->name('consents-and-checks.form');
+Route::post('volunteer-registration/consents-and-checks', [VolunteerController::class, 'consentsAndChecks'])->name('consents-and-checks');
