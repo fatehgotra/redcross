@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class VolunteerController extends Controller
 {
-    // Step 1
+    // Tab 1
     public function lodgeInformationForm()
     {
         return view('volunteer.lodge-information');
@@ -35,7 +35,7 @@ class VolunteerController extends Controller
         return redirect()->route('personal-information.form')->with('success', 'Lodgement Information saved successfully');
     }
 
-    // Step 2
+    // Tab 2
     public function personalInformationForm()
     {
         return view('volunteer.personal-information');
@@ -80,7 +80,7 @@ class VolunteerController extends Controller
         return redirect()->route('contact-information.form')->with('success', 'Personal Information saved successfully');
     }
 
-        // Step 3
+        // Tab 3
         public function contactInformationForm()
         {
             return view('volunteer.contact-information');
@@ -89,24 +89,165 @@ class VolunteerController extends Controller
         public function contactInformation(Request $request)
         {
             $rules = [
-                'date_of_lodgement'             => 'required',
-                'registering_year'              => 'required',
-                'division'                      => 'required',
-                'registration_location'         => 'required',
-                'registration_location_type'    => 'required',
+                'resedential_address'               => 'required',
+                'community_name'                    => 'required',
+                'community_type'                    => 'required',
+                'province'                          => 'required',
+                'district'                          => 'required',
+                'postal_address'                    => 'required',
+                'email'                             => 'required',
+                'landline_contact'                  => 'required',
+                'primary_mobile_contact_number'     => 'required',
+                'primary_mobile_network_provider'   => 'required',
+                'full_name_of_emergency_contact'    => 'required',
+                'relationship'                      => 'required',
+                'contact_number'                    => 'required',
             ];
     
             $messages = [
-                'date_of_lodgement.required'               => 'Please enter Date of Lodgement',
-                'registering_year.required'                => 'Please enter Registering Year.',
-                'division.required'                        => 'Please select Division',
-                'registration_location.required'           => 'Please enter Registration Location.',
-                'registration_location_type.required'      => 'Please select Location Type.'
+                'resedential_address.required'              => 'Please enter Resedential Address',
+                'community_name.required'                   => 'Please enter Community Name.',
+                'community_type.required'                   => 'Please enter Community Type',
+                'province.required'                         => 'Please enter Province.',
+                'district.required'                         => 'Please enter District / Tikina.',
+                'postal_address.required'                   => 'Please enter Postal Address',
+                'email.required'                            => 'Please enter Community Name.',
+                'landline_contact.required'                 => 'Please enter Landline Contact',
+                'primary_mobile_contact_number.required'    => 'Please enter Primary Mobile Contact Number.',
+                'primary_mobile_network_provider.required'  => 'Please select Primary Mobile Network Provider.',
+                'full_name_of_emergency_contact.required'   => 'Please enter Full Name of Emergency Contact.',
+                'relationship.required'                     => 'Please enter Relationship',
+                'contact_number.required'                   => 'Please enter Contact Number',
             ];
     
             $this->validate($request, $rules, $messages);
     
-            return redirect()->route('contact-information.form')->with('success', 'Personal Information saved successfully');
+            return redirect()->route('identification-and-employement-details.form')->with('success', 'Contact Information saved successfully');
         }
+
+        // Tab 4
+
+        public function identificationAndEmployementDetailsForm()
+        {
+            return view('volunteer.identification-and-employement-details');
+        }
+    
+        public function identificationAndEmployementDetails(Request $request)
+        {
+            $rules = [
+                'photo_id_card_type'               => 'required',
+                'specify_photo_id_card_type'       => $request->photo_id_card_type == 'Other' ? 'required' : '',
+                'id_card_number'                   => 'required',
+                'id_expiry_date'                   => 'required',
+                'tin'                              => 'required',
+                'current_employment_status'        => 'required',
+                'current_occupation'               => ($request->current_employment_status == 'Employed' || $request->current_employment_status == 'Self-Employed') ? 'required' : '',
+                'organisation_name'                => ($request->current_employment_status == 'Employed' || $request->current_employment_status == 'Self-Employed') ? 'required' : '',
+                'organisation_address'             => ($request->current_employment_status == 'Employed' || $request->current_employment_status == 'Self-Employed') ? 'required' : '',
+                'work_contact_number'              => ($request->current_employment_status == 'Employed' || $request->current_employment_status == 'Self-Employed') ? 'required' : '',               
+            ];
+    
+            $messages = [
+                'photo_id_card_type.required'          => 'Please select Photo ID Card Type',
+                'specify_photo_id_card_type.required'  => 'Please specify Photo ID Card Type.',
+                'id_card_number.required'              => 'Please enter ID Card Number',
+                'id_expiry_date.required'              => 'Please enter ID Expiry Date.',
+                'tin.required'                         => 'Please enter TIN.',
+                'current_employment_status.required'   => 'Please select Current Employment Status',
+                'current_occupation.required'          => 'Please enter Current Occupation.',
+                'organisation_name.required'           => 'Please enter Organisation Name',
+                'organisation_address.required'        => 'Please enter Organisation Address.',
+                'work_contact_number.required'         => 'Please enter Work Contact Number.',               
+            ];
+    
+            $this->validate($request, $rules, $messages);
+    
+            return redirect()->route('education-background.form')->with('success', 'Valid National Identification and Employment Details saved successfully');
+        }
+
+        // Tab 5
+        public function educationBackgroundForm()
+    {
+        return view('volunteer.education-background');
+    }
+
+    public function educationBackground(Request $request)
+    {
+        $rules = [
+            'highest_level_of_education'             => 'required',           
+        ];
+
+        $messages = [
+            'highest_level_of_education.required'   => 'Please select Highest Level of Education',           
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        return redirect()->route('special-information.form')->with('success', 'Lodgement Information saved successfully');
+    }
+
+     // Tab 6
+     public function specialInformationForm()
+     {
+         return view('volunteer.special-information');
+     }
+ 
+     public function specialInformation(Request $request)
+     {
+         $rules = [
+             'any_police_records'             => 'required',  
+             'any_special_needs'              => 'required',
+             'specify_special_needs'          => $request->any_special_needs == "Yes" ? 'required' : '',                  
+             'any_medical_conditions'         => 'required',  
+             'specify_medical_conditions'     => $request->any_medical_conditions == "Yes" ? 'required' : '',  
+             'know_how_to_swim'               => 'required', 
+             'full_covid_vaccination'         => 'required', 
+             'blood_donar'                    => 'required',
+             'know_your_blood_group'          => 'required',
+             'blood_group'                    => $request->know_your_blood_group == "Yes" ? 'required' : ''
+        ];
+
+         $messages = [
+             'any_police_records.required'           => 'Please select if there is any police records',
+             'any_special_needs.required'            => 'Please select if there is any police needs', 
+             'specify_special_needs.required'        => 'Please specify special needs', 
+             'any_medical_conditions.required'       => 'Please select if there are any medical conditions', 
+             'specify_medical_conditions.required'   => 'Please specify Medical conditions',  
+             'know_how_to_swim.required'             => 'Please select if you know how to swim',
+             'full_covid_vaccination.required'       => 'Please select if you are Full Covid 19 Vaccinated',                   
+             'blood_donar.required'                  => 'Please select if you are a Blood  donar',
+             'know_your_blood_group.required'        => 'Please select if you know your Blood Group',
+             'blood_group'                           => 'Please select Blood Group'
+         ];
+ 
+         $this->validate($request, $rules, $messages);
+ 
+         return redirect()->route('service-interest.form')->with('success', 'Lodgement Information saved successfully');
+     }
+
+      // Tab 7
+      public function serviceInterestForm()
+      {
+          return view('volunteer.service-interest');
+      }
+  
+      public function serviceInterest(Request $request)
+      {
+          $rules = [
+              'service_interest'               => 'required',  
+              'available_days'                 => 'required',
+              'available_times'                => 'required'
+         ];
+ 
+          $messages = [
+              'service_interest.required'           => 'Please select your Service Interest(s)',
+              'available_days.required'             => 'Please select on which days are you available', 
+              'available_times.required'            => 'Please select on which times are you available',              
+          ];
+  
+          $this->validate($request, $rules, $messages);
+  
+          return redirect()->route('service-interest.form')->with('success', 'Lodgement Information saved successfully');
+      }
 
 }

@@ -37,14 +37,30 @@ Route::get('change-password', [ChangePasswordController::class, 'changePasswordF
 
 Route::post('change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
 
-/* Volunteer Registration Lodge Information (Step 1)*/
+/* Volunteer Registration Lodge Information (Tab 1)*/
 Route::get('volunteer-registration/lodge-information', [VolunteerController::class, 'lodgeInformationForm'])->name('lodge-information.form');
 Route::post('volunteer-registration/lodge-information', [VolunteerController::class, 'lodgeInformation'])->name('lodge-information');
 
-/* Volunteer Registration Personal Information (Step 2)*/
+/* Volunteer Registration Personal Information (Tab 2)*/
 Route::get('volunteer-registration/personal-information', [VolunteerController::class, 'personalInformationForm'])->name('personal-information.form');
 Route::post('volunteer-registration/personal-information', [VolunteerController::class, 'personalInformation'])->name('personal-information');
 
-/* Volunteer Registration Contact Information (Step 3)*/
+/* Volunteer Registration Contact Information (Tab 3)*/
 Route::get('volunteer-registration/contact-information', [VolunteerController::class, 'contactInformationForm'])->name('contact-information.form');
 Route::post('volunteer-registration/contact-information', [VolunteerController::class, 'contactInformation'])->name('contact-information');
+
+/* Volunteer Registration Contact Information (Tab 4)*/
+Route::get('volunteer-registration/identification-and-employement-details', [VolunteerController::class, 'identificationAndEmployementDetailsForm'])->name('identification-and-employement-details.form');
+Route::post('volunteer-registration/identification-and-employement-details', [VolunteerController::class, 'identificationAndEmployementDetails'])->name('identification-and-employement-details');
+
+/* Volunteer Registration Education Background (Tab 5)*/
+Route::get('volunteer-registration/education-background', [VolunteerController::class, 'educationBackgroundForm'])->name('education-background.form');
+Route::post('volunteer-registration/education-background', [VolunteerController::class, 'educationBackground'])->name('education-background');
+
+/* Volunteer Registration Special Information (Tab 6)*/
+Route::get('volunteer-registration/special-information', [VolunteerController::class, 'specialInformationForm'])->name('special-information.form');
+Route::post('volunteer-registration/special-information', [VolunteerController::class, 'specialInformation'])->name('special-information');
+
+/* Volunteer Registration Service Interest (Tab 7)*/
+Route::get('volunteer-registration/service-interest', [VolunteerController::class, 'serviceInterestForm'])->name('service-interest.form');
+Route::post('volunteer-registration/service-interest', [VolunteerController::class, 'serviceInterest'])->name('service-interest');

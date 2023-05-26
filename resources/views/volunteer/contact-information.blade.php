@@ -8,20 +8,22 @@
     </section>
     <section>
         <div class="container pt-3">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="header-title text-center fw-bold">Contact Information</h4>
-                    <p class="text-center text-muted">Step 3</p>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('contact-information') }}" method="POST" id="contactInformationForm">
-                        @csrf
+            <form action="{{ route('contact-information') }}" method="POST" id="contactInformationForm">
+                @csrf
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="header-title text-center fw-bold">Contact Information</h4>
+                        <p class="text-center text-muted">Step 3</p>
+                    </div>
+                    <div class="card-body">
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label for="resedential_address" class="col-form-label">Residential Address (Usual pace of
                                     Residence) <span class="text-danger">*</span></label>
-                                <input type="text" id="resedential_address" class="form-control @error('resedential_address') is-invalid @enderror"
-                                    name="resedential_address" autocomplete="resedential_address" placeholder="Residential Address" autofocus value="{{ old('resedential_address') }}">
+                                <input type="text" id="resedential_address"
+                                    class="form-control @error('resedential_address') is-invalid @enderror"
+                                    name="resedential_address" autocomplete="resedential_address"
+                                    placeholder="Residential Address" autofocus value="{{ old('resedential_address') }}">
                                 @error('resedential_address')
                                     <small id="resedential_address-error" class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -89,7 +91,8 @@
                                         class="text-danger">*</span></label>
                                 <input id="postal_address" type="text"
                                     class="form-control @error('postal_address') is-invalid @enderror" name="postal_address"
-                                    value="{{ old('postal_address') }}" autocomplete="postal_address" placeholder="Postal Address">
+                                    value="{{ old('postal_address') }}" autocomplete="postal_address"
+                                    placeholder="Postal Address">
                                 @error('postal_address')
                                     <small id="postal_address-error" class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -104,17 +107,136 @@
                                     <small id="email-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <div class="col-lg-4">
+                                <label for="landline_contact" class="col-form-label">Landline Contact <span
+                                        class="text-danger">*</span></label>
+                                <input id="landline_contact" type="text"
+                                    class="form-control @error('landline_contact') is-invalid @enderror"
+                                    name="landline_contact" value="{{ old('landline_contact') }}"
+                                    autocomplete="landline_contact" placeholder="Landline Contact"
+                                    onkeypress="return isNumberKey(event)" maxlength="12">
+                                @error('landline_contact')
+                                    <small id="landline_contact-error" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="primary_mobile_contact_number" class="col-form-label">Primary Mobile Contact
+                                    Number <span class="text-danger">*</span></label>
+                                <input id="primary_mobile_contact_number" type="text"
+                                    class="form-control @error('primary_mobile_contact_number') is-invalid @enderror"
+                                    name="primary_mobile_contact_number"
+                                    value="{{ old('primary_mobile_contact_number') }}"
+                                    autocomplete="primary_mobile_contact_number"
+                                    placeholder="Primary Mobile Contact Number" onkeypress="return isNumberKey(event)"
+                                    maxlength="12">
+                                @error('primary_mobile_contact_number')
+                                    <small id="primary_mobile_contact_number-error"
+                                        class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="primary_mobile_network_provider" class="col-form-label">Primary Mobile Network
+                                    Provider <span class="text-danger">*</span></label>
+                                <select id="primary_mobile_network_provider"
+                                    class="form-select @error('primary_mobile_network_provider') is-invalid @enderror"
+                                    name="primary_mobile_network_provider">
+                                    <option value="">Select Network Provider</option>
+                                    <option value="Vodafone"
+                                        {{ old('primary_mobile_network_provider') == 'Vodafone' ? 'selected' : '' }}>
+                                        Vodafone
+                                    </option>
+                                    <option value="Inkk"
+                                        {{ old('primary_mobile_network_provider') == 'Inkk' ? 'selected' : '' }}>Inkk
+                                    </option>
+                                    <option value="Digicel"
+                                        {{ old('primary_mobile_network_provider') == 'Digicel' ? 'selected' : '' }}>
+                                        Digicel
+                                    </option>
+                                </select>
+                                @error('primary_mobile_network_provider')
+                                    <small id="primary_mobile_contact_number-error"
+                                        class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="other_contact_numbers" class="col-form-label">Other Contact Numbers</label>
+                                <input id="other_contact_numbers" type="text"
+                                    class="form-control @error('other_contact_numbers') is-invalid @enderror"
+                                    name="other_contact_numbers" value="{{ old('other_contact_numbers') }}"
+                                    autocomplete="other_contact_numbers" placeholder="Landline Contact"
+                                    onkeypress="return isNumberKey(event)" maxlength="12">
+                                @error('other_contact_numbers')
+                                    <small id="other_contact_numbers-error" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="header-title text-center fw-bold">Emergency Contact </h4>
+                        <p class="text-center text-muted">Step 4</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
 
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('personal-information.form') }}" class="btn btn-sm btn-warning float-start">Previous
-                        Step</a>
-                    <button type="submit" form="contactInformationForm" class="btn btn-sm btn-success float-end">Next
-                        Step</button>
-                </div>
-            </div>
+                            <div class="col-lg-6">
+                                <label for="full_name_of_emergency_contact" class="col-form-label">Full Name of Emergency <span class="text-danger">*</span>
+                                    Contact</label>
+                                <input id="full_name_of_emergency_contact" type="text"
+                                    class="form-control @error('full_name_of_emergency_contact') is-invalid @enderror"
+                                    name="full_name_of_emergency_contact"
+                                    value="{{ old('full_name_of_emergency_contact') }}"
+                                    autocomplete="full_name_of_emergency_contact"
+                                    placeholder="Full Name of Emergency Contact">
+                                @error('full_name_of_emergency_contact')
+                                    <small id="full_name_of_emergency_contact-error"
+                                        class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="relationship" class="col-form-label">Relationship <span class="text-danger">*</span></label>
+                                <input id="relationship" type="text"
+                                    class="form-control @error('relationship') is-invalid @enderror" name="relationship"
+                                    value="{{ old('relationship') }}" autocomplete="relationship"
+                                    placeholder="Relationship">
+                                @error('relationship')
+                                    <small id="registering_year-error" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="resedential_address_separate" class="col-form-label">Resedential Address (If
+                                    residing in a separate household)</label>
+                                <input id="resedential_address_separate" type="text"
+                                    class="form-control @error('resedential_address_separate') is-invalid @enderror"
+                                    name="resedential_address_separate" value="{{ old('resedential_address_separate') }}"
+                                    autocomplete="resedential_address_separate" placeholder="Resedential Address">
+                                @error('resedential_address_separate')
+                                    <small id="resedential_address_separate-error"
+                                        class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="contact_number" class="col-form-label">Contact Number <span class="text-danger">*</span></label>
+                                <input id="contact_number" type="text"
+                                    class="form-control @error('contact_number') is-invalid @enderror"
+                                    name="contact_number" value="{{ old('contact_number') }}"
+                                    autocomplete="contact_number" placeholder="Contact Number">
+                                @error('contact_number')
+                                    <small id="contact_number-error" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('personal-information.form') }}"
+                            class="btn btn-sm btn-warning float-start">Previous
+                            Step</a>
+                        <button type="submit" form="contactInformationForm"
+                            class="btn btn-sm btn-success float-end">Next
+                            Step</button>
+                    </div>
+            </form>
         </div>
     </section>
     <section>

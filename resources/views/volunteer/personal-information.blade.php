@@ -239,7 +239,7 @@
                                 <input id="specify_languages_spoken" type="text"
                                     class="form-control @error('specify_languages_spoken') is-invalid @enderror"
                                     name="specify_languages_spoken" value="{{ old('specify_languages_spoken') }}"
-                                    autocomplete="specify_languages_spoken" placeholder="Select Language(s) Spoken (If any other)">
+                                    autocomplete="specify_languages_spoken" placeholder="Specify Language(s) Spoken (If any other)">
                                 @error('specify_languages_spoken')
                                     <small id="specify_languages_spoken-error" class="text-danger">{{ $message }}</small>
                                 @enderror
