@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class VolunteerController extends Controller
 {
@@ -31,6 +33,9 @@ class VolunteerController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
+
+        $data = $request->except('_token'); 
+        FacadesSession::put('lodgeInfo',$data);
 
         return redirect()->route('personal-information.form')->with('success', 'Lodgement Information saved successfully');
     }
@@ -77,6 +82,9 @@ class VolunteerController extends Controller
 
         $this->validate($request, $rules, $messages);
 
+        $data = $request->except('_token'); 
+        FacadesSession::put('personalInfo',$data);
+
         return redirect()->route('contact-information.form')->with('success', 'Personal Information saved successfully');
     }
 
@@ -121,6 +129,9 @@ class VolunteerController extends Controller
             ];
     
             $this->validate($request, $rules, $messages);
+
+            $data = $request->except('_token'); 
+            FacadesSession::put('contactInfo',$data);
     
             return redirect()->route('identification-and-employement-details.form')->with('success', 'Contact Information saved successfully');
         }
@@ -161,6 +172,9 @@ class VolunteerController extends Controller
             ];
     
             $this->validate($request, $rules, $messages);
+
+            $data = $request->except('_token'); 
+            FacadesSession::put('idNempInfo',$data);
     
             return redirect()->route('education-background.form')->with('success', 'Valid National Identification and Employment Details saved successfully');
         }
@@ -182,6 +196,9 @@ class VolunteerController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
+
+        $data = $request->except('_token'); 
+        FacadesSession::put('eduInfo',$data);
 
         return redirect()->route('special-information.form')->with('success', 'Education Background saved successfully');
     }
@@ -221,6 +238,9 @@ class VolunteerController extends Controller
          ];
  
          $this->validate($request, $rules, $messages);
+
+         $data = $request->except('_token'); 
+         FacadesSession::put('specialInfo',$data);
  
          return redirect()->route('service-interest.form')->with('success', 'Special Information saved successfully');
      }
@@ -246,6 +266,9 @@ class VolunteerController extends Controller
           ];
   
           $this->validate($request, $rules, $messages);
+
+          $data = $request->except('_token'); 
+          FacadesSession::put('serviceInfo',$data);
   
           return redirect()->route('banking-information.form')->with('success', 'Service Interest saved successfully');
       }
@@ -277,6 +300,9 @@ class VolunteerController extends Controller
           ];
   
           $this->validate($request, $rules, $messages);
+
+          $data = $request->except('_token'); 
+          FacadesSession::put('bankingInfo',$data);
   
           return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
       }
@@ -318,6 +344,9 @@ class VolunteerController extends Controller
           ];
   
           $this->validate($request, $rules, $messages);
+
+          $data = $request->except('_token'); 
+          FacadesSession::put('consentInfo',$data);
   
           return redirect()->route('service-interest.form')->with('success', 'Consents and Checks saved successfully');
       }

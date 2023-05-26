@@ -1,6 +1,6 @@
 <footer class="bg-dark py-2">
     <div class="container">
-
+       
         <div class="row mt-2">
             <div class="col-lg-12 text-center">
                 <ul class="social-list list-inline">
