@@ -128,7 +128,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-4">
-                                <label for="agree_to_code_of_conduct" class="col-form-label">Agree to Code of Conduct (CoC)<span
+                                <label for="agree_to_code_of_conduct" class="col-form-label">Agree to <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#code-of-conduct">Code of Conduct (CoC)</a> <span
                                         class="text-danger">*</span></label>
                                 <select id="agree_to_code_of_conduct"
                                     class="form-select @error('agree_to_code_of_conduct') is-invalid @enderror"
@@ -145,7 +145,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-4">
-                                <label for="agree_to_child_protection_policy" class="col-form-label">Agree to Child Protection Policy (CPP) <span
+                                <label for="agree_to_child_protection_policy" class="col-form-label">Agree to <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#child-protection-policy">Child Protection Policy (CPP)</a> <span
                                         class="text-danger">*</span></label>
                                 <select id="agree_to_child_protection_policy"
                                     class="form-select @error('agree_to_child_protection_policy') is-invalid @enderror"
@@ -284,6 +284,8 @@
             </ul>
         </div>
     </section>
+    @include('volunteer.modals.code-of-conduct')
+    @include('volunteer.modals.child-protection-policy')
 @endsection
 @push('scripts')
 <script>
