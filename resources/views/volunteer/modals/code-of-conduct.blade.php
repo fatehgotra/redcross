@@ -62,6 +62,9 @@
                             <li>(xxiv) Hierarchy of control must be adhered to.</li>
 
                         </ul>
+                        <ul class="list-unstyled">                           
+                            <li>I certify that I have read and understood the Fiji Red Cross National Society Code of Conduct and agree to comply with it. I affirm that I have no financial interest or affiliation with any organisation which have, interest that conflict with the best interests of the Society.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
