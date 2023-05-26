@@ -60,8 +60,8 @@
                             </a>
                         @endif
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="nav-link d-lg-none">Volunteer Now</a>
-                            <a href="{{ route('register') }}"
+                            <a href="{{ route('lodge-information.form') }}" class="nav-link d-lg-none">Volunteer Now</a>
+                            <a href="{{ route('lodge-information.form') }}"
                                 class="btn btn-sm btn-outline-info d-none d-lg-inline-flex">
                                 <i class="mdi mdi-water text-danger me-1"></i>Volunteer Now
                             </a>

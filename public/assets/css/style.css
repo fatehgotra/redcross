@@ -78,30 +78,9 @@
 .fs-18{
   font-size: 18px;
 }
-.btn-warning {
-  color: #fff;
-  background-color: #f49e3f;
-  border-color: #f49e3f;
-  box-shadow: none !important;
-  text-transform: uppercase;
-  padding: 5px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  font-size: 15px;
-}
+
 .btn-warning:hover{
   background-color: #d97834;
   border-color: #d97834;
   color: #fff !important;
 }
-.btn-dark{
-  box-shadow: none !important;
-  text-transform: uppercase;
-  padding: 5px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  font-size: 15px;
-}
-  
