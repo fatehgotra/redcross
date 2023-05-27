@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PersonalBankingInformation extends Model
 {
     use HasFactory;
+
+   
 }
