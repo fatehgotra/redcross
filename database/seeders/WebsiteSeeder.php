@@ -38,13 +38,13 @@ class WebsiteSeeder extends Seeder
 
         for ($i = 1; $i < 21; $i++) {
 
-            $supplier               = User::create([
-                'name'              => $faker->firstname(),              
+            $volunteers               = User::create([
+                'firstname'              => $faker->firstname(),      
+                'lastname'              => $faker->lastname(),                  
                 'email'             => $i == 1 ? 'user@admin.com' : $faker->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'phone'             => $faker->numerify('9#########'),
-                'password'          => Hash::make('password'), 
-                'country'           => Country::inRandomOrder()->first()->country           
+                'password'          => Hash::make('password')                
             ]);
            
         }      
