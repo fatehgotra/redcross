@@ -1,3 +1,6 @@
+@php
+    $banking_information = Session::get('banking-information');
+@endphp
 @extends('layouts.app')
 @section('title', 'Volunteer Registration | Fiji Red Cross Society')
 @section('content')
@@ -8,7 +11,7 @@
     </section>
     <section>
         <div class="container pt-3">
-            <form action="{{ route('contact-information') }}" method="POST" id="bankingInformationForm">
+            <form action="{{ route('banking-information') }}" method="POST" id="bankingInformationForm">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -23,17 +26,17 @@
                                 <select id="bank"
                                     class="form-select @error('bank') is-invalid @enderror" name="bank">
                                     <option value="">Select Bank</option>                                   
-                                    <option value="Bank of South Pacific (BSP)" {{ old('bank') == 'Bank of South Pacific (BSP)' ? 'selected' : '' }}>Bank of South Pacific (BSP)
+                                    <option value="Bank of South Pacific (BSP)" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'Bank of South Pacific (BSP)' ? 'selected' : '' }}>Bank of South Pacific (BSP)
                                     </option>    
-                                    <option value="Australia & New Zealand Banking Group (ANZ)" {{ old('bank') == 'Australia & New Zealand Banking Group (ANZ)' ? 'selected' : '' }}>Australia & New Zealand Banking Group (ANZ)
+                                    <option value="Australia & New Zealand Banking Group (ANZ)" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'Australia & New Zealand Banking Group (ANZ)' ? 'selected' : '' }}>Australia & New Zealand Banking Group (ANZ)
                                     </option>                                  
-                                    <option value="Home Finance Company Bank (HFC)" {{ old('bank') == 'Home Finance Company Bank (HFC)' ? 'selected' : '' }}>Home Finance Company Bank (HFC)
+                                    <option value="Home Finance Company Bank (HFC)" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'Home Finance Company Bank (HFC)' ? 'selected' : '' }}>Home Finance Company Bank (HFC)
                                     </option> 
-                                    <option value="Bank of Baroda" {{ old('bank') == 'Bank of Baroda' ? 'selected' : '' }}>Bank of Baroda
+                                    <option value="Bank of Baroda" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'Bank of Baroda' ? 'selected' : '' }}>Bank of Baroda
                                     </option> 
-                                    <option value="Westpac" {{ old('bank') == 'Westpac' ? 'selected' : '' }}>Westpac
+                                    <option value="Westpac" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'Westpac' ? 'selected' : '' }}>Westpac
                                     </option>                           
-                                    <option value="BRED bank" {{ old('bank') == 'BRED bank' ? 'selected' : '' }}>BRED bank
+                                    <option value="BRED bank" {{ old('bank', isset($banking_information) ? $banking_information['bank'] : '') == 'BRED bank' ? 'selected' : '' }}>BRED bank
                                     </option>                                                                                                                            
                                 </select>
                                 @error('bank')
@@ -46,7 +49,7 @@
                                         <input id="account_number" type="text"
                                         class="form-control @error('account_number') is-invalid @enderror"
                                         name="account_number"
-                                        value="{{ old('account_number') }}"
+                                        value="{{ old('account_number', isset($banking_information) ? $banking_information['account_number'] : '') }}"
                                         autocomplete="account_number"
                                         placeholder="Account Number">
                                 @error('account_number')
@@ -59,7 +62,7 @@
                                         <input id="name_bank_account" type="text"
                                         class="form-control @error('name_bank_account') is-invalid @enderror"
                                         name="name_bank_account"
-                                        value="{{ old('name_bank_account') }}"
+                                        value="{{ old('name_bank_account', isset($banking_information) ? $banking_information['name_bank_account'] : '') }}"
                                         autocomplete="name_bank_account"
                                         placeholder="Name as used with Bank Account">
                                 @error('name_bank_account')
@@ -85,9 +88,9 @@
                                 <select id="mobile_bank"
                                     class="form-select @error('mobile_bank') is-invalid @enderror" name="mobile_bank">
                                     <option value="">Select Mobile Bank</option>                                   
-                                    <option value="Vodafone MPAISA" {{ old('mobile_bank') == 'Vodafone MPAISA' ? 'selected' : '' }}>Vodafone MPAISA
+                                    <option value="Vodafone MPAISA" {{ old('mobile_bank', isset($banking_information) ? $banking_information['mobile_bank'] : '') == 'Vodafone MPAISA' ? 'selected' : '' }}>Vodafone MPAISA
                                     </option>    
-                                    <option value="Digicel MyCash" {{ old('mobile_bank') == 'Digicel MyCash' ? 'selected' : '' }}>Digicel MyCash
+                                    <option value="Digicel MyCash" {{ old('mobile_bank', isset($banking_information) ? $banking_information['mobile_bank'] : '') == 'Digicel MyCash' ? 'selected' : '' }}>Digicel MyCash
                                     </option>                                                                                                                                                                                               
                                 </select>
                                 @error('mobile_bank')
@@ -100,7 +103,7 @@
                                         <input id="mobile_bank_number" type="text"
                                         class="form-control @error('mobile_bank_number') is-invalid @enderror"
                                         name="mobile_bank_number"
-                                        value="{{ old('mobile_bank_number') }}"
+                                        value="{{ old('mobile_bank_number', isset($banking_information) ? $banking_information['mobile_bank_number'] : '') }}"
                                         autocomplete="mobile_bank_number"
                                         placeholder="Mobile Number registered with Mobile banking Service">
                                 @error('mobile_bank_number')
@@ -113,7 +116,7 @@
                                         <input id="name_mobile_bank_account" type="text"
                                         class="form-control @error('name_mobile_bank_account') is-invalid @enderror"
                                         name="name_mobile_bank_account"
-                                        value="{{ old('name_mobile_bank_account') }}"
+                                        value="{{ old('name_mobile_bank_account', isset($banking_information) ? $banking_information['name_mobile_bank_account'] : '') }}"
                                         autocomplete="name_mobile_bank_account"
                                         placeholder="Name as registered with Mobile banking Service">
                                 @error('name_mobile_bank_account')

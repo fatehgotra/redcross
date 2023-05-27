@@ -1,3 +1,6 @@
+@php
+    $consents_and_checks = Session::get('consents-and-checks');
+@endphp
 @extends('layouts.app')
 @section('title', 'Volunteer Registration | Fiji Red Cross Society')
 @section('content')
@@ -30,14 +33,38 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @isset($consents_and_checks)
+                                            @if(count($consents_and_checks['referees']) > 0)
+                                                @foreach ($consents_and_checks['referees'] as $key => $referee)
+                                                    <tr id="referee-row{{ $key }}">
+                                                        <td><input type="text" class="form-control form-control-sm" name="referee[{{ $key }}][name]" value="{{ $referee['name'] }}"></td>
+                                                        <td><input type="text" class="form-control form-control-sm" name="referee[{{ $key }}][role]" value="{{ $referee['role'] }}"></td>
+                                                        <td><input type="text" class="form-control form-control-sm" name="referee[{{ $key }}][organisation]" value="{{ $referee['organisation'] }}"></td>
+                                                        <td><input type="text" class="form-control form-control-sm" name="referee[{{ $key }}][contact_number]" value="{{ $referee['contact_number'] }}"></td>
+                                                        <td><input type="email" class="form-control form-control-sm" name="referee[{{ $key }}][email]" value="{{ $referee['email'] }}"></td>
+                                                        <td><button class="btn btn-sm btn-danger" onclick="$('#referee-row{{ $key }}').remove();"><i class="mdi mdi-delete"></i></button></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr id="referee-row0">
+                                                    <td><input type="text" class="form-control form-control-sm" name="referee[0][name]"></td>
+                                                    <td><input type="text" class="form-control form-control-sm" name="referee[0][role]"></td>
+                                                    <td><input type="text" class="form-control form-control-sm" name="referee[0][organisation]"></td>
+                                                    <td><input type="text" class="form-control form-control-sm" name="referee[0][contact_number]"></td>
+                                                    <td><input type="email" class="form-control form-control-sm" name="referee[0][email]"></td>
+                                                    <td><button class="btn btn-sm btn-danger" onclick="$('#referee-row0').remove();"><i class="mdi mdi-delete"></i></button></td>
+                                                </tr>
+                                            @endif
+                                        @else
                                         <tr id="referee-row0">
-                                            <td><input type="text" class="form-control form-control-sm" name="referee[0][name]" onkeypress="return isNumberKey(event)" maxlength="4"></td>
+                                            <td><input type="text" class="form-control form-control-sm" name="referee[0][name]"></td>
                                             <td><input type="text" class="form-control form-control-sm" name="referee[0][role]"></td>
                                             <td><input type="text" class="form-control form-control-sm" name="referee[0][organisation]"></td>
                                             <td><input type="text" class="form-control form-control-sm" name="referee[0][contact_number]"></td>
                                             <td><input type="email" class="form-control form-control-sm" name="referee[0][email]"></td>
                                             <td><button class="btn btn-sm btn-danger" onclick="$('#referee-row0').remove();"><i class="mdi mdi-delete"></i></button></td>
                                         </tr>
+                                        @endisset
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -66,10 +93,10 @@
                                     class="form-select @error('consent_to_be_contacted') is-invalid @enderror"
                                     name="consent_to_be_contacted">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('consent_to_be_contacted') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('consent_to_be_contacted', isset($consents_and_checks) ? $consents_and_checks['consent_to_be_contacted'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('consent_to_be_contacted') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('consent_to_be_contacted', isset($consents_and_checks) ? $consents_and_checks['consent_to_be_contacted'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('consent_to_be_contacted')
@@ -83,10 +110,10 @@
                                     class="form-select @error('consent_to_background_check') is-invalid @enderror"
                                     name="consent_to_background_check">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('consent_to_background_check') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('consent_to_background_check', isset($consents_and_checks) ? $consents_and_checks['consent_to_background_check'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('consent_to_background_check') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('consent_to_background_check', isset($consents_and_checks) ? $consents_and_checks['consent_to_background_check'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('consent_to_background_check')
@@ -100,10 +127,10 @@
                                     class="form-select @error('parental_consent') is-invalid @enderror"
                                     name="parental_consent">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('parental_consent') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('parental_consent', isset($consents_and_checks) ? $consents_and_checks['parental_consent'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('parental_consent') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('parental_consent', isset($consents_and_checks) ? $consents_and_checks['parental_consent'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('parental_consent')
@@ -117,10 +144,10 @@
                                     class="form-select @error('media_consent') is-invalid @enderror"
                                     name="media_consent">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('media_consent') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('media_consent', isset($consents_and_checks) ? $consents_and_checks['media_consent'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('media_consent') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('media_consent', isset($consents_and_checks) ? $consents_and_checks['media_consent'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('media_consent')
@@ -134,10 +161,10 @@
                                     class="form-select @error('agree_to_code_of_conduct') is-invalid @enderror"
                                     name="agree_to_code_of_conduct">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('agree_to_code_of_conduct') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('agree_to_code_of_conduct', isset($consents_and_checks) ? $consents_and_checks['agree_to_code_of_conduct'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('agree_to_code_of_conduct') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('agree_to_code_of_conduct', isset($consents_and_checks) ? $consents_and_checks['agree_to_code_of_conduct'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('agree_to_code_of_conduct')
@@ -151,10 +178,10 @@
                                     class="form-select @error('agree_to_child_protection_policy') is-invalid @enderror"
                                     name="agree_to_child_protection_policy">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('agree_to_child_protection_policy') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('agree_to_child_protection_policy', isset($consents_and_checks) ? $consents_and_checks['agree_to_child_protection_policy'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('agree_to_child_protection_policy') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('agree_to_child_protection_policy', isset($consents_and_checks) ? $consents_and_checks['agree_to_child_protection_policy'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('agree_to_child_protection_policy')
@@ -178,10 +205,10 @@
                                     class="form-select @error('statutory_declaration_attached') is-invalid @enderror"
                                     name="statutory_declaration_attached">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('statutory_declaration_attached') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('statutory_declaration_attached', isset($consents_and_checks) ? $consents_and_checks['statutory_declaration_attached'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('statutory_declaration_attached') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('statutory_declaration_attached', isset($consents_and_checks) ? $consents_and_checks['statutory_declaration_attached'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('statutory_declaration_attached')
@@ -195,10 +222,10 @@
                                     class="form-select @error('code_of_conduct_attached') is-invalid @enderror"
                                     name="code_of_conduct_attached">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('code_of_conduct_attached') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('code_of_conduct_attached', isset($consents_and_checks) ? $consents_and_checks['code_of_conduct_attached'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('code_of_conduct_attached') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('code_of_conduct_attached', isset($consents_and_checks) ? $consents_and_checks['code_of_conduct_attached'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('code_of_conduct_attached')
@@ -212,10 +239,10 @@
                                     class="form-select @error('signed_child_protection_policy_attached') is-invalid @enderror"
                                     name="signed_child_protection_policy_attached">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('signed_child_protection_policy_attached') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('signed_child_protection_policy_attached', isset($consents_and_checks) ? $consents_and_checks['signed_child_protection_policy_attached'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('signed_child_protection_policy_attached') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('signed_child_protection_policy_attached', isset($consents_and_checks) ? $consents_and_checks['signed_child_protection_policy_attached'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('signed_child_protection_policy_attached')
@@ -229,10 +256,10 @@
                                     class="form-select @error('cv_attached') is-invalid @enderror"
                                     name="cv_attached">
                                     <option value="">Select</option>
-                                    <option value="Yes" {{ old('cv_attached') == 'Yes' ? 'selected' : '' }}>
+                                    <option value="Yes" {{ old('cv_attached', isset($consents_and_checks) ? $consents_and_checks['cv_attached'] : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
-                                    <option value="No" {{ old('cv_attached') == 'No' ? 'selected' : '' }}>No
+                                    <option value="No" {{ old('cv_attached', isset($consents_and_checks) ? $consents_and_checks['cv_attached'] : '') == 'No' ? 'selected' : '' }}>No
                                     </option>
                                 </select>
                                 @error('cv_attached')
@@ -246,12 +273,12 @@
                                     class="form-select @error('base_location') is-invalid @enderror"
                                     name="base_location">
                                     <option value="">Select</option>
-                                    <option value="Branch" {{ old('base_location') == 'Branch' ? 'selected' : '' }}>
+                                    <option value="Branch" {{ old('base_location', isset($consents_and_checks) ? $consents_and_checks['base_location'] : '') == 'Branch' ? 'selected' : '' }}>
                                         Branch
                                     </option>
-                                    <option value="Community (CBV)" {{ old('base_location') == 'Community (CBV)' ? 'selected' : '' }}>Community (CBV)
+                                    <option value="Community (CBV)" {{ old('base_location', isset($consents_and_checks) ? $consents_and_checks['base_location'] : '') == 'Community (CBV)' ? 'selected' : '' }}>Community (CBV)
                                     </option>
-                                    <option value="Office" {{ old('base_location') == 'Office' ? 'selected' : '' }}>Office
+                                    <option value="Office" {{ old('base_location', isset($consents_and_checks) ? $consents_and_checks['base_location'] : '') == 'Office' ? 'selected' : '' }}>Office
                                     </option>
                                 </select>
                                 @error('base_location')
@@ -289,7 +316,15 @@
 @endsection
 @push('scripts')
 <script>
-    var referee_row = 1;
+    @isset($consents_and_checks)
+        @if(count($consents_and_checks['referees']) > 0)
+            var referee_row = {{ count($consents_and_checks['referees']) }};
+        @else
+            var referee_row = 1;
+        @endif
+    @else
+        var referee_row = 1;
+    @endisset
     function addReferee(){
         html =  '<tr id="referee-row' +referee_row+ '">';       
         html += '<td><input type="text" class="form-control form-control-sm" name="referee[' +referee_row+ '][name]"></td>'

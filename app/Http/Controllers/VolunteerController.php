@@ -299,11 +299,13 @@ class VolunteerController extends Controller
      // Tab 6
      public function specialInformationForm()
      {
+        // Session::forget('special-information');
          return view('volunteer.special-information');
      }
  
      public function specialInformation(Request $request)
      {
+        // return $request->all();
          $rules = [
              'any_police_records'             => 'required',  
              'any_special_needs'              => 'required',
@@ -384,8 +386,13 @@ class VolunteerController extends Controller
   
           $this->validate($request, $rules, $messages);
 
-          $data = $request->except('_token'); 
-          Session::put('serviceInfo',$data);
+          $data                                       = array();
+          $data['service_interest']                   = $request->service_interest;
+          $data['available_days']                     = $request->available_days;
+          $data['available_times']                    = $request->available_times;
+          $data['other_skills']                       = $request->other_skills;              
+  
+          Session::put('service-interest', $data);
   
           return redirect()->route('banking-information.form')->with('success', 'Service Interest saved successfully');
       }
@@ -418,8 +425,15 @@ class VolunteerController extends Controller
   
           $this->validate($request, $rules, $messages);
 
-          $data = $request->except('_token'); 
-          Session::put('bankingInfo',$data);
+          $data                                       = array();
+          $data['bank']                               = $request->bank;
+          $data['account_number']                     = $request->account_number;
+          $data['name_bank_account']                  = $request->name_bank_account;
+          $data['mobile_bank']                        = $request->mobile_bank;  
+          $data['mobile_bank_number']                 = $request->mobile_bank_number;
+          $data['name_mobile_bank_account']           = $request->name_mobile_bank_account;            
+  
+          Session::put('banking-information', $data);
   
           return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
       }
@@ -462,10 +476,34 @@ class VolunteerController extends Controller
   
           $this->validate($request, $rules, $messages);
 
-          $data = $request->except('_token'); 
-          Session::put('consentInfo',$data);
+          $data                                             = array();
+          $data['consent_to_be_contacted']                  = $request->consent_to_be_contacted;
+          $data['consent_to_background_check']              = $request->consent_to_background_check;
+          $data['parental_consent']                         = $request->parental_consent;
+          $data['media_consent']                            = $request->media_consent;  
+          $data['agree_to_code_of_conduct']                 = $request->agree_to_code_of_conduct;
+          $data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy;              
+          $data['statutory_declaration_attached']           = $request->statutory_declaration_attached;
+          $data['code_of_conduct_attached']                 = $request->code_of_conduct_attached;
+          $data['signed_child_protection_policy_attached']  = $request->signed_child_protection_policy_attached;  
+          $data['cv_attached']                              = $request->cv_attached;
+          $data['base_location']                            = $request->base_location;   
+
+          if(!empty($request->referee) && is_array($request->referee)){
+            foreach($request->referee as $key => $referee){
+                $data['referees'][$key]['name']                = $referee['name'];
+                $data['referees'][$key]['role']                = $referee['role'];
+                $data['referees'][$key]['organisation']        = $referee['organisation'];   
+                $data['referees'][$key]['contact_number']      = $referee['contact_number'];  
+                $data['referees'][$key]['email']               = $referee['email'];           
+            }
+        }else{
+            $data['referees'] = [];
+        }
+
+        Session::put('consents-and-checks', $data);
   
-          return redirect()->route('service-interest.form')->with('success', 'Consents and Checks saved successfully');
+          return redirect()->route('register')->with('success', 'Consents and Checks saved successfully');
       }
 
 }

@@ -263,7 +263,7 @@
                                             <tr id="volunteer-row{{ $key }}">                                      
                                                 <td><input type="text" class="form-control form-control-sm" name="volunteer[{{ $key }}][year]" onkeypress="return isNumberKey(event)" maxlength="4" value="{{ $volunteer['year'] }}" required></td>                                        
                                                 <td><input type="text" class="form-control form-control-sm" name="volunteer[{{ $key }}][experience]" value="{{ $volunteer['experience'] }}" required></td>
-                                                <td><select class="form-select form-control-sm" name="volunteer[{{ $key }}][red_cross_involvement]" required><option value="">Select</option><option value="Yes" {{ $volunteer['red_cross_envolvement'] == "Yes" ? "selected" : "" }}>Yes</option><option value="No" {{ $volunteer['red_cross_envolvement'] == "No" ? "selected" : "" }}>No</option></select></td>
+                                                <td><select class="form-select form-control-sm" name="volunteer[{{ $key }}][red_cross_involvement]" required><option value="">Select</option><option value="Yes" {{ $volunteer['red_cross_involvement'] == "Yes" ? "selected" : "" }}>Yes</option><option value="No" {{ $volunteer['red_cross_involvement'] == "No" ? "selected" : "" }}>No</option></select></td>
                                                 <td class="text-end"><button class="btn btn-sm btn-danger" onclick="$('#volunteer-row{{ $key }}').remove();"><i class="mdi mdi-delete"></i></button></td>
                                             </tr>
                                             @endforeach
@@ -337,7 +337,7 @@
         html =  '<tr id="volunteer-row' +volunteer_row+ '">';       
         html += '<td><input type="text" class="form-control form-control-sm" name="volunteer[' +volunteer_row+ '][year]" onkeypress="return isNumberKey(event)" maxlength="4" required></td>';    
         html += '<td><input type="text" class="form-control form-control-sm" name="volunteer[' +volunteer_row+ '][experience]" required></td>';
-        html += '<td><select class="form-select form-control-sm" name="volunteer[0][red_cross_involvement]" required><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></td>';
+        html += '<td><select class="form-select form-control-sm" name="volunteer[' +volunteer_row+ '][red_cross_involvement]" required><option value="">Select</option><option value="Yes">Yes</option><option value="No">No</option></select></td>';
         html += '<td class="text-end"><button class="btn btn-sm btn-danger" onclick="$(\'#volunteer-row' + volunteer_row + '\').remove();"><i class="mdi mdi-delete"></i></button></td>';
         html += '</tr>';
 
