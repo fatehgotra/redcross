@@ -332,8 +332,32 @@ class VolunteerController extends Controller
  
          $this->validate($request, $rules, $messages);
 
-         $data = $request->except('_token'); 
-         Session::put('specialInfo',$data);
+         $data                                       = array();
+         $data['any_police_records']                 = $request->any_police_records;
+         $data['any_special_needs']                  = $request->any_special_needs;
+         $data['specify_special_needs']              = $request->specify_special_needs;
+         $data['any_medical_conditions']             = $request->any_medical_conditions;
+         $data['specify_medical_conditions']         = $request->specify_medical_conditions;
+         $data['know_how_to_swim']                   = $request->know_how_to_swim;
+         $data['full_covid_vaccination']             = $request->full_covid_vaccination;
+         $data['date_first_vaccine']                 = $request->date_first_vaccine;
+         $data['date_second_vaccine']                = $request->date_second_vaccine;
+         $data['date_booster']                       = $request->date_booster; 
+         $data['blood_donar']                        = $request->blood_donar;
+         $data['know_your_blood_group']              = $request->know_your_blood_group;
+         $data['blood_group']                        = $request->blood_group;        
+         
+         if(!empty($request->volunteer) && is_array($request->volunteer)){
+            foreach($request->volunteer as $key => $volunteer){
+                $data['volunteers'][$key]['year']                         = $volunteer['year'];
+                $data['volunteers'][$key]['experience']                    = $volunteer['experience'];
+                $data['volunteers'][$key]['red_cross_involvement']        = $volunteer['red_cross_involvement'];            
+            }
+        }else{
+            $data['volunteers'] = [];
+        }
+
+         Session::put('special-information', $data);
  
          return redirect()->route('service-interest.form')->with('success', 'Special Information saved successfully');
      }
