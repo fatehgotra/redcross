@@ -1,3 +1,6 @@
+@php
+    $lodgement_information = Session::get('lodgement-information');
+@endphp
 @extends('layouts.app')
 @section('title', 'Volunteer Registration | Fiji Red Cross Society')
 @section('content')
@@ -22,7 +25,7 @@
                                         class="text-danger">*</span></label>
                                 <input id="date_of_lodgement" type="date"
                                     class="form-control @error('date_of_lodgement') is-invalid @enderror"
-                                    name="date_of_lodgement" value="{{ old('date_of_lodgement') }}"
+                                    name="date_of_lodgement" value="{{ old('date_of_lodgement', isset($lodgement_information) ? $lodgement_information['date_of_lodgement'] : '') }}"
                                     autocomplete="date_of_lodgement" placeholder="Date of Lodgement" autofocus>
                                 @error('date_of_lodgement')
                                     <small id="date_of_lodgement-error" class="text-danger">{{ $message }}</small>
@@ -33,7 +36,7 @@
                                         class="text-danger">*</span></label>
                                 <input id="registering_year" type="text"
                                     class="form-control @error('registering_year') is-invalid @enderror"
-                                    name="registering_year" value="{{ old('registering_year') }}"
+                                    name="registering_year" value="{{ old('registering_year', isset($lodgement_information) ? $lodgement_information['registering_year'] : '') }}"
                                     autocomplete="registering_year" placeholder="Registering Year"
                                     onkeypress="return isNumberKey(event)" maxlength="4">
                                 @error('registering_year')
@@ -47,11 +50,11 @@
                                     name="division">
                                     <option value="">Select Division</option>
                                     <option value="Central / Eastern"
-                                        {{ old('division') == 'Central / Eastern' ? 'selected' : '' }}>Central / Eastern
+                                        {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Central / Eastern' ? 'selected' : '' }}>Central / Eastern
                                     </option>
-                                    <option value="Western" {{ old('division') == 'Western' ? 'selected' : '' }}>Western
+                                    <option value="Western" {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Western' ? 'selected' : '' }}>Western
                                     </option>
-                                    <option value="Northern" {{ old('division') == 'Northern' ? 'selected' : '' }}>Northern
+                                    <option value="Northern" {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Northern' ? 'selected' : '' }}>Northern
                                     </option>
                                 </select>
                                 @error('division')
@@ -65,7 +68,7 @@
                                     <div class="col-md-8">
                                         <input id="registration_location" type="text"
                                             class="form-control @error('registration_location') is-invalid @enderror"
-                                            name="registration_location" value="{{ old('registration_location') }}"
+                                            name="registration_location" value="{{ old('registration_location', isset($lodgement_information) ? $lodgement_information['registration_location'] : '') }}"
                                             autocomplete="registration_location"
                                             placeholder="Branch/Office Location E.g. Suva, Tuvaua etc." autofocus>
                                         @error('registration_location')
@@ -78,11 +81,11 @@
                                             class="form-select @error('registration_location_type') is-invalid @enderror"
                                             name="registration_location_type">
                                             <option value="Branch"
-                                                {{ old('registration_location_type') == 'Branch' ? 'selected' : '' }}>
+                                                {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Branch' ? 'selected' : '' }}>
                                                 Branch
                                             </option>
                                             <option value="National Office"
-                                                {{ old('registration_location_type') == 'National Office' ? 'selected' : '' }}>
+                                                {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'National Office' ? 'selected' : '' }}>
                                                 National Office
                                             </option>
                                         </select>

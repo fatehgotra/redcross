@@ -1,41 +1,45 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session as FacadesSession;
+use Illuminate\Support\Facades\Session;
 
 class VolunteerController extends Controller
 {
     // Tab 1
     public function lodgeInformationForm()
-    {
+    {        
         return view('volunteer.lodge-information');
     }
 
     public function lodgeInformation(Request $request)
     {
         $rules = [
-            'date_of_lodgement'             => 'required',
-            'registering_year'              => 'required',
-            'division'                      => 'required',
-            'registration_location'         => 'required',
-            'registration_location_type'    => 'required',
+            'date_of_lodgement'                    => 'required',
+            'registering_year'                     => 'required',
+            'division'                             => 'required',
+            'registration_location'                => 'required',
+            'registration_location_type'           => 'required',
         ];
 
         $messages = [
-            'date_of_lodgement.required'               => 'Please enter Date of Lodgement',
-            'registering_year.required'                => 'Please enter Registering Year.',
-            'division.required'                        => 'Please select Division',
-            'registration_location.required'           => 'Please enter Registration Location.',
-            'registration_location_type.required'      => 'Please select Location Type.'
+            'date_of_lodgement.required'           => 'Please enter Date of Lodgement',
+            'registering_year.required'            => 'Please enter Registering Year.',
+            'division.required'                    => 'Please select Division',
+            'registration_location.required'       => 'Please enter Registration Location.',
+            'registration_location_type.required'  => 'Please select Location Type.'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $this->validate($request, $rules, $messages); 
 
-        $data = $request->except('_token'); 
-        FacadesSession::put('lodgeInfo',$data);
+        $data                                      = array();
+        $data['date_of_lodgement']                 = $request->date_of_lodgement;
+        $data['registering_year']                  = $request->registering_year;
+        $data['division']                          = $request->division;
+        $data['registration_location']             = $request->registration_location;
+        $data['registration_location_type']        = $request->registration_location_type;
+
+        Session::put('lodgement-information', $data);
 
         return redirect()->route('personal-information.form')->with('success', 'Lodgement Information saved successfully');
     }
@@ -49,19 +53,19 @@ class VolunteerController extends Controller
     public function personalInformation(Request $request)
     {
         $rules = [
-            'lastname'                  => 'required',
-            'firstname'                 => 'required',
-            'father_name'               => 'required',
-            'date_of_birth'             => 'required',
-            'sex'                       => 'required',
-            'citizenship'               => 'required',
-            'specify_citizenship'       => $request->citizenship == 'Other' ? 'required' : '',
-            'ethnic_background'         => 'required|array|min:1',
-            'specify_ethnic_background' => is_array($request->ethnic_background) ? (in_array('Other', $request->ethnic_background) ? 'required' : '') : '',
-            'marital_status'            => 'required',
-            'no_of_dependents'          => 'required',
-            'languages_spoken'          => 'required|array|min:1',
-            'specify_languages_spoken'  => is_array($request->languages_spoken) ? (in_array('Other Languages', $request->languages_spoken) ? 'required' : '') : '',
+            'lastname'                              => 'required',
+            'firstname'                             => 'required',
+            'father_name'                           => 'required',
+            'date_of_birth'                         => 'required',
+            'sex'                                   => 'required',
+            'citizenship'                           => 'required',
+            'specify_citizenship'                   => $request->citizenship == 'Other' ? 'required' : '',
+            'ethnic_background'                     => 'required|array|min:1',
+            'specify_ethnic_background'             => is_array($request->ethnic_background) ? (in_array('Other', $request->ethnic_background) ? 'required' : '') : '',
+            'marital_status'                        => 'required',
+            'no_of_dependents'                      => 'required',
+            'languages_spoken'                      => 'required|array|min:1',
+            'specify_languages_spoken'              => is_array($request->languages_spoken) ? (in_array('Other Languages', $request->languages_spoken) ? 'required' : '') : '',
         ];
 
         $messages = [
@@ -76,14 +80,29 @@ class VolunteerController extends Controller
             'specify_ethnic_background.required'    => 'Please specify Ethnic background.',
             'marital_status.required'               => 'Please select Marital Status.',
             'no_of_dependents.required'             => 'Please enter No. of Dependents.',
-            'languagees_spoken.required'            => 'Please select Languages Spoken.',
-            'specify_languagees_spoken.required'    => 'Please specify Languages Spoken.',
+            'languages_spoken.required'             => 'Please select Languages Spoken.',
+            'specify_languages_spoken.required'     => 'Please specify Languages Spoken.',
         ];
 
         $this->validate($request, $rules, $messages);
 
-        $data = $request->except('_token'); 
-        FacadesSession::put('personalInfo',$data);
+        $data                                       = array();
+        $data['lastname']                           = $request->lastname;
+        $data['firstname']                          = $request->firstname;
+        $data['other_names']                        = $request->other_names;
+        $data['father_name']                        = $request->father_name;
+        $data['date_of_birth']                      = $request->date_of_birth;
+        $data['sex']                                = $request->sex;
+        $data['citizenship']                        = $request->citizenship;
+        $data['specify_citizenship']                = $request->specify_citizenship;        
+        $data['ethnic_background']                  = $request->ethnic_background;
+        $data['specify_ethnic_background']          = $request->specify_ethnic_background;        
+        $data['marital_status']                     = $request->marital_status;
+        $data['no_of_dependents']                   = $request->no_of_dependents;
+        $data['languages_spoken']                   = $request->languages_spoken;
+        $data['specify_languages_spoken']           = $request->specify_languages_spoken;       
+
+        Session::put('personal-information', $data);
 
         return redirect()->route('contact-information.form')->with('success', 'Personal Information saved successfully');
     }
@@ -130,8 +149,24 @@ class VolunteerController extends Controller
     
             $this->validate($request, $rules, $messages);
 
-            $data = $request->except('_token'); 
-            FacadesSession::put('contactInfo',$data);
+            $data                                       = array();
+            $data['resedential_address']                = $request->resedential_address;
+            $data['community_name']                     = $request->community_name;
+            $data['community_type']                     = $request->community_type;
+            $data['province']                           = $request->province;
+            $data['district']                           = $request->district;
+            $data['postal_address']                     = $request->postal_address;
+            $data['email']                              = $request->email;
+            $data['landline_contact']                   = $request->landline_contact;
+            $data['primary_mobile_contact_number']      = $request->primary_mobile_contact_number;
+            $data['primary_mobile_network_provider']    = $request->primary_mobile_network_provider;
+            $data['other_contact_numbers']              = $request->other_contact_numbers;
+            $data['full_name_of_emergency_contact']     = $request->full_name_of_emergency_contact;
+            $data['relationship']                       = $request->relationship;
+            $data['resedential_address_separate']       = $request->resedential_address_separate;
+            $data['contact_number']                     = $request->contact_number;     
+
+            Session::put('contact-information', $data);
     
             return redirect()->route('identification-and-employement-details.form')->with('success', 'Contact Information saved successfully');
         }
@@ -139,7 +174,7 @@ class VolunteerController extends Controller
         // Tab 4
 
         public function identificationAndEmployementDetailsForm()
-        {
+        {           
             return view('volunteer.identification-and-employement-details');
         }
     
@@ -173,8 +208,27 @@ class VolunteerController extends Controller
     
             $this->validate($request, $rules, $messages);
 
-            $data = $request->except('_token'); 
-            FacadesSession::put('idNempInfo',$data);
+            $data                                       = array();
+            $data['photo_id_card_type']                 = $request->photo_id_card_type;
+            $data['specify_photo_id_card_type']         = $request->specify_photo_id_card_type;
+            $data['id_card_number']                     = $request->id_card_number;
+            $data['id_expiry_date']                     = $request->id_expiry_date;
+            $data['tin']                                = $request->tin;
+            $data['current_employment_status']          = $request->current_employment_status;
+            $data['current_occupation']                 = $request->current_occupation;
+            $data['organisation_name']                  = $request->organisation_name;
+            $data['organisation_address']               = $request->organisation_address;
+            $data['work_contact_number']                = $request->work_contact_number; 
+
+            if ($request->hasfile('photo_id')) {
+                    $photo_id = $request->file('photo_id');
+                    $name     = time().'-'.$photo_id->getClientOriginalName();
+                    $photo_id->storeAs('uploads/temp/', $name, 'public');                
+            }  
+
+            $data['photo_id']                           = $request->hasfile('photo_id') ? $name : null;    
+
+            Session::put('identification-employment-details', $data);
     
             return redirect()->route('education-background.form')->with('success', 'Valid National Identification and Employment Details saved successfully');
         }
@@ -182,6 +236,7 @@ class VolunteerController extends Controller
         // Tab 5
         public function educationBackgroundForm()
     {
+    //   session::forget('education-background');
         return view('volunteer.education-background');
     }
 
@@ -197,8 +252,46 @@ class VolunteerController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $data = $request->except('_token'); 
-        FacadesSession::put('eduInfo',$data);
+            $data                                       = array();
+            $data['highest_level_of_education']         = $request->highest_level_of_education;
+
+            if(!empty($request->qualification) && is_array($request->qualification)){
+                foreach($request->qualification as $key => $qualification){
+                    $data['qualifications'][$key]['year']          = $qualification['year'];
+                    $data['qualifications'][$key]['institution']   = $qualification['institution'];
+                    $data['qualifications'][$key]['course']        = $qualification['course'];
+                    $data['qualifications'][$key]['course_status'] = $qualification['course_status'];
+
+                    if ($request->hasFile('qualification'.$key.'evidence')) {
+                        $qualification_evidence                     = $qualification['evidence'];
+                        $qualification_evidence_name                = time().'-'.$qualification_evidence->getClientOriginalName();
+                        $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
+                    }  
+
+                    $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification'.$key.'evidence') ? $qualification_evidence_name : '';
+                }
+            }else{
+                $data['qualifications'] = [];
+            }
+
+            if(!empty($request->skill) && is_array($request->skill)){
+                foreach($request->skill as $key => $skill){
+                    $data['skills'][$key]['skill']                   = $skill['skill'];                  
+                    if ($request->hasFile('skill'.$key.'evidence')) {
+                        $skill_evidence                             = $skill['evidence'];
+                        $skill_evidence_name                        = time().'-'.$skill_evidence->getClientOriginalName();
+                        $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
+                    }  
+                    $data['skills'][$key]['evidence']               = $request->hasFile('skill'.$key.'evidence') ? $skill_evidence_name : '';
+                }
+            }else{
+                $data['skills'] = [];
+            }
+               
+
+            Session::put('education-background', $data);
+           
+
 
         return redirect()->route('special-information.form')->with('success', 'Education Background saved successfully');
     }
@@ -240,7 +333,7 @@ class VolunteerController extends Controller
          $this->validate($request, $rules, $messages);
 
          $data = $request->except('_token'); 
-         FacadesSession::put('specialInfo',$data);
+         Session::put('specialInfo',$data);
  
          return redirect()->route('service-interest.form')->with('success', 'Special Information saved successfully');
      }
@@ -268,7 +361,7 @@ class VolunteerController extends Controller
           $this->validate($request, $rules, $messages);
 
           $data = $request->except('_token'); 
-          FacadesSession::put('serviceInfo',$data);
+          Session::put('serviceInfo',$data);
   
           return redirect()->route('banking-information.form')->with('success', 'Service Interest saved successfully');
       }
@@ -302,7 +395,7 @@ class VolunteerController extends Controller
           $this->validate($request, $rules, $messages);
 
           $data = $request->except('_token'); 
-          FacadesSession::put('bankingInfo',$data);
+          Session::put('bankingInfo',$data);
   
           return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
       }
@@ -346,7 +439,7 @@ class VolunteerController extends Controller
           $this->validate($request, $rules, $messages);
 
           $data = $request->except('_token'); 
-          FacadesSession::put('consentInfo',$data);
+          Session::put('consentInfo',$data);
   
           return redirect()->route('service-interest.form')->with('success', 'Consents and Checks saved successfully');
       }

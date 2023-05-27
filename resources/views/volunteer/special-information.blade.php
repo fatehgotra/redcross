@@ -1,3 +1,6 @@
+@php
+    $special_information = Session::get('special-information');
+@endphp
 @extends('layouts.app')
 @section('title', 'Volunteer Registration | Fiji Red Cross Society')
 @section('content')
