@@ -299,13 +299,11 @@ class VolunteerController extends Controller
      // Tab 6
      public function specialInformationForm()
      {
-        // Session::forget('special-information');
          return view('volunteer.special-information');
      }
  
      public function specialInformation(Request $request)
      {
-        // return $request->all();
          $rules = [
              'any_police_records'             => 'required',  
              'any_special_needs'              => 'required',
