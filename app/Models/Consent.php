@@ -18,4 +18,9 @@ class Consent extends Model
         'agree_to_code_of_conduct',
         'agree_to_child_protection_policy',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

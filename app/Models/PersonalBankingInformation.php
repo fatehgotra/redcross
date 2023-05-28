@@ -15,5 +15,10 @@ class PersonalBankingInformation extends Model
         'account_number', 
         'name_bank_account'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
    
 }

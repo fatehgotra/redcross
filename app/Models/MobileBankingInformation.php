@@ -15,4 +15,9 @@ class MobileBankingInformation extends Model
         'mobile_bank_number', 
         'name_mobile_bank_account'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

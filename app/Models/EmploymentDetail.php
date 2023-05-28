@@ -17,4 +17,9 @@ class EmploymentDetail extends Model
         'organisation_address',
         'work_contact_number',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

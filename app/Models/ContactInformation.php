@@ -27,4 +27,9 @@ class ContactInformation extends Model
         'resedential_address_separate',
         'contact_number',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

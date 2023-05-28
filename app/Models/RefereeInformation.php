@@ -17,4 +17,9 @@ class RefereeInformation extends Model
         'contact_number',
         'email'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

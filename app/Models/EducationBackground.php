@@ -12,4 +12,9 @@ class EducationBackground extends Model
     protected $fillable = [
         'highest_level_of_education'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

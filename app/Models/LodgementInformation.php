@@ -17,4 +17,14 @@ class LodgementInformation extends Model
         'registration_location',
         'registration_location_type',
     ];
+
+    /**
+     * Get the user that owns the LodgementInformation
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -15,4 +15,9 @@ class BloodInformation extends Model
         'know_your_blood_group',
         'blood_group',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

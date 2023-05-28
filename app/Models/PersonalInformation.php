@@ -31,4 +31,9 @@ class PersonalInformation extends Model
         'ethnic_background' => 'array',
         'languages_spoken' => 'array'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

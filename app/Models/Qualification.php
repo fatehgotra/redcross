@@ -15,4 +15,9 @@ class Qualification extends Model
        'course',
        'evidence',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
