@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('year')->nullable();
             $table->string('institution')->nullable();
             $table->string('course')->nullable();
+            $table->string('course_status')->nullable();
             $table->string('evidence')->nullable();
             $table->timestamps();
         });

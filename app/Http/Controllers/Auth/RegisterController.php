@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\BloodInformation;
+use App\Models\Check;
+use App\Models\Consent;
 use App\Models\ContactInformation;
 use App\Models\EducationBackground;
 use App\Models\EmploymentDetail;
 use App\Models\LodgementInformation;
 use App\Models\Market;
+use App\Models\MobileBankingInformation;
+use App\Models\PersonalBankingInformation;
 use App\Models\PersonalInformation;
 use App\Models\Qualification;
+use App\Models\RefereeInformation;
+use App\Models\ServiceInterest;
 use App\Models\Skill;
+use App\Models\SpecialInformation;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\UserExhibitor;
 use App\Models\ValidNationalIdentification;
+use App\Models\VolunteeringInformation;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -216,6 +225,115 @@ class RegisterController extends Controller
                 }
             }
         }
+
+        $special_information = Session::get('special-information');
+
+        if(isset($special_information)){
+            $special_information_data                                       = array();
+            $special_information_data['user_id']                            = $user->id;
+            $special_information_data['any_police_records']                 = $special_information['any_police_records'];
+            $special_information_data['any_special_needs']                  = $special_information['any_special_needs'];
+            $special_information_data['specify_special_needs']              = $special_information['specify_special_needs'];
+            $special_information_data['any_medical_conditions']             = $special_information['any_medical_conditions'];
+            $special_information_data['specify_medical_conditions']         = $special_information['specify_medical_conditions'];
+            $special_information_data['know_how_to_swim']                   = $special_information['know_how_to_swim'];
+            $special_information_data['full_covid_vaccination']             = $special_information['full_covid_vaccination'];
+            $special_information_data['date_first_vaccine']                 = $special_information['date_first_vaccine'];
+            $special_information_data['date_second_vaccine']                = $special_information['date_second_vaccine'];
+            $special_information_data['date_booster']                       = $special_information['date_booster']; 
+           
+            SpecialInformation::create($special_information_data);
+
+            $blood_information                                       = array();
+            $blood_information['user_id']                            = $user->id;
+            $blood_information['blood_donar']                        = $special_information['blood_donar'];
+            $blood_information['know_your_blood_group']              = $special_information['know_your_blood_group'];
+            $blood_information['blood_group']                        = $special_information['blood_group'];
+
+            BloodInformation::create($blood_information);
+
+            if(!empty($special_information['volunteers']) && is_array($special_information['volunteers'])){
+                foreach($special_information['volunteers'] as $key => $volunteer){                    
+                    $volun                               = new VolunteeringInformation();
+                    $volun->user_id                      = $user->id;
+                    $volun->year                         = $volunteer['year'];
+                    $volun->experience                   = $volunteer['experience'];
+                    $volun->red_cross_involvement        = $volunteer['red_cross_involvement'];                    
+                    $volun->save();
+                }
+            }
+        }
+
+        $service_interest =  Session::get('service-interest');
+
+        if(isset($service_interest)){
+
+          $service_interest_data                                       = array();
+          $service_interest_data['user_id']                            = $user->id;
+          $service_interest_data['service_interest']                   = $service_interest['service_interest'];
+          $service_interest_data['available_days']                     = $service_interest['available_days'];
+          $service_interest_data['available_times']                    = $service_interest['available_times'];
+          $service_interest_data['other_skills']                       = $service_interest['other_skills'];
+
+          ServiceInterest::create($service_interest_data);
+        }
+
+        $banking_information =  Session::get('banking-information');
+
+        if(isset($banking_information)){
+            $personal_banking_information_data                                       = array();
+            $personal_banking_information_data['user_id']                            = $user->id;
+            $personal_banking_information_data['bank']                               = $banking_information['bank'];
+            $personal_banking_information_data['account_number']                     = $banking_information['account_number'];
+            $personal_banking_information_data['name_bank_account']                  = $banking_information['name_bank_account'];
+            PersonalBankingInformation::create($personal_banking_information_data);
+            
+            $mobile_banking_information_data                                         = array();
+            $mobile_banking_information_data['user_id']                              = $user->id;
+            $mobile_banking_information_data['mobile_bank']                          = $banking_information['mobile_bank'];  
+            $mobile_banking_information_data['mobile_bank_number']                   = $banking_information['mobile_bank_number'];
+            $mobile_banking_information_data['name_mobile_bank_account']             = $banking_information['name_mobile_bank_account'];
+            MobileBankingInformation::create($mobile_banking_information_data);
+        }
+
+        $consents_and_checks =  Session::get('consents-and-checks');
+
+        if(isset($consents_and_checks)){
+            if(!empty($consents_and_checks['referees']) && is_array($consents_and_checks['referees'])){
+                foreach($consents_and_checks['referees'] as $key => $referee){                    
+                    $refr                  = new RefereeInformation();
+                    $refr->user_id         = $user->id;
+                    $refr->name            = $referee['name'];
+                    $refr->role            = $referee['role'];
+                    $refr->organisation    = $referee['organisation'];
+                    $refr->contact_number  = $referee['contact_number'];  
+                    $refr->email           = $referee['email'];                  
+                    $refr->save();
+                }
+            }
+
+            $consent_data                                             = array();
+            $consent_data['user_id']                                  = $user->id;
+            $consent_data['consent_to_be_contacted']                  = $consents_and_checks['consent_to_be_contacted'];
+            $consent_data['consent_to_background_check']              = $consents_and_checks['consent_to_background_check'];
+            $consent_data['parental_consent']                         = $consents_and_checks['parental_consent'];
+            $consent_data['media_consent']                            = $consents_and_checks['media_consent'];  
+            $consent_data['agree_to_code_of_conduct']                 = $consents_and_checks['agree_to_code_of_conduct'];
+            $consent_data['agree_to_child_protection_policy']         = $consents_and_checks['agree_to_child_protection_policy'];  
+
+            Consent::create($consent_data);
+
+            $check_data                                             = array();
+            $check_data['user_id']                                  = $user->id;
+            $check_data['statutory_declaration_attached']           = $consents_and_checks['statutory_declaration_attached'];
+            $check_data['code_of_conduct_attached']                 = $consents_and_checks['code_of_conduct_attached'];
+            $check_data['signed_child_protection_policy_attached']  = $consents_and_checks['signed_child_protection_policy_attached'];  
+            $check_data['cv_attached']                              = $consents_and_checks['cv_attached'];
+            $check_data['base_location']                            = $consents_and_checks['base_location']; 
+
+            Check::create($check_data);
+        }
+             
         
         return $user;
     }

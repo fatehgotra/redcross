@@ -10,6 +10,7 @@ class EducationBackground extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'highest_level_of_education'
     ];
 
