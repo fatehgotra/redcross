@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('consent_to_be_contacted')->nullable();         
+            $table->string('consent_to_background_check')->nullable();     
+            $table->string('parental_consent')->nullable();                
+            $table->string('media_consent')->nullable();                   
+            $table->string('agree_to_code_of_conduct')->nullable();        
+            $table->string('agree_to_child_protection_policy')->nullable();
             $table->timestamps();
         });
     }

@@ -9,5 +9,11 @@ class PersonalBankingInformation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'bank',           
+        'account_number', 
+        'name_bank_account'
+    ];
    
 }

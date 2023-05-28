@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('blood_donar')->nullable();          
+            $table->string('know_your_blood_group')->nullable();
+            $table->string('blood_group')->nullable();          
             $table->timestamps();
         });
     }

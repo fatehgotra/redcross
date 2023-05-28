@@ -15,6 +15,16 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('any_police_records')->nullable();        
+            $table->text('any_special_needs')->nullable();         
+            $table->string('specify_special_needs')->nullable();     
+            $table->string('any_medical_conditions')->nullable();    
+            $table->text('specify_medical_conditions')->nullable();
+            $table->string('know_how_to_swim')->nullable();          
+            $table->string('full_covid_vaccination')->nullable();    
+            $table->string('date_first_vaccine')->nullable();        
+            $table->string('date_second_vaccine')->nullable();       
+            $table->string('date_booster')->nullable();              
             $table->timestamps();
         });
     }

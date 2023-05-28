@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('service_interest')->nullable();
+            $table->string('available_days')->nullable();  
+            $table->string('available_times')->nullable(); 
+            $table->string('other_skills')->nullable();    
             $table->timestamps();
         });
     }

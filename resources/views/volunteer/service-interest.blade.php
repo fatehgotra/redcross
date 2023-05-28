@@ -142,7 +142,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-12">
-                                <label for="other_skills" class="col-form-label">In the event of a disaster, what other skills can you support the tea with?</label>
+                                <label for="other_skills" class="col-form-label">In the event of a disaster, what other skills can you support the team with?</label>
                                 <textarea name="other_skills" id="other_skills" class="form-control">{{ old('other_skills', isset($service_interest) ? $service_interest['other_skills'] : '') }}</textarea>
                             </div>
                         </div>

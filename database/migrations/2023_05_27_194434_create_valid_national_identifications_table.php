@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('photo_id_card_type')->nullable();        
+            $table->string('specify_photo_id_card_type')->nullable();
+            $table->string('id_card_number')->nullable();            
+            $table->date('id_expiry_date')->nullable();            
+            $table->string('tin')->nullable();                       
+            $table->string('photo_id')->nullable();                  
             $table->timestamps();
         });
     }

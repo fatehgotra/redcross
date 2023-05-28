@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('year')->nullable();
+            $table->string('experience')->nullable();
+            $table->string('red_cross_involvement')->nullable();
             $table->timestamps();
         });
     }

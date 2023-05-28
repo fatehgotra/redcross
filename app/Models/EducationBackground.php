@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EducationBackground extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'highest_level_of_education'
+    ];
 }

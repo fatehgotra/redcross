@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('year')->nullable();
+            $table->string('institution')->nullable();
+            $table->string('course')->nullable();
+            $table->string('evidence')->nullable();
             $table->timestamps();
         });
     }

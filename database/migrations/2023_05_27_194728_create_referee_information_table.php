@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('referee_information', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');           
+            $table->string('name')->nullable();           
+            $table->string('role')->nullable(); 
+            $table->string('organisation')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
