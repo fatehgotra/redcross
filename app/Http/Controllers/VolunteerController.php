@@ -242,6 +242,7 @@ class VolunteerController extends Controller
 
     public function educationBackground(Request $request)
     {
+        
         $rules = [
             'highest_level_of_education'             => 'required',           
         ];
@@ -262,9 +263,9 @@ class VolunteerController extends Controller
                     $data['qualifications'][$key]['course']        = $qualification['course'];
                     $data['qualifications'][$key]['course_status'] = $qualification['course_status'];
 
-                    if ($request->hasFile('qualification'.$key.'evidence')) {
+                    if ($request->hasFile('qualification.'.$key.'.evidence')) {
                         $qualification_evidence                     = $qualification['evidence'];
-                        $qualification_evidence_name                = time().'-'.$qualification_evidence->getClientOriginalName();
+                        $qualification_evidence_name                = time().'-'.$qualification_evidence->getClientOriginalName();                       
                         $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
                     }  
 
@@ -277,7 +278,7 @@ class VolunteerController extends Controller
             if(!empty($request->skill) && is_array($request->skill)){
                 foreach($request->skill as $key => $skill){
                     $data['skills'][$key]['skill']                   = $skill['skill'];                  
-                    if ($request->hasFile('skill'.$key.'evidence')) {
+                    if ($request->hasFile('skill.'.$key.'.evidence')) {
                         $skill_evidence                             = $skill['evidence'];
                         $skill_evidence_name                        = time().'-'.$skill_evidence->getClientOriginalName();
                         $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
