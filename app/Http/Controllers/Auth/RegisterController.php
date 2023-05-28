@@ -198,7 +198,7 @@ class RegisterController extends Controller
             if(!empty($education_background['qualifications']) && is_array($education_background['qualifications'])){
                 foreach($education_background['qualifications'] as $key => $qualification){
                     if(isset($qualification['evidence'])){
-                        Storage::move('/public/uploads/temp/'.$qualification['evidence'], '/public/uploads/users/qualifications/'.$user->id.'/'.$qualification['evidence']);
+                        Storage::move('/public/uploads/temp/'.$qualification['evidence'], '/public/uploads/users/'.$user->id.'/'.'qualifications/'.$qualification['evidence']);
                     }  
                     $qual                  = new Qualification;
                     $qual->user_id         = $user->id;
@@ -214,7 +214,7 @@ class RegisterController extends Controller
             if(!empty($education_background['skills']) && is_array($education_background['skills'])){
                 foreach($education_background['skills'] as $key => $skill){
                     if(isset($skill['evidence'])){
-                        Storage::move('/public/uploads/temp/'.$skill['evidence'], '/public/uploads/users/skills/'.$user->id.'/'.$skill['evidence']);
+                        Storage::move('/public/uploads/temp/'.$skill['evidence'], '/public/uploads/users/'.$user->id.'/'.'skills/'.$skill['evidence']);
                     }  
                     $skil                  = new Skill();
                     $skil->user_id         = $user->id;

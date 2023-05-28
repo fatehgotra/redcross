@@ -269,7 +269,7 @@ class VolunteerController extends Controller
                         $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
                     }  
 
-                    $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification'.$key.'evidence') ? $qualification_evidence_name : '';
+                    $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification.'.$key.'.evidence') ? $qualification_evidence_name : '';
                 }
             }else{
                 $data['qualifications'] = [];
@@ -283,7 +283,7 @@ class VolunteerController extends Controller
                         $skill_evidence_name                        = time().'-'.$skill_evidence->getClientOriginalName();
                         $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
                     }  
-                    $data['skills'][$key]['evidence']               = $request->hasFile('skill'.$key.'evidence') ? $skill_evidence_name : '';
+                    $data['skills'][$key]['evidence']               = $request->hasFile('skill.'.$key.'.evidence') ? $skill_evidence_name : '';
                 }
             }else{
                 $data['skills'] = [];
