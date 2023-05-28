@@ -23,6 +23,7 @@ use App\Models\User;
 use App\Models\ValidNationalIdentification;
 use App\Models\VolunteeringInformation;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -167,7 +168,7 @@ class RegisterController extends Controller
             $identification_data['tin']                                = $identification_employment_details['tin'];
            
             if(isset($identification_employment_details['photo_id'])){
-                Storage::move('temp/'.$identification_employment_details['photo_id'], 'users/'.$user->id.'/'.$identification_employment_details['photo_id']);
+                Storage::move('/public/uploads/temp/'.$identification_employment_details['photo_id'], '/public/uploads/users/'.$user->id.'/'.$identification_employment_details['photo_id']);
             }            
 
             $identification_data['photo_id']                           = isset($identification_employment_details['photo_id']) ? $identification_employment_details['photo_id'] : null;
@@ -197,7 +198,7 @@ class RegisterController extends Controller
             if(!empty($education_background['qualifications']) && is_array($education_background['qualifications'])){
                 foreach($education_background['qualifications'] as $key => $qualification){
                     if(isset($qualification['evidence'])){
-                        Storage::move('temp/'.$qualification['evidence'], 'users/qualifications/'.$user->id.'/'.$qualification['evidence']);
+                        Storage::move('/public/uploads/temp/'.$qualification['evidence'], '/public/uploads/users/qualifications/'.$user->id.'/'.$qualification['evidence']);
                     }  
                     $qual                  = new Qualification;
                     $qual->user_id         = $user->id;
@@ -213,7 +214,7 @@ class RegisterController extends Controller
             if(!empty($education_background['skills']) && is_array($education_background['skills'])){
                 foreach($education_background['skills'] as $key => $skill){
                     if(isset($skill['evidence'])){
-                        Storage::move('temp/'.$skill['evidence'], 'users/skills/'.$user->id.'/'.$skill['evidence']);
+                        Storage::move('/public/uploads/temp/'.$skill['evidence'], '/public/uploads/users/skills/'.$user->id.'/'.$skill['evidence']);
                     }  
                     $skil                  = new Skill();
                     $skil->user_id         = $user->id;
