@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactInformation;
+use App\Models\EducationBackground;
 use App\Models\EmploymentDetail;
 use App\Models\LodgementInformation;
 use App\Models\Market;
 use App\Models\PersonalInformation;
+use App\Models\Qualification;
+use App\Models\Skill;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\UserExhibitor;
@@ -86,6 +89,7 @@ class RegisterController extends Controller
         if(isset($lodgement_information)){
 
             $lodgement_information_data                                      = array();
+            $lodgement_information_data['user_id']                           = $user->id;
             $lodgement_information_data['date_of_lodgement']                 = $lodgement_information['date_of_lodgement'];
             $lodgement_information_data['registering_year']                  = $lodgement_information['registering_year'];
             $lodgement_information_data['division']                          = $lodgement_information['division'];
@@ -100,6 +104,7 @@ class RegisterController extends Controller
         if(isset($personal_information)){
 
             $personal_information_data                                       = array();
+            $personal_information_data['user_id']                            = $user->id;
             $personal_information_data['lastname']                           = $personal_information['lastname'];
             $personal_information_data['firstname']                          = $personal_information['firstname'];
             $personal_information_data['other_names']                        = $personal_information['other_names'];
@@ -122,6 +127,7 @@ class RegisterController extends Controller
 
         if(isset($contact_information)){
             $contact_information_data                                       = array();
+            $contact_information_data['user_id']                            = $user->id;
             $contact_information_data['resedential_address']                = $contact_information['resedential_address'];
             $contact_information_data['community_name']                     = $contact_information['community_name'];
             $contact_information_data['community_type']                     = $contact_information['community_type'];
@@ -146,6 +152,7 @@ class RegisterController extends Controller
         if(isset($identification_employment_details)){
 
             $identification_data                                       = array();
+            $identification_data['user_id']                            = $user->id;
             $identification_data['photo_id_card_type']                 = $identification_employment_details['photo_id_card_type'];
             $identification_data['specify_photo_id_card_type']         = $identification_employment_details['specify_photo_id_card_type'];
             $identification_data['id_card_number']                     = $identification_employment_details['id_card_number'];
@@ -160,6 +167,8 @@ class RegisterController extends Controller
 
             ValidNationalIdentification::create($identification_data);
 
+            $employment_data                                       = array();
+            $employment_data['user_id']                            = $user->id;
             $employment_data['current_employment_status']          = $identification_employment_details['current_employment_status'];
             $employment_data['current_occupation']                 = $identification_employment_details['current_occupation'];
             $employment_data['organisation_name']                  = $identification_employment_details['organisation_name'];
@@ -167,6 +176,45 @@ class RegisterController extends Controller
             $employment_data['work_contact_number']                = $identification_employment_details['work_contact_number']; 
 
             EmploymentDetail::create($employment_data);
+        }
+
+        $education_background = Session::get('education-background');
+
+        if(isset($education_background)){
+            $education_background_data                                       = array();
+            $education_background_data['user_id']                            = $user->id;
+            $education_background_data['highest_level_of_education']         = $education_background['highest_level_of_education'];
+
+            EducationBackground::create($education_background_data);
+
+            if(!empty($education_background['qualifications']) && is_array($education_background['qualifications'])){
+                foreach($education_background['qualifications'] as $key => $qualification){
+                    if(isset($qualification['evidence'])){
+                        Storage::move('temp/'.$qualification['evidence'], 'users/qualifications/'.$user->id.'/'.$qualification['evidence']);
+                    }  
+                    $qual                  = new Qualification;
+                    $qual->user_id         = $user->id;
+                    $qual->year            = $qualification['year'];
+                    $qual->institution     = $qualification['institution'];
+                    $qual->course          = $qualification['course'];
+                    $qual->course_status   = $qualification['course_status'];
+                    $qual->evidence        = isset($qualification['evidence']) ? $qualification['evidence'] : null;
+                    $qual->save();
+                }
+            }
+
+            if(!empty($education_background['skills']) && is_array($education_background['skills'])){
+                foreach($education_background['skills'] as $key => $skill){
+                    if(isset($skill['evidence'])){
+                        Storage::move('temp/'.$skill['evidence'], 'users/skills/'.$user->id.'/'.$skill['evidence']);
+                    }  
+                    $skil                  = new Skill();
+                    $skil->user_id         = $user->id;
+                    $skil->skill           = $skill['skill'];  
+                    $skil->evidence        = isset($skill['evidence']) ? $skill['evidence'] : null;                 
+                    $skil->save();
+                }
+            }
         }
         
         return $user;
