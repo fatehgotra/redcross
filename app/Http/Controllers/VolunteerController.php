@@ -222,7 +222,7 @@ class VolunteerController extends Controller
 
             if ($request->hasfile('photo_id')) {
                     $photo_id = $request->file('photo_id');
-                    $name     = time().'-'.$photo_id->getClientOriginalName();
+                    $name     = time().'.'.$photo_id->getClientOriginalExtension();
                     $photo_id->storeAs('uploads/temp/', $name, 'public');                
             }  
 
@@ -265,7 +265,7 @@ class VolunteerController extends Controller
 
                     if ($request->hasFile('qualification.'.$key.'.evidence')) {
                         $qualification_evidence                     = $qualification['evidence'];
-                        $qualification_evidence_name                = time().'-'.$qualification_evidence->getClientOriginalName();                       
+                        $qualification_evidence_name                = time().$key.'.'.$qualification_evidence->getClientOriginalExtension();                       
                         $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
                     }  
 
@@ -280,7 +280,7 @@ class VolunteerController extends Controller
                     $data['skills'][$key]['skill']                   = $skill['skill'];                  
                     if ($request->hasFile('skill.'.$key.'.evidence')) {
                         $skill_evidence                             = $skill['evidence'];
-                        $skill_evidence_name                        = time().'-'.$skill_evidence->getClientOriginalName();
+                        $skill_evidence_name                        = time().$key.'.'.$skill_evidence->getClientOriginalExtension();
                         $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
                     }  
                     $data['skills'][$key]['evidence']               = $request->hasFile('skill.'.$key.'.evidence') ? $skill_evidence_name : '';
