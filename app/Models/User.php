@@ -45,23 +45,88 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function products()
+    public function lodgementInformation()
     {
-        return $this->hasMany(Product::class, 'user_id', 'id');
+        return $this->hasOne(LodgementInformation::class, 'user_id', 'id');
     }
 
-    public function exhibitor()
+    public function personalInformation()
     {
-        return $this->hasOne(UserExhibitor::class, 'user_id', 'id');
+        return $this->hasOne(PersonalInformation::class, 'user_id', 'id');
     }
     
-    public function bank()
+    public function contactInformation()
     {
-        return $this->hasOne(UserBankDetail::class, 'user_id', 'id');
+        return $this->hasOne(ContactInformation::class, 'user_id', 'id');
     }
 
-    public function lineItems()
+    public function validNationalIdentification()
     {
-        return $this->hasMany(SaleItem::class, 'user_id', 'id');
+        return $this->hasOne(ValidNationalIdentification::class, 'user_id', 'id');
+    }
+
+    public function employmentDetail()
+    {
+        return $this->hasOne(EmploymentDetail::class, 'user_id', 'id');
+    }
+
+    public function educationBackgroud()
+    {
+        return $this->hasOne(EducationBackground::class, 'user_id', 'id');
+    }
+
+    public function qualifications()
+    {
+        return $this->hasMany(Qualification::class, 'user_id', 'id');
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skill::class, 'user_id', 'id');
+    }
+
+    public function specialInformation()
+    {
+        return $this->hasOne(SpecialInformation::class, 'user_id', 'id');
+    }
+
+    public function bloodInformation()
+    {
+        return $this->hasOne(BloodInformation::class, 'user_id', 'id');
+    }
+
+    public function volunteers()
+    {
+        return $this->hasMany(VolunteeringInformation::class, 'user_id', 'id');
+    }
+
+    public function serviceInterest()
+    {
+        return $this->hasOne(ServiceInterest::class, 'user_id', 'id');
+    }
+
+    public function personalBankingInformation()
+    {
+        return $this->hasOne(PersonalBankingInformation::class, 'user_id', 'id');
+    }
+
+    public function mobileBankingInformation()
+    {
+        return $this->hasOne(MobileBankingInformation::class, 'user_id', 'id');
+    }
+
+    public function referees()
+    {
+        return $this->hasMany(RefereeInformation::class, 'user_id', 'id');
+    }
+
+    public function consents()
+    {
+        return $this->hasOne(Consent::class, 'user_id', 'id');
+    }
+
+    public function checks()
+    {
+        return $this->hasOne(Check::class, 'user_id', 'id');
     }
 }
