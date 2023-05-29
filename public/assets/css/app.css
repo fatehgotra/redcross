@@ -170,7 +170,7 @@ sup {
   top: -.5em; }
 
 a {
-  color: #d97834;
+  color: #FFC626;
   text-decoration: none; }
   a:hover {
     color: #6169d0; }
@@ -2609,25 +2609,25 @@ textarea.form-control-lg {
 
     .btn-warning {
       color: #fff;
-      background-color: #d97834;
-      border-color: #d97834;
+      background-color: #FFC626;
+      border-color: #FFC626;
     }
       .btn-warning:hover {
         color: #fff;
-        background-color: #d97834;
-        border-color: #d97834; }
+        background-color: #FFC626;
+        border-color: #FFC626; }
       .btn-check:focus + .btn-warning, .btn-warning:focus {
         color: #fff;
-        background-color: #d97834;
-        border-color: #d97834;
+        background-color: #FFC626;
+        border-color: #FFC626;
         -webkit-box-shadow: 0 0 0 0.2rem rgba(224, 169, 11, 0.5);
                 box-shadow: 0 0 0 0.2rem rgba(224, 169, 11, 0.5); }
       .btn-check:checked + .btn-warning,
       .btn-check:active + .btn-warning, .btn-warning:active, .btn-warning.active,
       .show > .btn-warning.dropdown-toggle {
         color: #fff;
-        background-color: #d97834;
-        border-color: #d97834; }
+        background-color: #FFC626;
+        border-color: #FFC626; }
         .btn-check:checked + .btn-warning:focus,
         .btn-check:active + .btn-warning:focus, .btn-warning:active:focus, .btn-warning.active:focus,
         .show > .btn-warning.dropdown-toggle:focus {
@@ -2635,8 +2635,8 @@ textarea.form-control-lg {
                   box-shadow: 0 0 0 0.2rem rgba(224, 169, 11, 0.5); }
       .btn-warning:disabled, .btn-warning.disabled {
         color: #fff;
-        background-color: #d97834;
-        border-color: #d97834; }
+        background-color: #FFC626;
+        border-color: #FFC626; }
 .btn-danger {
   color: #fff;
   background-color: #e11d48;
@@ -3370,8 +3370,8 @@ textarea.form-control-lg {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #000;
-  background-color: #FFC626!important; }
+  color: #fff;
+  background-color: #1b8eb0!important; }
 
 .nav-fill > .nav-link,
 .nav-fill .nav-item {
@@ -9772,12 +9772,12 @@ body[data-leftbar-theme="dark"] .side-nav .side-nav-link {
     color: #222 !important;background: #f2f2f2;
   } body[data-leftbar-theme="dark"] .side-nav .side-nav-link:active{
     color: #fff;
-    background: #d97834;
+    background: #FFC626;
   }
 
 body[data-leftbar-theme="dark"] .side-nav .menuitem-active > a {
   color: #ffffff !important;
-  background: #d97834;
+  background: #FFC626;
 }
 
 body[data-leftbar-theme="dark"] .side-nav .side-nav-title {

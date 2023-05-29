@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('title', 'Change Password')
 @section('content')
     <!-- Start Content-->
@@ -11,7 +11,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Fiji Red Cross Society</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Settings</a></li>
                             <li class="breadcrumb-item active">Change Password</li>
                         </ol>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        @include('admin.includes.flash-message')
+        @include('user.includes.flash-message')
         <!-- end page title -->
 
     </div> <!-- container -->
@@ -29,7 +29,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="passwordForm" method="POST" action="{{ route('admin.change-password') }}">
+                    <form id="passwordForm" method="POST" action="{{ route('change-password') }}">
                         @csrf
                         <div class="form-group">
                             <label for="current_password" class="col-form-label">Current password *</label>

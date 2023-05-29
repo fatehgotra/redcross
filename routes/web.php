@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSkuController;
 use App\Http\Controllers\VolunteerController;
@@ -72,3 +73,51 @@ Route::post('volunteer-registration/banking-information', [VolunteerController::
 /* Volunteer Registration Consent and checks (Tab 9)*/
 Route::get('volunteer-registration/consents-and-checks', [VolunteerController::class, 'consentsAndChecksForm'])->name('consents-and-checks.form');
 Route::post('volunteer-registration/consents-and-checks', [VolunteerController::class, 'consentsAndChecks'])->name('consents-and-checks');
+
+/*
+|--------------------------------------------------------------------------
+| User Dashboard Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+
+/* My Profile > Lodge Information (Tab 1)*/
+Route::get('my-profile/lodge-information', [MyProfileController::class, 'lodgeInformationForm'])->name('my-profile.lodge-information.form');
+Route::post('my-profile/lodge-information', [MyProfileController::class, 'lodgeInformation'])->name('my-profile.lodge-information');
+
+/* My Profile > Personal Information (Tab 2)*/
+Route::get('my-profile/personal-information', [MyProfileController::class, 'personalInformationForm'])->name('my-profile.personal-information.form');
+Route::post('my-profile/personal-information', [MyProfileController::class, 'personalInformation'])->name('my-profile.personal-information');
+
+/* My Profile > Contact Information (Tab 3)*/
+Route::get('my-profile/contact-information', [MyProfileController::class, 'contactInformationForm'])->name('my-profile.contact-information.form');
+Route::post('my-profile/contact-information', [MyProfileController::class, 'contactInformation'])->name('my-profile.contact-information');
+
+/* My Profile > Contact Information (Tab 4)*/
+Route::get('my-profile/identification-and-employement-details', [MyProfileController::class, 'identificationAndEmployementDetailsForm'])->name('my-profile.identification-and-employement-details.form');
+Route::post('my-profile/identification-and-employement-details', [MyProfileController::class, 'identificationAndEmployementDetails'])->name('my-profile.identification-and-employement-details');
+
+/* My Profile > Education Background (Tab 5)*/
+Route::get('my-profile/education-background', [MyProfileController::class, 'educationBackgroundForm'])->name('my-profile.education-background.form');
+Route::post('my-profile/education-background', [MyProfileController::class, 'educationBackground'])->name('my-profile.education-background');
+
+/* My Profile > Special Information (Tab 6)*/
+Route::get('my-profile/special-information', [MyProfileController::class, 'specialInformationForm'])->name('my-profile.special-information.form');
+Route::post('my-profile/special-information', [MyProfileController::class, 'specialInformation'])->name('my-profile.special-information');
+
+/* My Profile > Service Interest (Tab 7)*/
+Route::get('my-profile/service-interest', [MyProfileController::class, 'serviceInterestForm'])->name('my-profile.service-interest.form');
+Route::post('my-profile/service-interest', [MyProfileController::class, 'serviceInterest'])->name('my-profile.service-interest');
+
+/* My Profile > Banking Information (Tab 8)*/
+Route::get('my-profile/banking-information', [MyProfileController::class, 'bankingInformationForm'])->name('my-profile.banking-information.form');
+Route::post('my-profile/banking-information', [MyProfileController::class, 'bankingInformation'])->name('my-profile.banking-information');
+
+/* My Profile > Consent and checks (Tab 9)*/
+Route::get('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecksForm'])->name('my-profile.consents-and-checks.form');
+Route::post('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecks'])->name('my-profile.consents-and-checks');

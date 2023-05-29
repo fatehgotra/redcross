@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 @section('title', 'My Account')
 @section('content')
     <!-- Start Content-->
@@ -11,7 +11,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Fiji Red Cross Society</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Settings</a></li>
                             <li class="breadcrumb-item active">My Account</li>
                         </ol>
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        @include('admin.includes.flash-message')
+        @include('user.includes.flash-message')
         <!-- end page title -->
 
     </div> <!-- container -->
@@ -30,14 +30,14 @@
             <div class="card">
                 <div class="card-body">
                     <form id="accountForm" method="POST"
-                        action="{{ route('admin.my-account.update', Auth::guard('admin')->id()) }}"
+                        action="{{ route('my-account.update', Auth::user()->id) }}"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
                             <label for="name" class="col-form-label">Full Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Full Name" value="{{ old('name', $admin->name) }}">
+                                placeholder="Enter Full Name" value="{{ old('name', $user->name) }}">
                             @error('name')
                                 <code id="name-error" class="text-danger">{{ $message }}</code>
                             @enderror
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email Address</label>
                             <input type="email" class="form-control" id="email" name="email"
-                                placeholder="Enter Email Address" value="{{ old('email', $admin->email) }}">
+                                placeholder="Enter Email Address" value="{{ old('email', $user->email) }}">
                             @error('email')
                                 <code id="name-error" class="text-danger">{{ $message }}</code>
                             @enderror
@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label for="phone" class="col-form-label">Phone Number</label>
                             <input type="text" class="form-control" id="phone" name="phone"
-                                placeholder="Enter Phone Number" value="{{ old('phone', $admin->phone) }}">
+                                placeholder="Enter Phone Number" value="{{ old('phone', $user->phone) }}">
                             @error('phone')
                                 <code id="name-error" class="text-danger">{{ $message }}</code>
                             @enderror
@@ -69,7 +69,7 @@
                                     <strong>{{ $errors->first('avatar') }}</strong>
                                 </code>
                             @endif
-                            <img id="preview_img" src="{{ $admin->avatar }}" class="mt-2" width="100"
+                            <img id="preview_img" src="{{ $user->avatar }}" class="mt-2" width="100"
                                 height="100" />
                         </div>
                     </form>

@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="{{ route('admin.dashboard') }}" class="logo text-center logo-light">
+    <a href="{{ route('home') }}" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
                 height="50px">
@@ -13,7 +13,7 @@
     </a>
 
     <!-- LOGO -->
-    <a href="{{ route('admin.dashboard') }}" class="logo text-center logo-dark">
+    <a href="{{ route('home') }}" class="logo text-center logo-dark">
         <span class="logo-lg">
             {{-- <img src="assets/images/logo-dark.png" alt="" height="16"> --}}
             <h2 class="text-primary">{{ config('app.name', 'Laravel') }}</h2>
@@ -30,23 +30,19 @@
         <ul class="side-nav">
 
             <li class="side-nav-item">
-                <a href="{{ route('admin.dashboard') }}" class="side-nav-link">
+                <a href="{{ route('home') }}" class="side-nav-link">
                     <i class="uil-home-alt"></i>
                     <span> Dashboard </span>
                 </a>
             </li>
 
-
-            <li
-                class="side-nav-item {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'menuitem-active' : '' }}">
-                <a href="{{ route('admin.users.index') }}"
-                    class="side-nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
-                    <i class="mdi mdi-account-group-outline"></i>                  
-                    <span
-                        class="badge bg-warning float-end me-1">{{ \App\Models\User::count() }}</span>
-                    <span> Users </span>
+            <li class="side-nav-item">
+                <a href="{{ route('my-profile.lodge-information.form') }}" class="side-nav-link">
+                    <i class="uil-user-check"></i>
+                    <span> My Profile </span>
                 </a>
             </li>
+           
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSettings" aria-expanded="false"
@@ -58,10 +54,10 @@
                 <div class="collapse" id="sidebarSettings">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{ route('admin.password.form') }}">Change Password</a>
+                            <a href="{{ route('password.form') }}">Change Password</a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.my-account.edit', Auth::guard('admin')->id()) }}">My Account</a>
+                            <a href="{{ route('my-account.edit', Auth::user()->id) }}">My Account</a>
                         </li>
                     </ul>
                 </div>
