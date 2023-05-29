@@ -77,7 +77,7 @@
 
                     <!-- Footer-->
                     <footer class="footer footer-alt">
-                        <p class="text-muted">Don't have an account? <a href="{{ route('register') }}"
+                        <p class="text-muted">Don't have an account? <a href="{{ route('lodge-information.form') }}"
                                 class="text-muted ms-1"><b>Sign Up</b></a></p>
                     </footer>
 
