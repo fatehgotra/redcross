@@ -22,36 +22,40 @@
         @include('user.includes.flash-message')
         <div class="row">
             <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body p-0">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link" href="{{ route('my-profile.lodge-information.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Lodgement Information
+                        <i class="me-1 dripicons-chevron-right"></i>Lodgement Information
                     </a>
                     <a class="nav-link" href="{{ route('my-profile.personal-information.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Personal Information
+                        <i class="me-1 dripicons-chevron-right"></i>Personal Information
                     </a>   
                     <a class="nav-link active show" href="{{ route('my-profile.contact-information.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Contact Information
+                        <i class="me-1 dripicons-chevron-right"></i>Contact Information
                     </a>   
                     <a class="nav-link" href="{{ route('my-profile.identification-and-employement-details.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Identification Details
+                        <i class="me-1 dripicons-chevron-right"></i>Identification Details
                     </a>                 
                     <a class="nav-link" href="{{ route('my-profile.education-background.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Education Background
+                        <i class="me-1 dripicons-chevron-right"></i>Education Background
                     </a>  
                     <a class="nav-link" href="{{ route('my-profile.special-information.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Special Information
+                        <i class="me-1 dripicons-chevron-right"></i>Special Information
                     </a>  
                     <a class="nav-link" href="{{ route('my-profile.service-interest.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Service Interests
+                        <i class="me-1 dripicons-chevron-right"></i>Service Interests
                     </a>  
                     <a class="nav-link" href="{{ route('my-profile.banking-information.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Banking Information
+                        <i class="me-1 dripicons-chevron-right"></i>Banking Information
                     </a>  
                     <a class="nav-link" href="{{ route('my-profile.consents-and-checks.form') }}">
-                        <i class="me-1 mdi mdi-check-decagram"></i>Consent and Checks
+                        <i class="me-1 dripicons-chevron-right"></i>Consent and Checks
                     </a>                   
                 </div>
             </div>
+        </div>
+    </div>
             <div class="col-sm-9">
                 <form action="{{ route('my-profile.contact-information') }}" method="POST" id="contactInformationForm">
                     @csrf

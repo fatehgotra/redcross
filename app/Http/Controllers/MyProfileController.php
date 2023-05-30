@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\BloodInformation;
+use App\Models\Check;
+use App\Models\Consent;
 use App\Models\ContactInformation;
 use App\Models\EducationBackground;
 use App\Models\EmploymentDetail;
 use App\Models\LodgementInformation;
+use App\Models\MobileBankingInformation;
+use App\Models\PersonalBankingInformation;
 use App\Models\PersonalInformation;
+use App\Models\Qualification;
+use App\Models\RefereeInformation;
 use App\Models\ServiceInterest;
+use App\Models\Skill;
 use App\Models\SpecialInformation;
 use App\Models\ValidNationalIdentification;
+use App\Models\VolunteeringInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -282,52 +290,40 @@ class MyProfileController extends Controller
         $education_background_data['highest_level_of_education']         = $request->highest_level_of_education;
         EducationBackground::updateOrCreate(['user_id' => Auth::user()->id], $education_background_data);
 
-        if (!empty($request->qualification) && is_array($request->qualification)) {
-            foreach ($request->qualification as $key => $qualification) {
-                $data['qualifications'][$key]['year']          = $qualification['year'];
-                $data['qualifications'][$key]['institution']   = $qualification['institution'];
-                $data['qualifications'][$key]['course']        = $qualification['course'];
-                $data['qualifications'][$key]['course_status'] = $qualification['course_status'];
+        // Qualification::where('user_id', Auth::user()->id)->delete();
+        // if (!empty($request->qualification) && is_array($request->qualification)) {
+        //     foreach ($request->qualification as $key => $qualification) {
+        //         $qual                  = new Qualification();
+        //         $qual->user_id         = Auth::user()->id;
+        //         $qual->year            = $qualification['year'];
+        //         $qual->institution     = $qualification['institution'];
+        //         $qual->course          = $qualification['course'];
+        //         $qual->course_status   = $qualification['course_status'];
+                // $qual->evidence        = isset($qualification['evidence']) ? $qualification['evidence'] : null;
+        //         $qual->save();
+        //     }
+        // }
+        // Skill::where('user_id', Auth::user()->id)->delete();
+        // if (!empty($request->skill) && is_array($request->skill)) {
+        //     foreach ($request->skill as $key => $skill) {
+        //         $skil                  = new Skill();
+        //         $skil->user_id         = Auth::user()->id;
+        //         $skil->skill           = $skill['skill'];  
+                // $skil->evidence        = isset($skill['evidence']) ? $skill['evidence'] : null;                 
+        //         $skil->save();
+        //     }
+        // }
 
-                if ($request->hasFile('qualification.' . $key . '.evidence')) {
-                    $qualification_evidence                     = $qualification['evidence'];
-                    $qualification_evidence_name                = time() . $key . '.' . $qualification_evidence->getClientOriginalExtension();
-                    $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');
-                }
-
-                $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification.' . $key . '.evidence') ? $qualification_evidence_name : '';
-            }
-        } else {
-            $data['qualifications'] = [];
-        }
-
-        if (!empty($request->skill) && is_array($request->skill)) {
-            foreach ($request->skill as $key => $skill) {
-                $data['skills'][$key]['skill']                   = $skill['skill'];
-                if ($request->hasFile('skill.' . $key . '.evidence')) {
-                    $skill_evidence                             = $skill['evidence'];
-                    $skill_evidence_name                        = time() . $key . '.' . $skill_evidence->getClientOriginalExtension();
-                    $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');
-                }
-                $data['skills'][$key]['evidence']               = $request->hasFile('skill.' . $key . '.evidence') ? $skill_evidence_name : '';
-            }
-        } else {
-            $data['skills'] = [];
-        }
-
-
-        Session::put('education-background', $data);
-
-
-
-        return redirect()->back()->with('success', 'Education Background saved successfully');
+        return redirect()->back()->with('success', 'Education Background updated successfully');
     }
 
     // Tab 6
     public function specialInformationForm()
     {
         $special_information   = Auth::user()->specialInformation;
-        return view('user.my-profile.special-information', compact('special_information'));
+        $blood_information   = Auth::user()->bloodInformation;
+        $volunteers   = Auth::user()->volunteers;
+        return view('user.my-profile.special-information', compact('special_information', 'blood_information', 'volunteers'));
     }
 
     public function specialInformation(Request $request)
@@ -382,17 +378,19 @@ class MyProfileController extends Controller
 
         BloodInformation::updateOrCreate(['user_id' => Auth::user()->id], $blood_information_data);
 
+        VolunteeringInformation::where('user_id', Auth::user()->id)->delete();
         if (!empty($request->volunteer) && is_array($request->volunteer)) {
             foreach ($request->volunteer as $key => $volunteer) {
-                $data['volunteers'][$key]['year']                         = $volunteer['year'];
-                $data['volunteers'][$key]['experience']                    = $volunteer['experience'];
-                $data['volunteers'][$key]['red_cross_involvement']        = $volunteer['red_cross_involvement'];
+                    $volun                               = new VolunteeringInformation();
+                    $volun->user_id                      = Auth::user()->id;
+                    $volun->year                         = $volunteer['year'];
+                    $volun->experience                   = $volunteer['experience'];
+                    $volun->red_cross_involvement        = $volunteer['red_cross_involvement'];                    
+                    $volun->save();
             }
-        } else {
-            $data['volunteers'] = [];
         }
 
-        return redirect()->back()->with('success', 'Special Information saved successfully');
+        return redirect()->back()->with('success', 'Special Information updated successfully');
     }
 
     // Tab 7
@@ -426,13 +424,16 @@ class MyProfileController extends Controller
 
         ServiceInterest::updateOrCreate(['user_id' => Auth::user()->id], $data);
 
-        return redirect()->back()->with('success', 'Service Interest saved successfully');
+        return redirect()->back()->with('success', 'Service Interest updated successfully');
     }
 
     // Tab 8
     public function bankingInformationForm()
     {
-        return view('user.my-profile.banking-information');
+
+        $personal_banking_information   = Auth::user()->personalBankingInformation;
+        $mobile_banking_information   = Auth::user()->mobileBankingInformation;
+        return view('user.my-profile.banking-information', compact('personal_banking_information', 'mobile_banking_information'));
     }
 
     public function bankingInformation(Request $request)
@@ -457,23 +458,28 @@ class MyProfileController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $data                                       = array();
-        $data['bank']                               = $request->bank;
-        $data['account_number']                     = $request->account_number;
-        $data['name_bank_account']                  = $request->name_bank_account;
-        $data['mobile_bank']                        = $request->mobile_bank;
-        $data['mobile_bank_number']                 = $request->mobile_bank_number;
-        $data['name_mobile_bank_account']           = $request->name_mobile_bank_account;
+        $personal_banking_data                                       = array();
+        $personal_banking_data['bank']                               = $request->bank;
+        $personal_banking_data['account_number']                     = $request->account_number;
+        $personal_banking_data['name_bank_account']                  = $request->name_bank_account;
+        PersonalBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $personal_banking_data);
 
-        Session::put('banking-information', $data);
+        $mobile_banking_data                                       = array();
+        $mobile_banking_data['mobile_bank']                        = $request->mobile_bank;
+        $mobile_banking_data['mobile_bank_number']                 = $request->mobile_bank_number;
+        $mobile_banking_data['name_mobile_bank_account']           = $request->name_mobile_bank_account;
+        MobileBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $mobile_banking_data);
 
-        return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
+        return redirect()->back()->with('success', 'Banking Information updated successfully');
     }
 
     // Tab 9
     public function consentsAndChecksForm()
     {
-        return view('user.my-profile.consents-and-checks');
+        $consents   = Auth::user()->consents;
+        $checks   = Auth::user()->checks;
+        $referees   = Auth::user()->referees;
+        return view('user.my-profile.consents-and-checks', compact('consents', 'checks', 'referees'));
     }
 
     public function consentsAndChecks(Request $request)
@@ -508,33 +514,37 @@ class MyProfileController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $data                                             = array();
-        $data['consent_to_be_contacted']                  = $request->consent_to_be_contacted;
-        $data['consent_to_background_check']              = $request->consent_to_background_check;
-        $data['parental_consent']                         = $request->parental_consent;
-        $data['media_consent']                            = $request->media_consent;
-        $data['agree_to_code_of_conduct']                 = $request->agree_to_code_of_conduct;
-        $data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy;
-        $data['statutory_declaration_attached']           = $request->statutory_declaration_attached;
-        $data['code_of_conduct_attached']                 = $request->code_of_conduct_attached;
-        $data['signed_child_protection_policy_attached']  = $request->signed_child_protection_policy_attached;
-        $data['cv_attached']                              = $request->cv_attached;
-        $data['base_location']                            = $request->base_location;
+        $consent_data                                             = array();
+        $consent_data['consent_to_be_contacted']                  = $request->consent_to_be_contacted;
+        $consent_data['consent_to_background_check']              = $request->consent_to_background_check;
+        $consent_data['parental_consent']                         = $request->parental_consent;
+        $consent_data['media_consent']                            = $request->media_consent;
+        $consent_data['agree_to_code_of_conduct']                 = $request->agree_to_code_of_conduct;
+        $consent_data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy;
+        Consent::updateOrCreate(['user_id' => Auth::user()->id], $consent_data);
 
+        $check_data                                             = array();
+        $check_data['statutory_declaration_attached']           = $request->statutory_declaration_attached;
+        $check_data['code_of_conduct_attached']                 = $request->code_of_conduct_attached;
+        $check_data['signed_child_protection_policy_attached']  = $request->signed_child_protection_policy_attached;
+        $check_data['cv_attached']                              = $request->cv_attached;
+        $check_data['base_location']                            = $request->base_location;
+        Check::updateOrCreate(['user_id' => Auth::user()->id], $check_data);
+
+        RefereeInformation::where('user_id', Auth::user()->id)->delete();
         if (!empty($request->referee) && is_array($request->referee)) {
             foreach ($request->referee as $key => $referee) {
-                $data['referees'][$key]['name']                = $referee['name'];
-                $data['referees'][$key]['role']                = $referee['role'];
-                $data['referees'][$key]['organisation']        = $referee['organisation'];
-                $data['referees'][$key]['contact_number']      = $referee['contact_number'];
-                $data['referees'][$key]['email']               = $referee['email'];
+                $refr                  = new RefereeInformation();
+                $refr->user_id         = Auth::user()->id;
+                $refr->name            = $referee['name'];
+                $refr->role            = $referee['role'];
+                $refr->organisation    = $referee['organisation'];
+                $refr->contact_number  = $referee['contact_number'];  
+                $refr->email           = $referee['email'];                  
+                $refr->save();
             }
-        } else {
-            $data['referees'] = [];
-        }
+        }     
 
-        Session::put('consents-and-checks', $data);
-
-        return redirect()->route('register')->with('success', 'Consents and Checks saved successfully');
+        return redirect()->back()->with('success', 'Consents and Checks updated successfully');
     }
 }

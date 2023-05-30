@@ -3326,7 +3326,7 @@ textarea.form-control-lg {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.62rem 0.5rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out; }
   @media (prefers-reduced-motion: reduce) {
@@ -3371,7 +3371,7 @@ textarea.form-control-lg {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #1b8eb0!important; }
+  background-color: #0269C2!important; }
 
 .nav-fill > .nav-link,
 .nav-fill .nav-item {
@@ -9776,7 +9776,7 @@ body[data-leftbar-theme="dark"] .side-nav .side-nav-link {
   }
 
 body[data-leftbar-theme="dark"] .side-nav .menuitem-active > a {
-  color: #ffffff !important;
+  color: #222 !important;
   background: #FFC626;
 }
 

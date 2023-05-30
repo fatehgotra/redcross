@@ -36,8 +36,8 @@
                 </a>
             </li>
 
-            <li class="side-nav-item">
-                <a href="{{ route('my-profile.lodge-information.form') }}" class="side-nav-link">
+            <li class="side-nav-item {{ request()->is('my-profile/*') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('my-profile.lodge-information.form') }}" class="side-nav-link {{ request()->is('my-profile/*') ? 'active' : '' }}">
                     <i class="uil-user-check"></i>
                     <span> My Profile </span>
                 </a>
