@@ -58,6 +58,10 @@
                             <a href="{{ route('login') }}" class="btn btn-sm btn-outline-light d-none d-lg-inline-flex">
                                  Login
                             </a>
+                            <a href="{{ route('admin.login') }}" class="nav-link d-lg-none">Department Login</a>
+                            <a href="{{ route('admin.login') }}" class="btn btn-sm btn-outline-light d-none d-lg-inline-flex">
+                            Department Login
+                            </a>
                         @endif
                         @if (Route::has('register'))
                             <a href="{{ route('lodge-information.form') }}" class="nav-link d-lg-none">Volunteer Now</a>
