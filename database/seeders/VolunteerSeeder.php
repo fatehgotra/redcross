@@ -35,11 +35,11 @@ class VolunteerSeeder extends Seeder
     {
         $faker = app(Generator::class);
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
             $firstname  =  $faker->firstname();
             $lastname   = $faker->lastname();
-            $email      = $i == 1 ? 'volunteer@redcross.com' : $faker->unique()->safeEmail();
+            $email      = $i == 0 ? 'volunteer@redcross.com' : $faker->unique()->safeEmail();
             $phone      = $faker->numerify('7#9#8#2####');
 
             $user = User::create([
@@ -53,7 +53,7 @@ class VolunteerSeeder extends Seeder
 
             LodgementInformation::create([
                 'user_id'                    => $user->id,
-                'date_of_lodgement'          => $faker->randomElement([Carbon::now()->subDays(2)->format('d-m-Y'), Carbon::now()->subDays(3)->format('d-m-Y'), Carbon::now()->subDays(4)->format('d-m-Y')]),
+                'date_of_lodgement'          => $faker->randomElement([Carbon::now()->subDays(2)->format('Y-m-d'), Carbon::now()->subDays(3)->format('Y-m-d'), Carbon::now()->subDays(4)->format('Y-m-d')]),
                 'registering_year'           => '2023',
                 'division'                   => $faker->randomElement(['Central / Eastern', 'Northern', 'Western']),
                 'registration_location'      => $faker->randomElement(['West, 1 Vomo St, Lautoka', 'North, Lot 24 Tuatua, Labasa', '22 Gorrie St., Suva, Fiji']),
@@ -66,7 +66,7 @@ class VolunteerSeeder extends Seeder
                 'firstname'                     => $firstname,
                 'other_names'                   => $faker->name(),
                 'father_name'                   => $faker->name(),
-                'date_of_birth'                 => Carbon::now()->subYears(30)->format('d-m-Y'),
+                'date_of_birth'                 => Carbon::now()->subYears(30)->format('Y-m-d'),
                 'sex'                           => $faker->randomElement(['Male', 'Female', 'Non-Binary']),
                 'citizenship'                   => $faker->randomElement(['Fiji', 'Other']),
                 'specify_citizenship'           => $faker->randomElement(['Indian', 'Chinese']),
@@ -103,7 +103,7 @@ class VolunteerSeeder extends Seeder
             $identification_data['photo_id_card_type']                 = 'Other';
             $identification_data['specify_photo_id_card_type']         = 'Passport';
             $identification_data['id_card_number']                     = $faker->numerify('26##-7#2#-#3##');
-            $identification_data['id_expiry_date']                     = Carbon::now()->addYears(7)->format('d-m-Y');
+            $identification_data['id_expiry_date']                     = Carbon::now()->addYears(7)->format('Y-m-d');
             $identification_data['tin']                                = $faker->numerify('##-#####-#-#');
             $identification_data['photo_id']                           = 'photo_id.png';
 
@@ -124,7 +124,7 @@ class VolunteerSeeder extends Seeder
             $education_background_data['highest_level_of_education']         = $faker->randomElement(['Doctorate', 'Degree', 'Certificate', 'Masters', 'Diploma']);
             EducationBackground::create($education_background_data);
 
-            for ($j = 0; $j < 2; $j++) {
+            for ($j = 1; $j < 3; $j++) {
                 $qual                  = new Qualification();
                 $qual->user_id         = $user->id;
                 $qual->year            = Carbon::now()->subYears($j + 3)->format('Y');
@@ -135,7 +135,7 @@ class VolunteerSeeder extends Seeder
                 $qual->save();
             }
 
-            for ($k = 0; $k < 2; $k++) {
+            for ($k = 1; $k < 3; $k++) {
                 $skil                  = new Skill();
                 $skil->user_id         = $user->id;
                 $skil->skill           = $k == 1 ? 'React Native' : $faker->randomElement(['Wordpress', 'Laravel']);
@@ -152,9 +152,9 @@ class VolunteerSeeder extends Seeder
             $special_information_data['specify_medical_conditions']         = $special_information_data['any_medical_conditions'] == 'Yes' ? $faker->randomElement(['Asthama', 'Bronchitis']) : null;
             $special_information_data['know_how_to_swim']                   = $faker->randomElement(['Yes', 'No']);
             $special_information_data['full_covid_vaccination']             = $faker->randomElement(['Yes', 'No']);
-            $special_information_data['date_first_vaccine']                 = Carbon::now()->subYears(3)->format('Y');;
-            $special_information_data['date_second_vaccine']                = Carbon::now()->subYears(2)->format('Y');;
-            $special_information_data['date_booster']                       = Carbon::now()->subYears(1)->format('Y');;
+            $special_information_data['date_first_vaccine']                 = Carbon::now()->subYears(3)->format('Y-m-d');;
+            $special_information_data['date_second_vaccine']                = Carbon::now()->subYears(2)->format('Y-m-d');;
+            $special_information_data['date_booster']                       = Carbon::now()->subYears(1)->format('Y-m-d');;
 
             SpecialInformation::create($special_information_data);
 
@@ -167,7 +167,7 @@ class VolunteerSeeder extends Seeder
 
             BloodInformation::create($blood_information_data);
 
-            for ($l = 0; $l < 2; $l++) {
+            for ($l = 1; $l < 3; $l++) {
                 $volun                               = new VolunteeringInformation();
                 $volun->user_id                      = $user->id;
                 $volun->year                         = Carbon::now()->subYears($l + 3)->format('Y');
@@ -199,7 +199,7 @@ class VolunteerSeeder extends Seeder
             $mobile_banking_data['name_mobile_bank_account']           = $firstname . ' ' . $lastname;
             MobileBankingInformation::updateOrCreate($mobile_banking_data);
 
-            for ($m = 0; $m < 2; $m++) {
+            for ($m = 1; $m < 3; $m++) {
                 $refr                  = new RefereeInformation();
                 $refr->user_id         = $user->id;
                 $refr->name            = $faker->name();
