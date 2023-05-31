@@ -131,4 +131,14 @@ class USerController extends Controller
         User::find($id)->delete();
         return redirect()->route('admin.suppliers.index')->with('success', 'User deleted successfully!');
     }   
+
+    public function changeStatus(Request $request, $id){
+        User::find($id)->update(['status' => $request->status]);
+        if($request->status == 'approve'){
+            return redirect()->back()->with('success', 'Volunteer approved successfully!');
+        }else{
+            return redirect()->back()->with('success', 'Volunteer declined successfully!');
+        }
+    
+    }
 }

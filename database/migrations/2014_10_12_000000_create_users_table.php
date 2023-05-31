@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->nullable();
             $table->string('country')->nullable();
+            $table->enum('status', ['pending', 'approve', 'decline'])->default('pending');
             $table->rememberToken();
             $table->timestamps();
         });

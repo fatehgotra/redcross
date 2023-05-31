@@ -11,7 +11,7 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Volunteers</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.volunteers.index') }}">Volunteers</a></li>
                             <li class="breadcrumb-item active">Edit Volunteer</li>
                         </ol>
                     </div>
@@ -23,7 +23,7 @@
         <!-- end page title -->
 
     </div> <!-- container -->
-    <form method="POST" action="{{ route('admin.users.update', $user->id) }}" id="supplierForm" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.volunteers.update', $user->id) }}" id="supplierForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -70,22 +70,10 @@
                                 @error('password')
                                     <code id="password-error" class="text-danger">{{ $message }}</code>
                                 @enderror
-                            </div>
-                            <div class="col-md-12 mb-2">
-                                <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
-                                <select class="form-control select2" data-toggle="select2" name="country" id="country">
-                                    <option value="">Select Country</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->country }}" {{ old('country', $user->country == $country->country ? "selected" : "") }}>{{ $country->country }}</option>
-                                    @endforeach
-                                </select>
-                                @error('country')
-                                    <code id="name-error" class="text-danger">{{ $message }}</code>
-                                @enderror
-                            </div>
+                            </div>                          
                             <div class="col-md-12 mb-2 text-end">
                                 <button type="submit" class="btn btn-sm btn-warning" form="supplierForm">Update</button>
-                                <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn-dark">Cancel</a>
+                                <a href="{{ route('admin.volunteers.index') }}" class="btn btn-sm btn-dark">Cancel</a>
                             </div>
                         </div>
                     </div>

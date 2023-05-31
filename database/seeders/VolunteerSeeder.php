@@ -129,7 +129,7 @@ class VolunteerSeeder extends Seeder
                 $qual->user_id         = $user->id;
                 $qual->year            = Carbon::now()->subYears($j + 3)->format('Y');
                 $qual->institution     = $faker->randomElement(['Fiji National University', 'The University of the South Pacific']);
-                $qual->course          = $j == 1 ? 'Engineering' : $faker->randomElement(['B.Sc', 'B.Com', 'B.Arts', 'B.Ed']);
+                $qual->course          = $j == 1 ? 'Business Administration' : $faker->randomElement(['B.Sc', 'B.Com', 'B.Arts', 'B.Ed']);
                 $qual->course_status   = 'Complete';
                 $qual->evidence        = $j . '.png';
                 $qual->save();

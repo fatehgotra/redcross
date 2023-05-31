@@ -38,13 +38,13 @@
 
 
             <li
-                class="side-nav-item {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'menuitem-active' : '' }}">
-                <a href="{{ route('admin.users.index') }}"
-                    class="side-nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                class="side-nav-item {{ request()->is('admin/volunteers') || request()->is('admin/volunteers/*') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('admin.volunteers.index') }}"
+                    class="side-nav-link {{ request()->is('admin/volunteers') || request()->is('admin/volunteers/*') ? 'active' : '' }}">
                     <i class="mdi mdi-account-group-outline"></i>                  
                     <span
                         class="badge bg-warning float-end me-1">{{ \App\Models\User::count() }}</span>
-                    <span> Users </span>
+                    <span> Volunteers </span>
                 </a>
             </li>
 
