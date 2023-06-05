@@ -133,6 +133,8 @@ class USerController extends Controller
     }   
 
     public function changeStatus(Request $request, $id){
+
+       
         User::find($id)->update(['status' => $request->status]);
         if($request->status == 'approve'){
             return redirect()->back()->with('success', 'Volunteer approved successfully!');
@@ -140,5 +142,13 @@ class USerController extends Controller
             return redirect()->back()->with('success', 'Volunteer declined successfully!');
         }
     
+    }
+
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+            'password' => ['required', 'min:6', 'confirmed']
+        ]);
+        User::where('id', $request->id)->update(['password' => Hash::make($request->password)]);
+        return redirect()->route('admin.volunteers.index')->with('success', 'Volunteer password has been reset successfully!');
     }
 }

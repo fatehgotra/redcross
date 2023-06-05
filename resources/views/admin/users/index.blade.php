@@ -74,7 +74,11 @@
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="{{ route('admin.volunteer-detail.lodge-information.form', $user->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-eye"></i>
-                                                            Show Details</a>                                                       
+                                                            Show Details</a>     
+                                                            <a href="javascript:void(0);" class="dropdown-item change-password"
+                                                        data-bs-toggle="modal" data-bs-target="#modal-password"
+                                                        data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i
+                                                            class="mdi mdi-key"></i> Reset Password</a>                                                  
                                                         <a href="javascript:void(0);"
                                                             onclick="confirmDelete({{ $user->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
@@ -100,7 +104,39 @@
             </div>
         </div>
     </div>
-
+    <div id="modal-password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-passwordLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <p class="modal-title text-center" id="primary-header-modalLabel"><strong>Want to Change Password of </strong><span id="volunteer_name">{{ old('volunteer_name') }}</span></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="changePasswordForm" action="{{ route('admin.volunteer.reset-password') }}">
+                        @csrf
+                        <input type="hidden" value="{{ old('volunteer_name') }}" name="volunteer_name" id="volunteer_name_input">
+                        <input type="hidden" value="{{ old('id') }}" name="id" id="id">
+                        <div class="form-group mb-2 {{ $errors->has('password') ? 'has-error' : '' }}">
+                            <label for="password">New password *</label>
+                            <input type="password" id="password" name="password" placeholder="Enter new password" class="form-control">
+                            @error('password')
+                                <code id="name-error" class="text-danger">{{ $message }}</code>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-2 {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+                            <label for="password_confirmation">Confirm password *</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation"
+                                class="form-control" placeholder="Re-enter new password">
+                        </div>
+                    </form>
+                </div>
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="changePasswordForm" class="btn btn-sm btn-success">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -148,4 +184,21 @@
             })
         };
     </script>
+
+<script>
+    $(".change-password").click(function () {
+            var id = $(this).data('id');  
+            var name = $(this).data('name');         
+            $('#id').val(id);
+            $('#volunteer_name').text(name);
+            $('#volunteer_name_input').val(name);
+        });
+</script>
+@error('password')
+<script>
+    $(document).ready(function () {
+        $('#modal-password').modal('show');
+    });
+</script>
+@enderror
 @endpush

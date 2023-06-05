@@ -55,6 +55,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('volunteers', UserController::class);
 
+    Route::post('volunteer/reset-password', [UserController::class, 'resetPassword'])->name('volunteer.reset-password');
+
     /* Volunteer Information > Lodge Information (Tab 1)*/
     Route::get('volunteer/lodge-information/{id}', [VolunteerDetailController::class, 'lodgeInformationForm'])->name('volunteer-detail.lodge-information.form');
 

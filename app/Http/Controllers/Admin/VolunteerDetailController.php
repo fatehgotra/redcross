@@ -96,7 +96,6 @@ class VolunteerDetailController extends Controller
         $checks     = User::find($id)->checks;
         $referees   = User::find($id)->referees;
         return view('admin.users.volunteer-details.consents-and-checks', compact('user', 'consents', 'checks', 'referees'));
-    }
-
+    }   
 
 }
