@@ -45,6 +45,18 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'branch-level' => [
+            'driver' => 'session',
+            'provider' => 'branch-levels',
+        ],
+        'division-manager' => [
+            'driver' => 'session',
+            'provider' => 'division-managers',
+        ],
+        'hq' => [
+            'driver' => 'session',
+            'provider' => 'hqs',
+        ],
     ],
 
     /*
@@ -72,6 +84,18 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+        'branch-levels' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\BranchLevel::class,
+        ],
+        'division-managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\DivisionManager::class,
+        ],
+        'hqs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Hq::class,
         ],
 
         // 'users' => [
@@ -108,6 +132,24 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'branch-levels' => [
+            'provider' => 'branch-levels',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'division-managers' => [
+            'provider' => 'division-managers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'hqs' => [
+            'provider' => 'hqs',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

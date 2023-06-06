@@ -108,7 +108,7 @@
                 </span>
                 <span>
                     <span class="account-user-name">{{ Auth::guard('admin')->user()->name }}</span>
-                    <span class="account-position">{{ Auth::guard('admin')->user()->role }}</span>
+                    <span class="account-position">Administrator</span>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">

@@ -20,6 +20,18 @@ class Authenticate extends Middleware
             return route('admin.login');
         }
 
+        if ($request->is('branch-level') || $request->is('branch-level/*')) {
+            return route('branch-level.login');
+        }
+
+        if ($request->is('division-manager') || $request->is('division-manager/*')) {
+            return route('division-manager.login');
+        }
+
+        if ($request->is('hq') || $request->is('hq/*')) {
+            return route('hq.login');
+        }
+
         if (! $request->expectsJson()) {
             return route('login');
         }
