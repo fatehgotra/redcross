@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class USerController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
@@ -64,7 +64,7 @@ class USerController extends Controller
             'password'              => Hash::make($request->password)
         ]);
 
-        return redirect()->route('branch-level.suppliers.index')->with('success', 'User added successfully!');
+        return redirect()->route('branch-level.volunteers.index')->with('success', 'User added successfully!');
     }
 
     /**
@@ -120,7 +120,7 @@ class USerController extends Controller
         }
         $user->country          = $request->country;
         $user->save();
-        return redirect()->route('branch-level.users.index')->with('success', 'User updated successfully!');
+        return redirect()->route('branch-level.volunteers.index')->with('success', 'User updated successfully!');
     }
 
     /**
@@ -129,7 +129,7 @@ class USerController extends Controller
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        return redirect()->route('branch-level.suppliers.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('branch-level.volunteers.index')->with('success', 'User deleted successfully!');
     }   
 
     public function changeStatus(Request $request, $id){

@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\MyAccountController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\BranchLevelController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DivisionManagerController;
+use App\Http\Controllers\Admin\HqController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +53,70 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Users Route
+    | User Management Route
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::resource('user-management/admins', AdminController::class, [
+        'names' => [
+            'index'         => 'admins.index',
+            'create'        => 'admins.create',
+            'update'        => 'admins.update',
+            'edit'          => 'admins.edit',
+            'store'         => 'admins.store',
+            'show'          => 'admins.show',
+            'destroy'       => 'admins.destroy',
+        ]
+    ]);
+
+    Route::post('admins/reset-password', [AdminController::class, 'resetPassword'])->name('admins.reset-password');
+
+    Route::resource('user-management/branch-level', BranchLevelController::class, [
+        'names' => [
+            'index'         => 'branch-level.index',
+            'create'        => 'branch-level.create',
+            'update'        => 'branch-level.update',
+            'edit'          => 'branch-level.edit',
+            'store'         => 'branch-level.store',
+            'show'          => 'branch-level.show',
+            'destroy'       => 'branch-level.destroy',
+        ]
+    ]);
+
+    Route::post('branch-level/reset-password', [BranchLevelController::class, 'resetPassword'])->name('branch-level.reset-password');
+
+    Route::resource('user-management/division-manager', DivisionManagerController::class, [
+        'names' => [
+            'index'         => 'division-manager.index',
+            'create'        => 'division-manager.create',
+            'update'        => 'division-manager.update',
+            'edit'          => 'division-manager.edit',
+            'store'         => 'division-manager.store',
+            'show'          => 'division-manager.show',
+            'destroy'       => 'division-manager.destroy',
+        ]
+    ]);
+
+    Route::post('division-manager/reset-password', [DivisionManagerController::class, 'resetPassword'])->name('division-manager.reset-password');
+
+    Route::resource('user-management/hq', HqController::class, [
+        'names' => [
+            'index'         => 'hq.index',
+            'create'        => 'hq.create',
+            'update'        => 'hq.update',
+            'edit'          => 'hq.edit',
+            'store'         => 'hq.store',
+            'show'          => 'hq.show',
+            'destroy'       => 'hq.destroy',
+        ]
+    ]);
+
+    Route::post('hq/reset-password', [HqController::class, 'resetPassword'])->name('hq.reset-password');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Volunteers Route
     |--------------------------------------------------------------------------
     */
 
@@ -82,7 +149,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('volunteer/banking-information/{id}', [VolunteerDetailController::class, 'bankingInformationForm'])->name('volunteer-detail.banking-information.form');
 
     /* Volunteer Information > Consent and checks (Tab 9)*/
-    Route::get('volunteer/consents-and-checks/{id}', [VolunteerDetailController::class, 'consentsAndChecksForm'])->name('volunteer-detail.consents-and-checks.form');   
+    Route::get('volunteer/consents-and-checks/{id}', [VolunteerDetailController::class, 'consentsAndChecksForm'])->name('volunteer-detail.consents-and-checks.form');
 
     Route::put('volunteer/change-status/{id}', [UserController::class, 'changeStatus'])->name('change-status');
 
