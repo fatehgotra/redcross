@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ApprovalHistory;
 use App\Models\Country;
 use App\Models\User;
+use App\Notifications\ApprovalNotification;
+use App\Notifications\DeclineNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -150,6 +152,8 @@ class UserController extends Controller
             'approver_id'   => Auth::guard('branch-level')->id()
         ]);
 
+        
+
         if($request->status == 'approve'){
 
             ApprovalHistory::create([
@@ -158,8 +162,14 @@ class UserController extends Controller
                 'approved_by'   => 'Division Manager',
                 'approver_id'   => null
             ]);
+
+            $user = User::find($id);
+            $user->notify(new ApprovalNotification('branch-level'));
             return redirect()->back()->with('success', 'Volunteer approved successfully!');
         }else{
+
+            $user = User::find($id);
+            $user->notify(new DeclineNotification('branch-level'));
             return redirect()->back()->with('success', 'Volunteer declined successfully!');
         }
     
