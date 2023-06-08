@@ -56,10 +56,10 @@
                                                 <td>{{ $user->phone }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($user->created_at)->format('M d, Y') }}
                                                 </td>
-                                                @if($user->status == 'approve')
+                                                @if($user->status == 'approve' && $user->approved_by == 'HQ')
                                                 <td><span
                                                     class="badge bg-success float-end me-1">Approved</span></td>
-                                                @elseif($user->status == 'decline')
+                                                @elseif($user->status == 'decline' && $user->approved_by == 'HQ')
                                                 <td><span
                                                     class="badge bg-danger float-end me-1">Declined</span></td>
                                                 @else

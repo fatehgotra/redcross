@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\DivisionManager;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApprovalHistory;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -19,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users            = User::orderBy('id', 'desc')->get();
+        $users            = User::whereIn('status', ['approve', 'decline'])->whereIn('approved_by', ['Administrator', 'Division Manager','Branch Level', 'HQ'])->orderBy('id', 'desc')->get();
         return view('division-manager.users.index', compact('users'));
     }
 
@@ -135,8 +137,29 @@ class UserController extends Controller
     public function changeStatus(Request $request, $id){
 
        
-        User::find($id)->update(['status' => $request->status]);
+        User::find($id)->update([
+            'status'        => $request->status,
+            'approved_by'   => 'Division Manager',
+            'approver_id'   => Auth::guard('division-manager')->id()
+        ]);
+
+        ApprovalHistory::create([
+            'user_id'       => $id,
+            'status'        => $request->status,
+            'approved_by'   => 'Division Manager',
+            'approver_id'   => Auth::guard('division-manager')->id()
+        ]);
+     
+
         if($request->status == 'approve'){
+
+            ApprovalHistory::create([
+                'user_id'       => $id,
+                'status'        => 'pending',
+                'approved_by'   => 'HQ',
+                'approver_id'   => null
+            ]);
+
             return redirect()->back()->with('success', 'Volunteer approved successfully!');
         }else{
             return redirect()->back()->with('success', 'Volunteer declined successfully!');

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApprovalHistory;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -135,7 +137,19 @@ class UserController extends Controller
     public function changeStatus(Request $request, $id){
 
        
-        User::find($id)->update(['status' => $request->status]);
+        User::find($id)->update([
+            'status'        => $request->status,
+            'approved_by'   => 'Administrator',
+            'approver_id'   => Auth::guard('admin')->id()
+        ]);
+
+        ApprovalHistory::create([
+            'user_id'       => $id,
+            'status'        => $request->status,
+            'approved_by'   => 'Administrator',
+            'approver_id'   => Auth::guard('admin')->id()
+        ]);
+
         if($request->status == 'approve'){
             return redirect()->back()->with('success', 'Volunteer approved successfully!');
         }else{

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\BranchLevel;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApprovalHistory;
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -135,8 +137,27 @@ class UserController extends Controller
     public function changeStatus(Request $request, $id){
 
        
-        User::find($id)->update(['status' => $request->status]);
+        User::find($id)->update([
+            'status'        => $request->status,
+            'approved_by'   => 'Branch Level',
+            'approver_id'   => Auth::guard('branch-level')->id()
+        ]);
+
+        ApprovalHistory::create([
+            'user_id'       => $id,
+            'status'        => $request->status,
+            'approved_by'   => 'Branch Level',
+            'approver_id'   => Auth::guard('branch-level')->id()
+        ]);
+
         if($request->status == 'approve'){
+
+            ApprovalHistory::create([
+                'user_id'       => $id,
+                'status'        => 'pending',
+                'approved_by'   => 'Division Manager',
+                'approver_id'   => null
+            ]);
             return redirect()->back()->with('success', 'Volunteer approved successfully!');
         }else{
             return redirect()->back()->with('success', 'Volunteer declined successfully!');

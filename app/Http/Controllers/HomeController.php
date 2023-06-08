@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApprovalHistory;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleItem;
@@ -32,7 +33,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.dashboard.dashboard');
+        $approval_history = ApprovalHistory::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+        return view('user.dashboard.dashboard', compact('approval_history'));
     }
 
     

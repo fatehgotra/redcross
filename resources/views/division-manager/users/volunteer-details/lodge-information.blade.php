@@ -28,9 +28,9 @@
                             <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>  
                         </div>
                         <div class="float-end">
-                            @if($user->status == 'approve')
+                            @if($user->status == 'approve' && ($user->approved_by == 'Division Manager' || $user->approved_by == 'HQ'))
                             <button class="btn btn-sm btn-success" disabled type="button"><i class="me-1 dripicons-checkmark"></i>Approved</button>
-                            @elseif($user->status == 'decline')
+                            @elseif($user->status == 'decline' && ($user->approved_by == 'Division Manager' || $user->approved_by == 'HQ'))
                             <button class="btn btn-sm btn-danger" disabled type="button"><i class="me-1 dripicons-cross"></i>Declined</button>
                             @else
                             <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>

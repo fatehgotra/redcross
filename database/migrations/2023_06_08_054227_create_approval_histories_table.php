@@ -11,20 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();           
-            $table->string('firstname')->nullable();
-            $table->string('lastname')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('password');
-            $table->string('avatar')->nullable();
-            $table->string('country')->nullable();
+        Schema::create('approval_histories', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('user_id')->unsigned()->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('status', ['pending', 'approve', 'decline'])->default('pending');
             $table->enum('approved_by', ['Administrator', 'Branch Level', 'Division Manager', 'HQ'])->nullable();
             $table->bigInteger('approver_id')->unsigned()->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -34,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('approval_histories');
     }
 };

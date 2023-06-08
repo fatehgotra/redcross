@@ -43,7 +43,7 @@
                     class="side-nav-link {{ request()->is('hq/volunteers') || request()->is('hq/volunteers/*') ? 'active' : '' }}">
                     <i class="mdi mdi-account-group-outline"></i>                  
                     <span
-                        class="badge bg-warning float-end me-1">{{ \App\Models\User::count() }}</span>
+                        class="badge bg-warning float-end me-1">{{ \App\Models\User::where('status', 'approve')->whereIn('approved_by', ['Administrator', 'Division Manager', 'HQ'])->count() }}</span>
                     <span> Volunteers </span>
                 </a>
             </li>

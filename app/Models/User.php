@@ -24,7 +24,9 @@ class User extends Authenticatable
         'phone',
         'password',
         'avatar',
-        'status'
+        'status',
+        'approved_by',
+        'approver_id'
     ];
 
     /**
