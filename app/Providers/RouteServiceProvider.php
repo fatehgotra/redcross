@@ -19,6 +19,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    public const ADMIN = '/admin';
+
+    public const BRANCHLEVEL = '/branch-level';
+
+    public const DIVISIONMANAGER = '/division-manager';
+
+    public const HQ = '/hq';
+
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */

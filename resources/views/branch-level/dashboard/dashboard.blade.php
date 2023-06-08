@@ -1,5 +1,5 @@
 @extends('layouts.branch-level')
-@section('title', "Admin | Branch Level")
+@section('title', "Branch Level | Dashboard")
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />

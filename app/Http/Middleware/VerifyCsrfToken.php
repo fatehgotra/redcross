@@ -12,6 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'admin/logout',
+        'branch-level/logout',
+        'diivision-manager/logout',
+        'hq/logout'
     ];
 }
