@@ -117,7 +117,7 @@
                                 <h2 class="mt-0">Application Status</h2>
                                 <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Approved</b></h3>
                             </div>
-                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.svg') }}" width="120" alt="Generic placeholder image">
+                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.png') }}" width="140" alt="Generic placeholder image">
                         </div>
                     </div>
                     <!-- end card-body -->
@@ -130,7 +130,7 @@
                                 <h2 class="mt-0">Application Status</h2>
                                 <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Declined</b></h3>
                             </div>
-                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.svg') }}" width="120" alt="Generic placeholder image">
+                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.png') }}" width="140" alt="Generic placeholder image">
                         </div>
                     </div>
                     <!-- end card-body -->
@@ -143,7 +143,7 @@
                                 <h2 class="mt-0">Application Status</h2>
                                 <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Pending for Review</b></h3>
                             </div>
-                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.svg') }}" width="120" alt="Generic placeholder image">
+                            <img class="ms-3" src="{{ asset('assets/images/email-campaign.png') }}" width="140" alt="Generic placeholder image">
                         </div>
                     </div>
                     <!-- end card-body -->
