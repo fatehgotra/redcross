@@ -74,7 +74,10 @@
                                                     <div class="dropdown-menu dropdown-menu-end">
                                                         <a href="{{ route('division-manager.volunteer-detail.lodge-information.form', $user->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-eye"></i>
-                                                            Show Details</a>     
+                                                            Show Details</a>  
+                                                            <a href="{{ route('division-manager.volunteer.approval-history', $user->id) }}"
+                                                                class="dropdown-item"><i class="mdi mdi-information-variant"></i>
+                                                                Approval History</a>         
                                                             <a href="javascript:void(0);" class="dropdown-item change-password"
                                                         data-bs-toggle="modal" data-bs-target="#modal-password"
                                                         data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i

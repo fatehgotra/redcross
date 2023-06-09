@@ -27,7 +27,7 @@
                         <div class="float-start">
                             <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>  
                         </div>
-                        <div class="float-end">
+                        {{-- <div class="float-end">
                             @if($user->status == 'approve')
                             <button class="btn btn-sm btn-success" disabled type="button"><i class="me-1 dripicons-checkmark"></i>Approved</button>
                             @elseif($user->status == 'decline')
@@ -42,7 +42,7 @@
                             <input type='hidden' name='_token'
                                 value='{{ csrf_token() }}'>
                             <input type='hidden' name='status' value='approve'>
-<input type='hidden' name='_method' value='PUT'>
+                        <input type='hidden' name='_method' value='PUT'>
                         </form>
                             <form id='decline-form'
                                 action='{{ route('admin.change-status', $user->id) }}'
@@ -50,10 +50,10 @@
                                 <input type='hidden' name='_token'
                                     value='{{ csrf_token() }}'>
                                 <input type='hidden' name='status' value='decline'>
-<input type='hidden' name='_method' value='PUT'>
+                                <input type='hidden' name='_method' value='PUT'>
                             </form>
                             @endif
-                        </div>                      
+                        </div> --}}                      
                     </div>
                 </div>
             </div>

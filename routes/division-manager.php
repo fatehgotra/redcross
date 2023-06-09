@@ -55,6 +55,8 @@ Route::group(['prefix' => 'division-manager', 'as' => 'division-manager.'], func
 
     Route::resource('volunteers', UserController::class);
 
+    Route::get('volunteer/approval-history/{id}', [UserController::class, 'approvalHistory'])->name('volunteer.approval-history');
+
     Route::post('volunteer/reset-password', [UserController::class, 'resetPassword'])->name('volunteer.reset-password');
 
     /* Volunteer Information > Lodge Information (Tab 1)*/

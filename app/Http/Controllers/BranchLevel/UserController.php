@@ -175,6 +175,13 @@ class UserController extends Controller
     
     }
 
+    public function approvalHistory($id)
+    {
+        $approval_history   = ApprovalHistory::where('user_id', $id)->orderBy('id', 'desc')->get();
+        $user               = User::find($id);
+        return view('branch-level.users.approval-history', compact('approval_history', 'user'));
+    }
+
     public function resetPassword(Request $request){
         $this->validate($request, [
             'password' => ['required', 'min:6', 'confirmed']

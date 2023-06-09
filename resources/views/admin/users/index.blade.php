@@ -58,10 +58,10 @@
                                                 </td>
                                                 @if($user->status == 'approve')
                                                 <td><span
-                                                    class="badge bg-success float-end me-1">Approved</span></td>
+                                                    class="badge bg-success float-end me-1">Approved ({{ $user->approved_by }})</span></td>
                                                 @elseif($user->status == 'decline')
                                                 <td><span
-                                                    class="badge bg-danger float-end me-1">Declined</span></td>
+                                                    class="badge bg-danger float-end me-1">Declined ({{ $user->approved_by }})</span></td>
                                                 @else
                                                 <td><span
                                                     class="badge bg-info float-end me-1">Pending</span></td>
@@ -71,10 +71,13 @@
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                    <div class="dropdown-menu dropdown-menu-end">                                                        
                                                         <a href="{{ route('admin.volunteer-detail.lodge-information.form', $user->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-eye"></i>
-                                                            Show Details</a>     
+                                                            Show Details</a>  
+                                                            <a href="{{ route('admin.volunteer.approval-history', $user->id) }}"
+                                                                class="dropdown-item"><i class="mdi mdi-information-variant"></i>
+                                                                Approval History</a>        
                                                             <a href="javascript:void(0);" class="dropdown-item change-password"
                                                         data-bs-toggle="modal" data-bs-target="#modal-password"
                                                         data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i
