@@ -157,7 +157,7 @@
                             <div class="col-lg-4">
                                 <label for="date_of_birth" class="col-form-label">Date of Birth <span
                                         class="text-danger">*</span></label>
-                                <input id="date_of_birth" type="date"
+                                <input id="date_of_birth" type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" 
                                     class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth"
                                     value="{{ old('date_of_birth', isset($personal_information) ? $personal_information->date_of_birth : '') }}"
                                     autocomplete="date_of_birth" placeholder="Date of Birth" readonly>

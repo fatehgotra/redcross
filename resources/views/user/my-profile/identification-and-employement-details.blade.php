@@ -133,7 +133,7 @@
                                 <div class="col-lg-6">
                                     <label for="id_expiry_date" class="col-form-label">ID Expiry Date<span
                                             class="text-danger">*</span></label>
-                                    <input id="id_expiry_date" type="date"
+                                    <input id="id_expiry_date" type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" 
                                         class="form-control @error('id_expiry_date') is-invalid @enderror"
                                         name="id_expiry_date"
                                         value="{{ old('id_expiry_date', isset($identification_details) ? $identification_details->id_expiry_date : '') }}"
