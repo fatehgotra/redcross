@@ -142,7 +142,8 @@ class UserController extends Controller
         User::find($id)->update([
             'status'        => $request->status,
             'approved_by'   => 'HQ',
-            'approver_id'   => Auth::guard('hq')->id()
+            'approver_id'   => Auth::guard('hq')->id(),
+            'decline_reason' => $request->has('reason') ? $request->reason : null
         ]);
 
         ApprovalHistory::create([

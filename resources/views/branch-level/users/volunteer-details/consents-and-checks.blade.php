@@ -35,7 +35,7 @@
                                 @else
                                 <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>
                                 
-                                <a href="javascript:void(0);" onclick="confirmDecline()" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
+                                <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#decline-alert-modal" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
                                 <form id='approve-form'
                                 action='{{ route('branch-level.change-status', $user->id) }}'
                                 method='POST'>
@@ -43,15 +43,7 @@
                                     value='{{ csrf_token() }}'>
                                 <input type='hidden' name='status' value='approve'>
 <input type='hidden' name='_method' value='PUT'>
-                            </form>
-                                <form id='decline-form'
-                                    action='{{ route('branch-level.change-status', $user->id) }}'
-                                    method='POST'>
-                                    <input type='hidden' name='_token'
-                                        value='{{ csrf_token() }}'>
-                                    <input type='hidden' name='status' value='decline'>
-<input type='hidden' name='_method' value='PUT'>
-                                </form>
+                            </form>                               
                                 @endif
                             </div>                      
                         </div>
@@ -410,6 +402,7 @@
     </div>
     @include('branch-level.users.volunteer-details.modals.child-protection-policy')
     @include('branch-level.users.volunteer-details.modals.code-of-conduct')
+ @include('branch-level.users.volunteer-details.modals.decline-modal')
 @endsection
 @push('scripts')
     <script>

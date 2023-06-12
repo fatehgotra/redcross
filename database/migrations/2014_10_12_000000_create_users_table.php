@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approve', 'decline'])->default('pending');
             $table->enum('approved_by', ['Administrator', 'Branch Level', 'Division Manager', 'HQ'])->nullable();
             $table->bigInteger('approver_id')->unsigned()->nullable();
+            $table->text('decline_reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -26,7 +26,8 @@ class User extends Authenticatable
         'avatar',
         'status',
         'approved_by',
-        'approver_id'
+        'approver_id',
+        'decline_reason'
     ];
 
     /**

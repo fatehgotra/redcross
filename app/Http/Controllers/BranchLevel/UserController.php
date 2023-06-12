@@ -142,7 +142,8 @@ class UserController extends Controller
         User::find($id)->update([
             'status'        => $request->status,
             'approved_by'   => 'Branch Level',
-            'approver_id'   => Auth::guard('branch-level')->id()
+            'approver_id'   => Auth::guard('branch-level')->id(),
+            'decline_reason' => $request->has('reason') ? $request->reason : null
         ]);
 
         ApprovalHistory::create([

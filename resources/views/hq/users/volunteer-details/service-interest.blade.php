@@ -35,7 +35,7 @@
                             @else
                             <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>
                             
-                            <a href="javascript:void(0);" onclick="confirmDecline()" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
+                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#decline-alert-modal" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
                             <form id='approve-form'
                             action='{{ route('hq.change-status', $user->id) }}'
                             method='POST'>
@@ -44,14 +44,7 @@
                             <input type='hidden' name='status' value='approve'>
 <input type='hidden' name='_method' value='PUT'>
                         </form>
-                            <form id='decline-form'
-                                action='{{ route('hq.change-status', $user->id) }}'
-                                method='POST'>
-                                <input type='hidden' name='_token'
-                                    value='{{ csrf_token() }}'>
-                                <input type='hidden' name='status' value='decline'>
-<input type='hidden' name='_method' value='PUT'>
-                            </form>
+                            
                             @endif
                         </div>                      
                     </div>
@@ -239,6 +232,7 @@
             </div>
         </div>
     </div>
+@include('hq.users.volunteer-details.modals.decline-modal')
 @endsection
 @push('scripts')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

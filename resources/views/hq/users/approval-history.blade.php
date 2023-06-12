@@ -152,6 +152,18 @@
                 <!-- end card-->       
         
             </div>
+            @isset($user->decline_reason)
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                       <h4 class="card-title"> Decline Reason</h4>
+                    </div>
+                    <div class="card-body">
+                        <p> {{ $user->decline_reason }}</p>
+                     </div>
+                </div>
+            </div>
+            @endisset
         </div>        
     </div>
 @endsection
