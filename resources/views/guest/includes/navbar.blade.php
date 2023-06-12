@@ -49,7 +49,7 @@
                 @endif
                 @if (Route::has('register'))
                     <li class="nav-item mx-lg-1">
-                        <a href="{{ route('lodge-information.form') }}" class="nav-link d-lg-none">Volunteer Now</a>
+                        <a href="{{ route('lodge-information.form') }}" class="nav-link d-lg-none">Signup for volunteer</a>
                     </li>
                 @endif
                 @endauth
@@ -90,7 +90,7 @@
                         @if (Route::has('register'))                            
                             <a href="{{ route('lodge-information.form') }}"
                                 class="btn btn-sm btn-outline-info d-none d-lg-inline-flex">
-                                <i class="mdi mdi-water text-danger me-1"></i>Volunteer Now
+                                <i class="mdi mdi-water text-danger me-1"></i>Signup for volunteer
                             </a>
                         @endif
                     </li>

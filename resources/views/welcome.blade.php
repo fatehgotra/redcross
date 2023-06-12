@@ -12,7 +12,7 @@
             <h4>Our mission is to alleviate human suffering, promote health and well-being, and support disaster preparedness and response. </h4>
             <p>We work with volunteers, partners, and donors to deliver programs and services that address the needs of those most in need. </p>
             <p>Our organization is committed to upholding the fundamental principles of the Red Cross and Red Crescent Movement, including humanity, impartiality, neutrality, independence, voluntary service, unity, and universality.</p>
-            <a class="btn btn-sm btn-info" href="{{ route('lodge-information.form') }}"><i class="mdi mdi-water text-danger me-1"></i>Volunteer Now</a>
+            <a class="btn btn-sm btn-info" href="{{ route('lodge-information.form') }}"><i class="mdi mdi-water text-danger me-1"></i>Signup for volunteer</a>
         </div>
     </section>
 @endsection
