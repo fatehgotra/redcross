@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Courses')
+@section('title', 'Multiple Choice Questions')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -14,10 +14,10 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
                             <li class="breadcrumb-item"><a href="javascript:void(0);">Learning</a></li>
-                            <li class="breadcrumb-item active">Courses</li>
+                            <li class="breadcrumb-item active">Multiple Choice Questions</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Courses</h4>
+                    <h4 class="page-title">Multiple Choice Questions</h4>
                 </div>
             </div>
         </div>
@@ -28,8 +28,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <a href="{{ route('admin.courses.create') }}" class="btn btn-sm btn-dark float-end">Add
-                                    Course</a>
+                                <a href="{{ route('admin.mcqs.create') }}" class="btn btn-sm btn-dark float-end">Add
+                                    Question</a>
                             </div>
                         </div>
                     </div>
@@ -40,17 +40,19 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Question</th>
                                             <th>Course Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($courses as $course)
+                                        @foreach ($questions as $question)
                                             <tr>
-                                                <td>{{ $course->id }}</td>
-                                                <td>{{ $course->name }}</td>
-                                                @if ($course->status == 1)
+                                                <td>{{ $question->id }}</td>
+                                                <td>{{ $question->question }}</td>
+                                                <td>{{ $question->course->name }}</td>
+                                                @if ($question->status == 1)
                                                     <td><span class="badge bg-success">Active</span></td>
                                                 @else
                                                     <td><span class="badge bg-danger">Inactive</span></td>
@@ -61,16 +63,16 @@
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                        <a href="{{ route('admin.courses.edit', $course->id) }}"
+                                                        <a href="{{ route('admin.mcqs.edit', $question->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-account-edit-outline"></i>
-                                                            Edit Course</a>
+                                                            Edit question</a>
                                                         <a href="javascript:void(0);"
-                                                            onclick="confirmDelete({{ $course->id }})"
+                                                            onclick="confirmDelete({{ $question->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
                                                             Delete
-                                                            Course</a>
-                                                        <form id='delete-form{{ $course->id }}'
-                                                            action='{{ route('admin.courses.destroy', $course->id) }}'
+                                                            question</a>
+                                                        <form id='delete-form{{ $question->id }}'
+                                                            action='{{ route('admin.mcqs.destroy', $question->id) }}'
                                                             method='POST'>
                                                             <input type='hidden' name='_token'
                                                                 value='{{ csrf_token() }}'>
@@ -88,7 +90,7 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>    
 @endsection
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -135,5 +137,5 @@
                 }
             })
         };
-    </script>    
+    </script>   
 @endpush

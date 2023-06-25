@@ -24,7 +24,7 @@
         <!-- end page title -->
 
     </div> <!-- container -->
-    <form method="POST" action="{{ route('admin.courses.update', $course->id) }}" id="supplierForm" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.courses.update', $course->id) }}" id="courseForm" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row">
@@ -60,7 +60,7 @@
                             </div>      
                                                
                             <div class="col-md-12 mb-2 text-end">
-                                <button type="submit" class="btn btn-sm btn-warning" form="supplierForm">Update</button>
+                                <button type="submit" class="btn btn-sm btn-warning" form="courseForm">Update</button>
                                 <a href="{{ route('admin.courses.index') }}" class="btn btn-sm btn-dark">Cancel</a>
                             </div>
                         </div>

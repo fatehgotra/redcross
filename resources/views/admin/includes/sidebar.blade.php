@@ -65,7 +65,7 @@
             </li>
 
             @role('admin')
-                <li class="side-nav-item">
+                <li class="side-nav-item {{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') || request()->is('admin/learning/mcqs') || request()->is('admin/learning/mcqs/*') || request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'menuitem-active' : '' }}">
                     <a data-bs-toggle="collapse" href="#learning" aria-expanded="false" aria-controls="learning"
                         class="side-nav-link">
                         <svg class="shrink-0" width="22" height="22" xmlns="http://www.w3.org/2000/svg"
@@ -75,15 +75,15 @@
                         <span> Learning </span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="learning">
+                    <div class="{{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') || request()->is('admin/learning/mcqs') || request()->is('admin/learning/mcqs/*') || request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'collapse show' : 'collapse' }}" id="learning">
                         <ul class="side-nav-second-level">
-                            <li>
+                            <li class="{{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') ? 'menuitem-active' : '' }}">
                                 <a href="{{ route('admin.courses.index') }}">Courses</a>
                             </li>
-                            <li>
-                                <a href="javascript:void(0)">MCQs</a>
+                            <li class="{{ request()->is('admin/learning/mcqs') || request()->is('admin/learning/mcqs/*') ? 'menuitem-active' : '' }}">
+                                <a href="{{ route('admin.mcqs.index') }}">MCQs</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'menuitem-active' : '' }}">
                                 <a href="javascript:void(0)">Videos</a>
                             </li>
                         </ul>

@@ -13,4 +13,10 @@ class Course extends Model
         'name',
         'status'
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Course::class, 'course_id');
+    }
+
 }

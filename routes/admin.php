@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Auth\MyAccountController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
+use App\Http\Controllers\Admin\Learning\QuestionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             'store'         => 'courses.store',
             'show'          => 'courses.show',
             'destroy'       => 'courses.destroy',
+        ]
+    ]);
+
+     /*
+    |--------------------------------------------------------------------------
+    | Questions Route
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::resource('learning/mcqs', QuestionController::class, [
+        'names' => [
+            'index'         => 'mcqs.index',
+            'create'        => 'mcqs.create',
+            'update'        => 'mcqs.update',
+            'edit'          => 'mcqs.edit',
+            'store'         => 'mcqs.store',
+            'show'          => 'mcqs.show',
+            'destroy'       => 'mcqs.destroy',
         ]
     ]);
 

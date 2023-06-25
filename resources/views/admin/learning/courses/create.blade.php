@@ -24,7 +24,7 @@
         <!-- end page title -->
 
     </div> <!-- container -->
-    <form method="POST" action="{{ route('admin.courses.store') }}" id="supplierForm" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.courses.store') }}" id="courseForm" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-lg-12">
@@ -59,7 +59,7 @@
                             </div>      
                                                
                             <div class="col-md-12 mb-2 text-end">
-                                <button type="submit" class="btn btn-sm btn-warning" form="supplierForm">Save</button>
+                                <button type="submit" class="btn btn-sm btn-warning" form="courseForm">Save</button>
                                 <a href="{{ route('admin.courses.index') }}" class="btn btn-sm btn-dark">Cancel</a>
                             </div>
                         </div>
