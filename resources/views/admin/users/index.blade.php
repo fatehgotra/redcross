@@ -58,13 +58,13 @@
                                                 </td>
                                                 @if($user->status == 'approve')
                                                 <td><span
-                                                    class="badge bg-success float-end me-1">Approved ({{ $user->approved_by }})</span></td>
+                                                    class="badge bg-success">Approved ({{ $user->approved_by }})</span></td>
                                                 @elseif($user->status == 'decline')
                                                 <td><span
-                                                    class="badge bg-danger float-end me-1">Declined ({{ $user->approved_by }})</span></td>
+                                                    class="badge bg-danger">Declined ({{ $user->approved_by }})</span></td>
                                                 @else
                                                 <td><span
-                                                    class="badge bg-info float-end me-1">Pending</span></td>
+                                                    class="badge bg-info">Pending</span></td>
                                                 @endif
                                                 <td>
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop"

@@ -23,9 +23,11 @@
                             <div class="col-lg-6">
                                 <label for="date_of_lodgement" class="col-form-label">Date of Lodgement <span
                                         class="text-danger">*</span></label>
-                                <input id="date_of_lodgement" type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" 
+                                <input id="date_of_lodgement" type="text" data-provide="datepicker"
+                                    data-date-format="dd-mm-yyyy"
                                     class="form-control @error('date_of_lodgement') is-invalid @enderror"
-                                    name="date_of_lodgement" value="{{ old('date_of_lodgement', isset($lodgement_information) ? $lodgement_information['date_of_lodgement'] : '') }}"
+                                    name="date_of_lodgement"
+                                    value="{{ old('date_of_lodgement', isset($lodgement_information) ? $lodgement_information['date_of_lodgement'] : '') }}"
                                     autocomplete="date_of_lodgement" placeholder="Date of Lodgement" autofocus>
                                 @error('date_of_lodgement')
                                     <small id="date_of_lodgement-error" class="text-danger">{{ $message }}</small>
@@ -36,7 +38,8 @@
                                         class="text-danger">*</span></label>
                                 <input id="registering_year" type="text"
                                     class="form-control @error('registering_year') is-invalid @enderror"
-                                    name="registering_year" value="{{ old('registering_year', isset($lodgement_information) ? $lodgement_information['registering_year'] : '') }}"
+                                    name="registering_year"
+                                    value="{{ old('registering_year', isset($lodgement_information) ? $lodgement_information['registering_year'] : '') }}"
                                     autocomplete="registering_year" placeholder="Registering Year"
                                     onkeypress="return isNumberKey(event)" maxlength="4">
                                 @error('registering_year')
@@ -50,11 +53,16 @@
                                     name="division">
                                     <option value="">Select Division</option>
                                     <option value="Central / Eastern"
-                                        {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Central / Eastern' ? 'selected' : '' }}>Central / Eastern
+                                        {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Central / Eastern' ? 'selected' : '' }}>
+                                        Central / Eastern
                                     </option>
-                                    <option value="Western" {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Western' ? 'selected' : '' }}>Western
+                                    <option value="Western"
+                                        {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Western' ? 'selected' : '' }}>
+                                        Western
                                     </option>
-                                    <option value="Northern" {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Northern' ? 'selected' : '' }}>Northern
+                                    <option value="Northern"
+                                        {{ old('division', isset($lodgement_information) ? $lodgement_information['division'] : '') == 'Northern' ? 'selected' : '' }}>
+                                        Northern
                                     </option>
                                 </select>
                                 @error('division')
@@ -68,7 +76,8 @@
                                     <div class="col-md-8">
                                         <input id="registration_location" type="text"
                                             class="form-control @error('registration_location') is-invalid @enderror"
-                                            name="registration_location" value="{{ old('registration_location', isset($lodgement_information) ? $lodgement_information['registration_location'] : '') }}"
+                                            name="registration_location"
+                                            value="{{ old('registration_location', isset($lodgement_information) ? $lodgement_information['registration_location'] : '') }}"
                                             autocomplete="registration_location"
                                             placeholder="Branch/Office Location E.g. Suva, Tuvaua etc." autofocus>
                                         @error('registration_location')
@@ -80,14 +89,77 @@
                                         <select id="registration_location_type"
                                             class="form-select @error('registration_location_type') is-invalid @enderror"
                                             name="registration_location_type">
-                                            <option value="Branch"
-                                                {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Branch' ? 'selected' : '' }}>
-                                                Branch
-                                            </option>
-                                            <option value="National Office"
-                                                {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'National Office' ? 'selected' : '' }}>
-                                                National Office
-                                            </option>
+                                            <option value="">Branch</option>
+                                            <optgroup label="Central / Eastern">
+                                                <option value="Rotuma"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Rotuma' ? 'selected' : '' }}>
+                                                    Rotuma
+                                                </option>
+                                                <option value="Levuka"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Levuka' ? 'selected' : '' }}>
+                                                    Levuka
+                                                </option>
+                                                <option value="Suva"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Suva' ? 'selected' : '' }}>
+                                                    Suva
+                                                </option>
+                                            </optgroup>
+                                            <optgroup label="Western">
+                                                <option value="Sigatoka"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Sigatoka' ? 'selected' : '' }}>
+                                                    Sigatoka
+                                                </option>
+                                                <option value="Nadi"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Nadi' ? 'selected' : '' }}>
+                                                    Nadi
+                                                </option>
+                                                <option value="Lautoka"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Lautoka' ? 'selected' : '' }}>
+                                                    Lautoka
+                                                </option>
+                                                <option value="Ba"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Ba' ? 'selected' : '' }}>
+                                                    Ba
+                                                </option>
+                                                <option value="Tavua"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Tavua' ? 'selected' : '' }}>
+                                                    Tavua
+                                                </option>
+                                                <option value="Rakiraki"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Rakiraki' ? 'selected' : '' }}>
+                                                    Rakiraki
+                                                </option>
+                                                <option value="Nalawa"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Nalawa' ? 'selected' : '' }}>
+                                                    Nalawa
+                                                </option>
+                                            </optgroup>
+                                            <optgroup label="Northern">
+                                                <option value="Bua"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Bua' ? 'selected' : '' }}>
+                                                    Bua
+                                                </option>
+                                                <option value="Seaqaqa"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Seaqaqa' ? 'selected' : '' }}>
+                                                    Seaqaqa
+                                                </option>
+                                                <option value="Savusavu"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Savusavu' ? 'selected' : '' }}>
+                                                    Savusavu
+                                                </option>
+                                                <option value="Labasa"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Labasa' ? 'selected' : '' }}>
+                                                    Labasa
+                                                </option>
+                                                <option value="Taveuni"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Taveuni' ? 'selected' : '' }}>
+                                                    Taveuni
+                                                </option>
+                                                <option value="Rabi"
+                                                    {{ old('registration_location_type', isset($lodgement_information) ? $lodgement_information['registration_location_type'] : '') == 'Rabi' ? 'selected' : '' }}>
+                                                    Rabi
+                                                </option>
+                                            </optgroup>
                                         </select>
                                         @error('registration_location_type')
                                             <small id="registration_location_type-error"
@@ -100,7 +172,8 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" form="lodgeInformationForm" class="btn btn-sm btn-success float-end">Next Step</button>
+                    <button type="submit" form="lodgeInformationForm" class="btn btn-sm btn-success float-end">Next
+                        Step</button>
                 </div>
             </div>
         </div>

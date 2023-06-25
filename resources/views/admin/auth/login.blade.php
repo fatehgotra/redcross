@@ -40,16 +40,7 @@
 
                                 <form action="{{ route('admin.login') }}" method="POST">
                                     @csrf
-                                    <div class="mb-2">
-                                        <label for="role" class="form-label">Choose Role</label>
-                                        <select class="form-select" id="role"
-                                        onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                                        <option value="{{ route('admin.login') }}" selected>Admin</option>
-                                        <option value="{{ route('branch-level.login') }}">Branch Level</option>
-                                        <option value="{{ route('division-manager.login') }}">Division Manager</option>
-                                         <option value="{{ route('hq.login') }}">HQ</option>
-                                    </select>
-                                    </div>
+
                                     <div class="mb-2">
                                         <label for="emailaddress" class="form-label">Email address</label>
                                         <input class="form-control" type="email" name="email" id="emailaddress" placeholder="Enter your email" value="{{ old('email') }}">

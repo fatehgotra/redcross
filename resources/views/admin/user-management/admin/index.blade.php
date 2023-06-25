@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Admins')
+@section('title', 'User Management')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -13,11 +13,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">User Management</a></li>
-                            <li class="breadcrumb-item active">Admins</li>
+                            <li class="breadcrumb-item active">User Management</li>
                         </ol>
                     </div>
-                    <h4 class="page-title"><i class="mdi mdi-account-group-outline"></i> Admins</h4>
+                    <h4 class="page-title"><i class="mdi mdi-account-group-outline"></i> User Management</h4>
                 </div>
             </div>
         </div>
@@ -29,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-12 text-end">
                                 <a href="{{ route('admin.admins.create') }}" class="btn btn-sm btn-dark float-end">Add
-                                    Admin</a>
+                                    User</a>
                             </div>
                         </div>
                     </div>
@@ -41,9 +40,8 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Email Address</th>
-                                            <th>Contact Number</th>                                            
-                                            <th>Date Added</th>
+                                            <th>Branch</th>
+                                            <th>Roles</th>                                            
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -52,10 +50,12 @@
                                             <tr>
                                                 <td>{{ $user->id }}</td>
                                                 <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('M d, Y') }}
-                                                </td>                                              
+                                                <td>{{ $user->branch }}</td>
+                                                <td>
+                                                    @foreach ($user->roles as $role)
+                                                    <span class="badge badge-outline-danger">{{ ucfirst(str_replace('-', ' ', $role->name)) }}</span>
+                                                    @endforeach
+                                            </td>                                        
                                                 <td>
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,12 +69,12 @@
                                                             <a href="{{ route('admin.admins.edit', $user->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-account-edit-outline"></i>
                                                             Edit
-                                                            Admin</a>                                                 
+                                                            User</a>                                                 
                                                         <a href="javascript:void(0);"
                                                             onclick="confirmDelete({{ $user->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
                                                             Delete
-                                                            Admin</a>
+                                                            User</a>
                                                         <form id='delete-form{{ $user->id }}'
                                                             action='{{ route('admin.admins.destroy', $user->id) }}'
                                                             method='POST'>

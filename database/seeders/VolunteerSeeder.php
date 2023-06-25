@@ -35,12 +35,30 @@ class VolunteerSeeder extends Seeder
     {
         $faker = app(Generator::class);
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
 
             $firstname  =  $faker->firstname();
             $lastname   = $faker->lastname();
             $email      = $i == 0 ? 'volunteer@redcross.com' : $faker->unique()->safeEmail();
             $phone      = $faker->numerify('7#9#8#2####');
+            $division   = $faker->randomElement(['Central / Eastern', 'Northern', 'Western']);
+            switch ($division) {
+                case 'Central / Eastern':
+                    $registration_location_type = $faker->randomElement(['Rotuma', 'Levuka', 'Suva']);
+                    break;
+
+                case 'Northern':
+                    $registration_location_type = $faker->randomElement(['Bua', 'Seaqaqa', 'Savusavu', 'Labasa', 'Taveuni', 'Rabi']);
+                    break;
+
+                case 'Western':
+                    $registration_location_type = $faker->randomElement(['Sigatoka', 'Nadi', 'Lautoka', 'Ba', 'Tavua', 'Rakiraki', 'Nalawa']);
+                    break;
+
+                default:
+                    $registration_location_type = $faker->randomElement(['Rotuma', 'Levuka', 'Suva', 'Bua', 'Seaqaqa', 'Savusavu', 'Labasa', 'Taveuni', 'Rabi', 'Sigatoka', 'Nadi', 'Lautoka', 'Ba', 'Tavua', 'Rakiraki', 'Nalawa']);
+                    break;
+            }
 
             $user = User::create([
                 'firstname'         => $firstname,
@@ -55,9 +73,9 @@ class VolunteerSeeder extends Seeder
                 'user_id'                    => $user->id,
                 'date_of_lodgement'          => $faker->randomElement([Carbon::now()->subDays(2)->format('Y-m-d'), Carbon::now()->subDays(3)->format('Y-m-d'), Carbon::now()->subDays(4)->format('Y-m-d')]),
                 'registering_year'           => '2023',
-                'division'                   => $faker->randomElement(['Central / Eastern', 'Northern', 'Western']),
+                'division'                   => $division,
                 'registration_location'      => $faker->randomElement(['West, 1 Vomo St, Lautoka', 'North, Lot 24 Tuatua, Labasa', '22 Gorrie St., Suva, Fiji']),
-                'registration_location_type' => $faker->randomElement(['Branch', 'National Office']),
+                'registration_location_type' => $registration_location_type,
             ]);
 
             PersonalInformation::create([

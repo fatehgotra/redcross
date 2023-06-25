@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
+        $this->middleware(['role:admin']);
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +29,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.user-management.admin.create');
+        $roles = Role::get(['id', 'name']);
+        return view('admin.user-management.admin.create', compact('roles'));
     }
 
     /**
@@ -39,13 +42,16 @@ class AdminController extends Controller
             'name'                  => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password'              => ['required', 'string', 'min:6'],
-            'phone'                 => ['required', 'max:255']
+            'phone'                 => ['required', 'max:255'],
+            'branch'                => ['required'],
+            'roles'                 => ['required', 'array', 'min:1']
         ];
 
         $messages = [
             'name.required'                         => 'Please enter admin name.',
             'email.required'                        => 'Please enter admin email address.',
-            'password.required'                     => 'Please choose admin password.',
+            'password.required'                     => 'Please enter admin password.',
+            'branch.required'                       => 'Please choose branch.',
             'phone.required'                        => 'Please enter phone or mobile number.',
         ];
 
@@ -57,6 +63,9 @@ class AdminController extends Controller
             'phone'                 => $request->phone,
             'password'              => Hash::make($request->password)
         ]);
+
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $user->assignRole($roles);
 
         return redirect()->route('admin.admins.index')->with('success', 'Admin added successfully!');
     }
@@ -76,7 +85,8 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         $user                   = Admin::find($id);
-        return view('admin.user-management.admin.edit', compact('user'));
+        $roles                  = Role::get(['id', 'name']);
+        return view('admin.user-management.admin.edit', compact('user', 'roles'));
     }
 
     /**
@@ -88,12 +98,15 @@ class AdminController extends Controller
         $rules = [
             'name'                  => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'string', 'email', 'max:255', 'unique:admins,email,' . $id],
-            'phone'                 => ['required', 'max:255']           
+            'phone'                 => ['required', 'max:255'],
+            'branch'                => ['required'],
+            'roles'                 => ['required', 'array', 'min:1']         
         ];
 
         $messages = [
             'name.required'                         => 'Please enter admin name.',
             'email.required'                        => 'Please enter admin email address.',
+            'branch.required'                       => 'Please choose branch.',
             'phone.required'                        => 'Please enter phone or mobile number.'           
         ];
 
@@ -107,6 +120,9 @@ class AdminController extends Controller
             $user->password     = Hash::make($request->password);
         }
         $user->save();
+
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $user->syncRoles($roles);
         return redirect()->route('admin.admins.index')->with('success', 'Admin updated successfully!');
     }
 

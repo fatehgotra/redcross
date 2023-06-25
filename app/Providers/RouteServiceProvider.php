@@ -19,13 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
-    public const ADMIN = '/admin';
-
-    public const BRANCHLEVEL = '/branch-level';
-
-    public const DIVISIONMANAGER = '/division-manager';
-
-    public const HQ = '/hq';
+    public const ADMIN = '/admin';    
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -46,15 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/admin.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/branch-level.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/division-manager.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/hq.php'));
+           
         });
     }
 }

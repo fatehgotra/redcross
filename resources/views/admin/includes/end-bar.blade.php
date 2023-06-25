@@ -29,6 +29,15 @@
 
         </div> <!-- end padding-->
 
+        <div class="p-3">
+
+            <!-- Settings -->
+            <h5 class="mt-3">Roles</h5>
+            <hr class="mt-1" />
+            @foreach (Auth::guard('admin')->user()->roles as $role)
+            <i class="dripicons-jewel text-primary"></i> {{ ucfirst(str_replace('-', ' ', $role->name)) }}<br>
+            @endforeach
+
     </div>
 </div>
 

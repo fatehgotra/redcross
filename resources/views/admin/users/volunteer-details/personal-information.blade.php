@@ -25,35 +25,9 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-start">
-                            <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>  
+                            <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>
                         </div>
-                        {{-- <div class="float-end">
-                            @if($user->status == 'approve')
-                            <button class="btn btn-sm btn-success" disabled type="button"><i class="me-1 dripicons-checkmark"></i>Approved</button>
-                            @elseif($user->status == 'decline')
-                            <button class="btn btn-sm btn-danger" disabled type="button"><i class="me-1 dripicons-cross"></i>Declined</button>
-                            @else
-                            <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>
-                            
-                            <a href="javascript:void(0);" onclick="confirmDecline()" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
-                            <form id='approve-form'
-                            action='{{ route('admin.change-status', $user->id) }}'
-                            method='POST'>
-                            <input type='hidden' name='_token'
-                                value='{{ csrf_token() }}'>
-                            <input type='hidden' name='status' value='approve'>
-                            <input type='hidden' name='_method' value='PUT'>
-                        </form>
-                            <form id='decline-form'
-                                action='{{ route('admin.change-status', $user->id) }}'
-                                method='POST'>
-                                <input type='hidden' name='_token'
-                                    value='{{ csrf_token() }}'>
-                                <input type='hidden' name='status' value='decline'>
-                                <input type='hidden' name='_method' value='PUT'>
-                            </form>
-                            @endif
-                        </div> --}}                      
+                        @include('admin.users.volunteer-details.section.approval-section')
                     </div>
                 </div>
             </div>
@@ -157,7 +131,8 @@
                             <div class="col-lg-4">
                                 <label for="date_of_birth" class="col-form-label">Date of Birth <span
                                         class="text-danger">*</span></label>
-                                <input id="date_of_birth" type="text" data-provide="datepicker" data-date-format="dd-mm-yyyy" 
+                                <input id="date_of_birth" type="text" data-provide="datepicker"
+                                    data-date-format="dd-mm-yyyy"
                                     class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth"
                                     value="{{ old('date_of_birth', isset($personal_information) ? $personal_information->date_of_birth : '') }}"
                                     autocomplete="date_of_birth" placeholder="Date of Birth" readonly>
@@ -399,41 +374,42 @@
             </div>
         </div>
     </div>
+    @include('admin.users.volunteer-details.modals.decline-modal')
 @endsection
 @push('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript">
-    function confirmAccept(no) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve Volunteer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('approve-form').submit();
-            }
-        })
-    };
-</script>
-<script type="text/javascript">
-    function confirmDecline(no) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Decline Volunteer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('decline-form').submit();
-            }
-        })
-    };
-</script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function confirmAccept(no) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Approve Volunteer!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('approve-form').submit();
+                }
+            })
+        };
+    </script>
+    <script type="text/javascript">
+        function confirmDecline(no) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Decline Volunteer!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('decline-form').submit();
+                }
+            })
+        };
+    </script>
 @endpush

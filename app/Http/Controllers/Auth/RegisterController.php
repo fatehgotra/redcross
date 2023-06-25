@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\BloodInformation;
 use App\Models\Check;
 use App\Models\Consent;
@@ -22,9 +23,12 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\ValidNationalIdentification;
 use App\Models\VolunteeringInformation;
+use App\Notifications\NewRegistrationNotification;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -332,6 +336,10 @@ class RegisterController extends Controller
 
             Check::create($check_data);
         }
+
+        $admins = Admin::role('branch-level')->where('branch', $lodgement_information['registration_location_type'])->get();
+        $when   = Carbon::now()->addSecond(10);
+        Notification::send($admins, new NewRegistrationNotification());
              
         
         return $user;

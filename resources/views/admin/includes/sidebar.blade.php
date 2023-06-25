@@ -41,37 +41,32 @@
                 class="side-nav-item {{ request()->is('admin/volunteers') || request()->is('admin/volunteers/*') ? 'menuitem-active' : '' }}">
                 <a href="{{ route('admin.volunteers.index') }}"
                     class="side-nav-link {{ request()->is('admin/volunteers') || request()->is('admin/volunteers/*') ? 'active' : '' }}">
-                    <i class="mdi mdi-account-group-outline"></i>                  
-                    <span
-                        class="badge bg-warning float-end me-1">{{ \App\Models\User::count() }}</span>
-                    <span> Volunteers </span>
+                    <i class="mdi mdi-account-group-outline"></i>          
+                    @role('admin')        
+                        <span class="badge bg-dark float-end me-1">{{ \App\Models\User::count() }}</span>
+                        <span> Volunteers </span>
+                    @else
+                    @php
+                       $branch =  Auth::guard('admin')->user()->branch;
+                    @endphp
+                        <span class="badge bg-dark float-end me-1">{{ \App\Models\User::with('lodgementInformation')->whereHas('lodgementInformation', function ($q) use ($branch) {
+                            $q->where(function ($q) use ($branch) {
+                                $q->where('registration_location_type', $branch);
+                            });
+                        })->count() }}</span>
+                        <span> Volunteers </span>
+                    @endrole
                 </a>
             </li>
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#userManagement" aria-expanded="false"
-                    aria-controls="userManagement" class="side-nav-link">
-                    <i class="dripicons-user-id"></i>
-                    <span> User Management </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="userManagement">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{ route('admin.admins.index') }}">Admin</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.branch-level.index') }}">Branch Level</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.division-manager.index') }}">Division Manager</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.hq.index') }}">HQ</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            @role('admin')
+                <li class="side-nav-item">
+                    <a href="{{ route('admin.admins.index') }}" class="side-nav-link">
+                        <i class="dripicons-user-id"></i>
+                        <span> User Management </span>
+                    </a>                
+                </li>
+            @endrole
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarSettings" aria-expanded="false"

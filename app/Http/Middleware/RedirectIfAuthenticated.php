@@ -21,19 +21,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
 
-            if (Auth::guard($guard)->check()) {            
+            if (Auth::guard($guard)->check()) {
                 switch (Auth::guard($guard)) {
                     case 'admin':
                         return redirect(RouteServiceProvider::ADMIN);
-                        break;
-                    case 'branch-level':
-                        return redirect(RouteServiceProvider::BRANCHLEVEL);
-                        break;
-                    case 'division-manager':
-                        return redirect(RouteServiceProvider::DIVISIONMANAGER);
-                        break;
-                    case 'hq':
-                        return redirect(RouteServiceProvider::HQ);
                         break;
                     default:
                         return redirect(RouteServiceProvider::HOME);

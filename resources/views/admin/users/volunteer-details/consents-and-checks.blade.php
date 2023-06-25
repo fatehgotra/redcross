@@ -27,33 +27,7 @@
                         <div class="float-start">
                             <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>
                         </div>
-                        {{-- <div class="float-end">
-                            @if ($user->status == 'approve')
-                            <button class="btn btn-sm btn-success" disabled type="button"><i class="me-1 dripicons-checkmark"></i>Approved</button>
-                            @elseif($user->status == 'decline')
-                            <button class="btn btn-sm btn-danger" disabled type="button"><i class="me-1 dripicons-cross"></i>Declined</button>
-                            @else
-                            <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>
-                            
-                            <a href="javascript:void(0);" onclick="confirmDecline()" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
-                            <form id='approve-form'
-                            action='{{ route('admin.change-status', $user->id) }}'
-                            method='POST'>
-                            <input type='hidden' name='_token'
-                                value='{{ csrf_token() }}'>
-                            <input type='hidden' name='status' value='approve'>
-                            <input type='hidden' name='_method' value='PUT'>
-                        </form>
-                            <form id='decline-form'
-                                action='{{ route('admin.change-status', $user->id) }}'
-                                method='POST'>
-                                <input type='hidden' name='_token'
-                                    value='{{ csrf_token() }}'>
-                                <input type='hidden' name='status' value='decline'>
-                                <input type='hidden' name='_method' value='PUT'>
-                            </form>
-                            @endif
-                        </div> --}}
+                        @include('admin.users.volunteer-details.section.approval-section')
                     </div>
                 </div>
             </div>
@@ -416,6 +390,7 @@
     </div>
     @include('admin.users.volunteer-details.modals.child-protection-policy')
     @include('admin.users.volunteer-details.modals.code-of-conduct')
+    @include('admin.users.volunteer-details.modals.decline-modal')
 @endsection
 @push('scripts')
     <script>

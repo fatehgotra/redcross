@@ -25,35 +25,9 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-start">
-                            <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>  
+                            <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>
                         </div>
-                        {{-- <div class="float-end">
-                            @if($user->status == 'approve')
-                            <button class="btn btn-sm btn-success" disabled type="button"><i class="me-1 dripicons-checkmark"></i>Approved</button>
-                            @elseif($user->status == 'decline')
-                            <button class="btn btn-sm btn-danger" disabled type="button"><i class="me-1 dripicons-cross"></i>Declined</button>
-                            @else
-                            <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i class="me-1 dripicons-checkmark"></i>Approve</a>
-                            
-                            <a href="javascript:void(0);" onclick="confirmDecline()" class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
-                            <form id='approve-form'
-                            action='{{ route('admin.change-status', $user->id) }}'
-                            method='POST'>
-                            <input type='hidden' name='_token'
-                                value='{{ csrf_token() }}'>
-                            <input type='hidden' name='status' value='approve'>
-                            <input type='hidden' name='_method' value='PUT'>
-                        </form>
-                            <form id='decline-form'
-                                action='{{ route('admin.change-status', $user->id) }}'
-                                method='POST'>
-                                <input type='hidden' name='_token'
-                                    value='{{ csrf_token() }}'>
-                                <input type='hidden' name='status' value='decline'>
-                                <input type='hidden' name='_method' value='PUT'>
-                            </form>
-                            @endif
-                        </div> --}}                      
+                        @include('admin.users.volunteer-details.section.approval-section')
                     </div>
                 </div>
             </div>
@@ -123,10 +97,11 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <label for="community_name" class="col-form-label">Community name (applicable to CBV's)<span
-                                        class="text-danger">*</span></label>
+                                <label for="community_name" class="col-form-label">Community name (applicable to
+                                    CBV's)<span class="text-danger">*</span></label>
                                 <input id="community_name" type="text"
-                                    class="form-control @error('community_name') is-invalid @enderror" name="community_name"
+                                    class="form-control @error('community_name') is-invalid @enderror"
+                                    name="community_name"
                                     value="{{ old('community_name', isset($contact_information) ? $contact_information->community_name : '') }}"
                                     autocomplete="community_name" placeholder="Community name" readonly>
                                 @error('community_name')
@@ -137,8 +112,8 @@
                                 <label for="community_type" class="col-form-label">Community Type <span
                                         class="text-danger">*</span></label>
                                 <select id="community_type"
-                                    class="form-select @error('community_type') is-invalid @enderror" name="community_type"
-                                    disabled>
+                                    class="form-select @error('community_type') is-invalid @enderror"
+                                    name="community_type" disabled>
                                     <option value="">Select Community Type</option>
                                     <option value="Village"
                                         {{ old('community_type', isset($contact_information) ? $contact_information->community_type : '') == 'Village' ? 'selected' : '' }}>
@@ -350,41 +325,42 @@
                 </div>
             </div>
         </div>
+        @include('admin.users.volunteer-details.modals.decline-modal')
     @endsection
-@push('scripts')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript">
-    function confirmAccept(no) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve Volunteer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('approve-form').submit();
-            }
-        })
-    };
-</script>
-<script type="text/javascript">
-    function confirmDecline(no) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Decline Volunteer!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('decline-form').submit();
-            }
-        })
-    };
-</script>
-@endpush
+    @push('scripts')
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="text/javascript">
+            function confirmAccept(no) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Approve Volunteer!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('approve-form').submit();
+                    }
+                })
+            };
+        </script>
+        <script type="text/javascript">
+            function confirmDecline(no) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Decline Volunteer!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('decline-form').submit();
+                    }
+                })
+            };
+        </script>
+    @endpush
