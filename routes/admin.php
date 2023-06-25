@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\MyAccountController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     ]);
 
     Route::post('admins/reset-password', [AdminController::class, 'resetPassword'])->name('admins.reset-password');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Courses Route
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::resource('learning/courses', CourseController::class, [
+        'names' => [
+            'index'         => 'courses.index',
+            'create'        => 'courses.create',
+            'update'        => 'courses.update',
+            'edit'          => 'courses.edit',
+            'store'         => 'courses.store',
+            'show'          => 'courses.show',
+            'destroy'       => 'courses.destroy',
+        ]
+    ]);
 
 
     /*

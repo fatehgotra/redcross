@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Volunteers')
+@section('title', 'Courses')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -13,17 +13,26 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Volunteers</li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Learning</a></li>
+                            <li class="breadcrumb-item active">Courses</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Volunteers</h4>
+                    <h4 class="page-title">Courses</h4>
                 </div>
             </div>
         </div>
         @include('admin.includes.flash-message')
         <div class="row">
             <div class="col-12">
-                <div class="card">                    
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12 text-end">
+                                <a href="{{ route('admin.courses.create') }}" class="btn btn-sm btn-dark float-end">Add
+                                    Course</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 table-responsive">
@@ -31,56 +40,37 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Volunteer Name</th>
-                                            <th>Email Address</th>
-                                            <th>Contact Number</th>                                            
-                                            <th>Date Added</th>
+                                            <th>Course Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
+                                        @foreach ($courses as $course)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->firstname }} {{ $user->lastname }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($user->created_at)->format('M d, Y') }}
-                                                </td>
-                                                @if($user->status == 'approve')
-                                                <td><span
-                                                    class="badge bg-success">Approved ({{ $user->approved_by }})</span></td>
-                                                @elseif($user->status == 'decline')
-                                                <td><span
-                                                    class="badge bg-danger">Declined ({{ $user->approved_by }})</span></td>
+                                                <td>{{ $course->id }}</td>
+                                                <td>{{ $course->name }}</td>
+                                                @if ($course->status == 1)
+                                                    <td><span class="badge bg-success">Active</span></td>
                                                 @else
-                                                <td><span
-                                                    class="badge bg-info">Pending</span></td>
+                                                    <td><span class="badge bg-danger">Inactive</span></td>
                                                 @endif
                                                 <td>
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-end">                                                        
-                                                        <a href="{{ route('admin.volunteer-detail.lodge-information.form', $user->id) }}"
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{ route('admin.courses.edit', $course->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-eye"></i>
-                                                            Show Details</a>  
-                                                            <a href="{{ route('admin.volunteer.approval-history', $user->id) }}"
-                                                                class="dropdown-item"><i class="mdi mdi-information-variant"></i>
-                                                                Approval History</a>        
-                                                            <a href="javascript:void(0);" class="dropdown-item change-password"
-                                                        data-bs-toggle="modal" data-bs-target="#modal-password"
-                                                        data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i
-                                                            class="mdi mdi-key"></i> Reset Password</a>                                                  
+                                                            Edit Course</a>
                                                         <a href="javascript:void(0);"
-                                                            onclick="confirmDelete({{ $user->id }})"
+                                                            onclick="confirmDelete({{ $course->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
                                                             Delete
-                                                            Volunteer</a>
-                                                        <form id='delete-form{{ $user->id }}'
-                                                            action='{{ route('admin.volunteers.destroy', $user->id) }}'
+                                                            Course</a>
+                                                        <form id='delete-form{{ $course->id }}'
+                                                            action='{{ route('admin.courses.destroy', $course->id) }}'
                                                             method='POST'>
                                                             <input type='hidden' name='_token'
                                                                 value='{{ csrf_token() }}'>
@@ -99,21 +89,25 @@
             </div>
         </div>
     </div>
-    <div id="modal-password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-passwordLabel" aria-hidden="true">
+    <div id="modal-password" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal-passwordLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header modal-colored-header bg-primary">
-                    <p class="modal-title text-center" id="primary-header-modalLabel"><strong>Want to Change Password of </strong><span id="volunteer_name">{{ old('volunteer_name') }}</span></p>
+                    <p class="modal-title text-center" id="primary-header-modalLabel"><strong>Want to Change Password of
+                        </strong><span id="volunteer_name">{{ old('volunteer_name') }}</span></p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
                     <form method="POST" id="changePasswordForm" action="{{ route('admin.volunteer.reset-password') }}">
                         @csrf
-                        <input type="hidden" value="{{ old('volunteer_name') }}" name="volunteer_name" id="volunteer_name_input">
+                        <input type="hidden" value="{{ old('volunteer_name') }}" name="volunteer_name"
+                            id="volunteer_name_input">
                         <input type="hidden" value="{{ old('id') }}" name="id" id="id">
                         <div class="form-group mb-2 {{ $errors->has('password') ? 'has-error' : '' }}">
                             <label for="password">New password *</label>
-                            <input type="password" id="password" name="password" placeholder="Enter new password" class="form-control">
+                            <input type="password" id="password" name="password" placeholder="Enter new password"
+                                class="form-control">
                             @error('password')
                                 <code id="name-error" class="text-danger">{{ $message }}</code>
                             @enderror
@@ -180,20 +174,20 @@
         };
     </script>
 
-<script>
-    $(".change-password").click(function () {
-            var id = $(this).data('id');  
-            var name = $(this).data('name');         
+    <script>
+        $(".change-password").click(function() {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
             $('#id').val(id);
             $('#volunteer_name').text(name);
             $('#volunteer_name_input').val(name);
         });
-</script>
-@error('password')
-<script>
-    $(document).ready(function () {
-        $('#modal-password').modal('show');
-    });
-</script>
-@enderror
+    </script>
+    @error('password')
+        <script>
+            $(document).ready(function() {
+                $('#modal-password').modal('show');
+            });
+        </script>
+    @enderror
 @endpush

@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item active">User Management</li>
                         </ol>
                     </div>
-                    <h4 class="page-title"><i class="mdi mdi-account-group-outline"></i> User Management</h4>
+                    <h4 class="page-title">User Management</h4>
                 </div>
             </div>
         </div>

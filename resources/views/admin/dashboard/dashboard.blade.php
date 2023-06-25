@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', "Admin | Dashboard")
+@section('title', "Dashboard")
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div>
-                    <h4 class="page-title"><i class="uil-home-alt"></i> Dashboard</h4>
+                    <h4 class="page-title">Dashboard</h4>
                 </div>
             </div>
         </div>
