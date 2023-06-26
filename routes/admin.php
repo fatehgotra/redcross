@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\Admin\Learning\QuestionController;
+use App\Http\Controllers\Admin\Learning\VideoController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -106,6 +107,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             'store'         => 'mcqs.store',
             'show'          => 'mcqs.show',
             'destroy'       => 'mcqs.destroy',
+        ]
+    ]);
+
+     /*
+    |--------------------------------------------------------------------------
+    | Videos Route
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::resource('learning/videos', VideoController::class, [
+        'names' => [
+            'index'         => 'videos.index',
+            'create'        => 'videos.create',
+            'update'        => 'videos.update',
+            'edit'          => 'videos.edit',
+            'store'         => 'videos.store',
+            'show'          => 'videos.show',
+            'destroy'       => 'videos.destroy',
         ]
     ]);
 

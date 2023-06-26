@@ -84,7 +84,7 @@
                                 <a href="{{ route('admin.mcqs.index') }}">MCQs</a>
                             </li>
                             <li class="{{ request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'menuitem-active' : '' }}">
-                                <a href="javascript:void(0)">Videos</a>
+                                <a href="{{ route('admin.videos.index') }}">Videos</a>
                             </li>
                         </ul>
                     </div>
