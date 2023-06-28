@@ -21,10 +21,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filter_status    = $request->status;
         $branch           = Auth::guard('admin')->user()->branch;
         $users            = User::with('lodgementInformation');
+        if($filter_status){
+            $users        = $users->where('status', $filter_status);
+        }
         if (Auth::guard('admin')->user()->hasRole('admin')) {
             $users        = $users->orderBy('id', 'desc')->get();
         } else {

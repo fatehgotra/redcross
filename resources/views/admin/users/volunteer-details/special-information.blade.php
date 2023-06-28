@@ -214,7 +214,7 @@
                             <div class="col-lg-6">
                                 <label for="date_first_vaccine" class="col-form-label">Date First vaccine </label>
                                 <input id="date_first_vaccine" type="text" data-provide="datepicker"
-                                    data-date-format="dd-mm-yyyy"
+                                    data-date-format="yyyy-mm-dd"
                                     class="form-control @error('date_first_vaccine') is-invalid @enderror"
                                     name="date_first_vaccine"
                                     value="{{ old('date_first_vaccine', isset($special_information) ? $special_information->date_first_vaccine : '') }}"
@@ -226,7 +226,7 @@
                             <div class="col-lg-6">
                                 <label for="date_second_vaccine" class="col-form-label">Date Second vaccine </label>
                                 <input id="date_second_vaccine" type="text" data-provide="datepicker"
-                                    data-date-format="dd-mm-yyyy"
+                                    data-date-format="yyyy-mm-dd"
                                     class="form-control @error('date_second_vaccine') is-invalid @enderror"
                                     name="date_second_vaccine"
                                     value="{{ old('date_second_vaccine', isset($special_information) ? $special_information->date_second_vaccine : '') }}"
@@ -238,7 +238,7 @@
                             <div class="col-lg-6">
                                 <label for="date_booster" class="col-form-label">Date Booster </label>
                                 <input id="date_booster" type="text" data-provide="datepicker"
-                                    data-date-format="dd-mm-yyyy"
+                                    data-date-format="yyyy-mm-dd"
                                     class="form-control @error('date_booster') is-invalid @enderror" name="date_booster"
                                     value="{{ old('date_booster', isset($special_information) ? $special_information->date_booster : '') }}"
                                     autocomplete="date_booster" placeholder="Date Booster" readonly>

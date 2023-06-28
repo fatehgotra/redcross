@@ -87,7 +87,7 @@
                                 <label for="date_of_lodgement" class="col-form-label">Date of Lodgement <span
                                         class="text-danger">*</span></label>
                                 <input id="date_of_lodgement" type="text" data-provide="datepicker"
-                                    data-date-format="dd-mm-yyyy"
+                                    data-date-format="yyyy-mm-dd"
                                     class="form-control @error('date_of_lodgement') is-invalid @enderror"
                                     name="date_of_lodgement"
                                     value="{{ old('date_of_lodgement', isset($lodgement_information) ? $lodgement_information->date_of_lodgement : '') }}"
