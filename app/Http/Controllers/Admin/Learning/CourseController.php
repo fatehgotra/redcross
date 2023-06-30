@@ -37,11 +37,13 @@ class CourseController extends Controller
     {
         $rules = [
             'name'                  => ['required', 'string', 'max:255'],  
+            'description'           => ['required'],   
             'status'                => ['required'],          
         ];
 
         $messages = [
             'name.required'         => 'Please enter course name.', 
+            'description'           => 'Please enter course description.', 
             'status.required'       => 'Please enter course status.',          
         ];
 
@@ -49,6 +51,7 @@ class CourseController extends Controller
 
         $course                   = Course::create([
             'name'                => $request->name,
+            'description'         => $request->description,
             'status'              => $request->status           
         ]);        
 
@@ -79,11 +82,13 @@ class CourseController extends Controller
     {
         $rules = [
             'name'                  => ['required', 'string', 'max:255'],  
+            'description'           => ['required'],   
             'status'                => ['required'],          
         ];
 
         $messages = [
             'name.required'         => 'Please enter course name.', 
+            'description'           => 'Please enter course description.', 
             'status.required'       => 'Please enter course status.',          
         ];
 
@@ -91,6 +96,7 @@ class CourseController extends Controller
 
         $course                   = Course::find($id)->update([
             'name'                => $request->name,
+            'description'         => $request->description,
             'status'              => $request->status           
         ]);        
 

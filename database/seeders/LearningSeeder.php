@@ -20,38 +20,47 @@ class LearningSeeder extends Seeder
         
         Course::create([
             'name' => 'Course A',
+            'description' => 'Description for Course A'
         ]);
 
         Course::create([
             'name' => 'Course B',
+            'description' => 'Description for Course B'
         ]);
 
         Course::create([
             'name' => 'Course C',
+            'description' => 'Description for Course C'
         ]);
 
         Course::create([
             'name' => 'Course D',
+            'description' => 'Description for Course D'
         ]);
 
         Course::create([
             'name' => 'Course E',
+            'description' => 'Description for Course E'
         ]);
 
         Course::create([
             'name' => 'Course F',
+            'description' => 'Description for Course F'
         ]);
 
         Course::create([
             'name' => 'Course G',
+            'description' => 'Description for Course G'
         ]);
 
         Course::create([
             'name' => 'Course H',
+            'description' => 'Description for Course H'
         ]);
 
         Course::create([
             'name' => 'Course I',
+            'description' => 'Description for Course I'
         ]);
 
         $courses = Course::get();
@@ -59,7 +68,7 @@ class LearningSeeder extends Seeder
 
 
         foreach($courses as $course){
-            for ($i = 0; $i < 30; $i++) {
+            for ($i = 1; $i < 31; $i++) {
                 Question::create([
                     'course_id'         => $course->id,
                     'question'          => 'This is Sample Question No. '.$i. ' of '.$course->name.'.',
@@ -102,7 +111,7 @@ class LearningSeeder extends Seeder
 
                 Video::create([
                     'course_id'         => $course->id,
-                    'url'               => 'https://www.youtube.com/embed/KU8kkvcZttU',
+                    'url'               => 'https://www.youtube.com/embed/JRaakIL-N_s',
                     'title'             => 'Sample Video No.4 '.$course->name.'.',
                     'description'       => 'This field is to write Description for Video No.4 of '.$course->name.'.',                    
                     'status'            => true,

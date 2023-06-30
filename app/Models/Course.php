@@ -11,12 +11,18 @@ class Course extends Model
 
     protected $fillable = [
         'name',
+        'description',
         'status'
     ];
 
     public function questions()
     {
-        return $this->hasMany(Course::class, 'course_id');
+        return $this->hasMany(Question::class, 'course_id');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class, 'course_id');
     }
 
 }

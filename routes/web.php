@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSkuController;
@@ -121,3 +122,18 @@ Route::post('my-profile/banking-information', [MyProfileController::class, 'bank
 /* My Profile > Consent and checks (Tab 9)*/
 Route::get('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecksForm'])->name('my-profile.consents-and-checks.form');
 Route::post('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecks'])->name('my-profile.consents-and-checks');
+
+/* Learning Routes */
+Route::get('learning/courses', [LearningController::class, 'courses'])->name('learning.courses');
+
+/* Get Test Route */
+Route::get('learning/courses/take-test/{id}', [LearningController::class, 'takeTest'])->name('learning.take-test');
+
+/* Submit Test Route */
+Route::put('learning/courses/take-test/{id}', [LearningController::class, 'submitTest'])->name('learning.submit-test');
+
+/* Get All Videos Routes */
+Route::get('learning/courses/watch-videos/{id}', [LearningController::class, 'videos'])->name('learning.watch-videos');
+
+/* Get Test Result Routes */
+Route::get('learning/results/{id}', [LearningController::class, 'result'])->name('learning.result');

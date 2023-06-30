@@ -57,7 +57,15 @@
                                 @error('status')
                                     <code id="supplier_id-error" class="text-danger">{{ $message }}</code>
                                 @enderror
-                            </div>      
+                            </div>  
+                            
+                            <div class="col-md-12 mb-2">
+                                <label for="description" class="form-label">Course description <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="description" id="description" placeholder="Course description" rows="4">{{ old('description', $course->description) }}</textarea>
+                                @error('description')
+                                    <code id="description-error" class="text-danger">{{ $message }}</code>
+                                @enderror
+                            </div>
                                                
                             <div class="col-md-12 mb-2 text-end">
                                 <button type="submit" class="btn btn-sm btn-warning" form="courseForm">Update</button>
