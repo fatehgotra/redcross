@@ -25,4 +25,9 @@ class Question extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function responses()
+    {
+        return $this->hasMany(TestResponse::class);
+    }
+
 }

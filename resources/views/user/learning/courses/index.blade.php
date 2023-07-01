@@ -32,12 +32,21 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="row text-center">
-                                            <div class="col-6">
-                                                <a href="{{ route('learning.take-test', $course->id) }}" class="text-dark">
-                                                    <p class="font-18 mb-0"><i class="dripicons-blog"></i></p>
-                                                    <h6 class="text-truncate d-block">Take Test</h6>
-                                                </a>
-                                            </div>
+                                            @if($course->attempted)
+                                                <div class="col-6">
+                                                    <a href="{{ route('learning.result', $course->attempt_id) }}" class="text-dark">
+                                                        <p class="font-18 mb-0"><i class="dripicons-blog"></i></p>
+                                                        <h6 class="text-truncate d-block">View Result</h6>
+                                                    </a>
+                                                </div>
+                                            @else
+                                                <div class="col-6">
+                                                    <a href="{{ route('learning.take-test', $course->id) }}" class="text-dark">
+                                                        <p class="font-18 mb-0"><i class="dripicons-blog"></i></p>
+                                                        <h6 class="text-truncate d-block">Take Test</h6>
+                                                    </a>
+                                                </div>
+                                            @endif
                                             <div class="col-6">
                                                 <a href="{{ route('learning.watch-videos', $course->id) }}" class="text-dark">
                                                     <p class="font-18 mb-0"><i class="dripicons-device-desktop"></i></p>

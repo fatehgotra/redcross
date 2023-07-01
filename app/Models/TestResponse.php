@@ -18,4 +18,15 @@ class TestResponse extends Model
         'option',
         'correct',
     ];
+
+    public function attempt()
+    {
+        return $this->belongsTo(TestAttempt::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+
 }

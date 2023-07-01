@@ -19,4 +19,21 @@ class TestAttempt extends Model
         'unattempted',
         'marks',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+
+    public function responses()
+    {
+        return $this->hasMany(TestResponse::class);
+    }
+
+    public function attempted()
+    {
+        return $this->hasMany(TestResponse::class)->where('attempted', 'yes');
+    }
+
 }

@@ -17,12 +17,18 @@ class Course extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class, 'course_id');
+        return $this->hasMany(Question::class, 'course_id')->where('status', true);
     }
 
     public function videos()
     {
-        return $this->hasMany(Video::class, 'course_id');
+        return $this->hasMany(Video::class, 'course_id')->where('status', true);
     }
+
+    public function attempts()
+    {
+        return $this->hasMany(TestAttempt::class);
+    }
+
 
 }

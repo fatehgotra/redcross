@@ -21,6 +21,7 @@
         <form method="POST" action="{{ route('learning.submit-test', $course->id) }}" id="testForm">
             @csrf
             @method('PUT')
+            <input type="hidden" name="test_attempt_id" value="{{ $attempt->id }}">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card bg-info">
@@ -73,7 +74,7 @@
                             <div class="card-header bg-warning">
                                 {{ $question->question }}
                             </div>
-                            <div class="card-body">
+                            <div class="card-body">                                
                                 <input type="hidden" name="question[{{ $loop->iteration }}][question_id]"
                                     value="{{ $question->id }}">
                                 <div class="form-check form-radio-success mb-2">
