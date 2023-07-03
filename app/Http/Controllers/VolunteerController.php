@@ -125,7 +125,6 @@ class VolunteerController extends Controller
                 'email'                             => 'required',
                 'landline_contact'                  => 'required',
                 'primary_mobile_contact_number'     => 'required',
-                'primary_mobile_network_provider'   => 'required',
                 'full_name_of_emergency_contact'    => 'required',
                 'relationship'                      => 'required',
                 'contact_number'                    => 'required',
@@ -141,7 +140,6 @@ class VolunteerController extends Controller
                 'email.required'                            => 'Please enter Community Name.',
                 'landline_contact.required'                 => 'Please enter Landline Contact',
                 'primary_mobile_contact_number.required'    => 'Please enter Primary Mobile Contact Number.',
-                'primary_mobile_network_provider.required'  => 'Please select Primary Mobile Network Provider.',
                 'full_name_of_emergency_contact.required'   => 'Please enter Full Name of Emergency Contact.',
                 'relationship.required'                     => 'Please enter Relationship',
                 'contact_number.required'                   => 'Please enter Contact Number',
@@ -159,7 +157,6 @@ class VolunteerController extends Controller
             $data['email']                              = $request->email;
             $data['landline_contact']                   = $request->landline_contact;
             $data['primary_mobile_contact_number']      = $request->primary_mobile_contact_number;
-            $data['primary_mobile_network_provider']    = $request->primary_mobile_network_provider;
             $data['other_contact_numbers']              = $request->other_contact_numbers;
             $data['full_name_of_emergency_contact']     = $request->full_name_of_emergency_contact;
             $data['relationship']                       = $request->relationship;
@@ -405,18 +402,18 @@ class VolunteerController extends Controller
       public function bankingInformation(Request $request)
       {
           $rules = [
-              'bank'                        => 'required',  
-              'account_number'              => 'required',
-              'name_bank_account'           => 'required',
+            //   'bank'                        => 'required',  
+            //   'account_number'              => 'required',
+            //   'name_bank_account'           => 'required',
               'mobile_bank'                 => 'required',  
               'mobile_bank_number'          => 'required',
               'name_mobile_bank_account'    => 'required'
          ];
  
           $messages = [
-              'bank.required'                       => 'Please select your Bank',
-              'account_number.required'             => 'Please enter your Account Number', 
-              'name_bank_account.required'          => 'Please enter Name as used with Bank Account',  
+            //   'bank.required'                       => 'Please select your Bank',
+            //   'account_number.required'             => 'Please enter your Account Number', 
+            //   'name_bank_account.required'          => 'Please enter Name as used with Bank Account',  
               'mobile_bank.required'                => 'Please select your Mobile Bank',
               'mobile_bank_number.required'         => 'Please enter Mobile Number registered with Mobile banking Service', 
               'name_mobile_bank_account.required'   => 'Please enter Name as registered with Mobile banking Service',             
@@ -425,9 +422,9 @@ class VolunteerController extends Controller
           $this->validate($request, $rules, $messages);
 
           $data                                       = array();
-          $data['bank']                               = $request->bank;
-          $data['account_number']                     = $request->account_number;
-          $data['name_bank_account']                  = $request->name_bank_account;
+        //   $data['bank']                               = $request->bank;
+        //   $data['account_number']                     = $request->account_number;
+        //   $data['name_bank_account']                  = $request->name_bank_account;
           $data['mobile_bank']                        = $request->mobile_bank;  
           $data['mobile_bank_number']                 = $request->mobile_bank_number;
           $data['name_mobile_bank_account']           = $request->name_mobile_bank_account;            
@@ -452,10 +449,11 @@ class VolunteerController extends Controller
               'media_consent'                           => 'required',  
               'agree_to_code_of_conduct'                => 'required',
               'agree_to_child_protection_policy'        => 'required',
+              'age_under_18'                            => 'required',
               'statutory_declaration_attached'          => 'required',  
               'code_of_conduct_attached'                => 'required',
               'signed_child_protection_policy_attached' => 'required',
-              'cv_attached'                             => 'required',  
+              'professional_volunteer'                  => 'required',  
               'base_location'                           => 'required',  
          ];
  
@@ -466,10 +464,11 @@ class VolunteerController extends Controller
               'media_consent.required'                           => 'Please select Media Consent',
               'agree_to_code_of_conduct.required'                => 'Please select if agree to code of conduct', 
               'agree_to_child_protection_policy.required'        => 'Please select if agree to child protection policy',  
+              'age_under_18.required'                            => 'Please select if age is under 18',  
               'statutory_declaration_attached.required'          => 'Please select if Statutory declaration attached',  
               'code_of_conduct_attached.required'                => 'Please select if code of conduct attached',
               'signed_child_protection_policy_attached.required' => 'Please select if signed child protection policy attached',
-              'cv_attached.required'                             => 'Please select if CV attached',  
+              'professional_volunteer.required'                  => 'Please select if CV attached',  
               'base_location.required'                           => 'Please select base location',             
           ];
   
@@ -481,11 +480,12 @@ class VolunteerController extends Controller
           $data['parental_consent']                         = $request->parental_consent;
           $data['media_consent']                            = $request->media_consent;  
           $data['agree_to_code_of_conduct']                 = $request->agree_to_code_of_conduct;
-          $data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy;              
+          $data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy; 
+          $data['age_under_18']                             = $request->age_under_18;              
           $data['statutory_declaration_attached']           = $request->statutory_declaration_attached;
           $data['code_of_conduct_attached']                 = $request->code_of_conduct_attached;
           $data['signed_child_protection_policy_attached']  = $request->signed_child_protection_policy_attached;  
-          $data['cv_attached']                              = $request->cv_attached;
+          $data['professional_volunteer']                   = $request->professional_volunteer;
           $data['base_location']                            = $request->base_location;   
 
           if(!empty($request->referee) && is_array($request->referee)){

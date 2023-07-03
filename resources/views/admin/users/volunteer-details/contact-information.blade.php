@@ -217,7 +217,7 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <label for="primary_mobile_network_provider" class="col-form-label">Primary Mobile Network
                                     Provider <span class="text-danger">*</span></label>
                                 <select id="primary_mobile_network_provider"
@@ -241,7 +241,7 @@
                                     <small id="primary_mobile_contact_number-error"
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="col-lg-6">
                                 <label for="other_contact_numbers" class="col-form-label">Other Contact Numbers</label>
                                 <input id="other_contact_numbers" type="text"

@@ -284,12 +284,12 @@ class RegisterController extends Controller
         $banking_information =  Session::get('banking-information');
 
         if(isset($banking_information)){
-            $personal_banking_information_data                                       = array();
-            $personal_banking_information_data['user_id']                            = $user->id;
-            $personal_banking_information_data['bank']                               = $banking_information['bank'];
-            $personal_banking_information_data['account_number']                     = $banking_information['account_number'];
-            $personal_banking_information_data['name_bank_account']                  = $banking_information['name_bank_account'];
-            PersonalBankingInformation::create($personal_banking_information_data);
+            // $personal_banking_information_data                                       = array();
+            // $personal_banking_information_data['user_id']                            = $user->id;
+            // $personal_banking_information_data['bank']                               = $banking_information['bank'];
+            // $personal_banking_information_data['account_number']                     = $banking_information['account_number'];
+            // $personal_banking_information_data['name_bank_account']                  = $banking_information['name_bank_account'];
+            // PersonalBankingInformation::create($personal_banking_information_data);
             
             $mobile_banking_information_data                                         = array();
             $mobile_banking_information_data['user_id']                              = $user->id;
@@ -323,6 +323,7 @@ class RegisterController extends Controller
             $consent_data['media_consent']                            = $consents_and_checks['media_consent'];  
             $consent_data['agree_to_code_of_conduct']                 = $consents_and_checks['agree_to_code_of_conduct'];
             $consent_data['agree_to_child_protection_policy']         = $consents_and_checks['agree_to_child_protection_policy'];  
+            $consent_data['age_under_18']                             = $consents_and_checks['age_under_18'];  
 
             Consent::create($consent_data);
 
@@ -331,7 +332,7 @@ class RegisterController extends Controller
             $check_data['statutory_declaration_attached']           = $consents_and_checks['statutory_declaration_attached'];
             $check_data['code_of_conduct_attached']                 = $consents_and_checks['code_of_conduct_attached'];
             $check_data['signed_child_protection_policy_attached']  = $consents_and_checks['signed_child_protection_policy_attached'];  
-            $check_data['cv_attached']                              = $consents_and_checks['cv_attached'];
+            $check_data['professional_volunteer']                   = $consents_and_checks['professional_volunteer'];
             $check_data['base_location']                            = $consents_and_checks['base_location']; 
 
             Check::create($check_data);

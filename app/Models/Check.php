@@ -14,7 +14,7 @@ class Check extends Model
         'statutory_declaration_attached',
         'code_of_conduct_attached',
         'signed_child_protection_policy_attached',
-        'cv_attached',
+        'professional_volunteer',
         'base_location'
     ];
 

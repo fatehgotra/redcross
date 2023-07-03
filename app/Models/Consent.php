@@ -17,6 +17,7 @@ class Consent extends Model
         'media_consent',
         'agree_to_code_of_conduct',
         'agree_to_child_protection_policy',
+        'age_under_18'
     ];
 
     public function user()

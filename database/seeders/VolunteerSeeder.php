@@ -196,7 +196,7 @@ class VolunteerSeeder extends Seeder
 
             $service_interest_data                                       = array();
             $service_interest_data['user_id']                            = $user->id;
-            $service_interest_data['service_interest']                   = ["Marking, Events & Communications", "Safety", "Administration"];
+            $service_interest_data['service_interest']                   = ["Marketing", "Communications", "Safety", "Administration", "Legal", "Accounting"];
             $service_interest_data['available_days']                     = ["Monday", "Wednesday", "Friday", "Sunday"];
             $service_interest_data['available_times']                    = ["Morning: 06:00 AM to 10:00 AM", "Midday: 10:00 AM to 02:00 PM", "Mid-afternoon: 02:00 PM to 06:00 PM"];
             $service_interest_data['other_skills']                       = $faker->randomElement(['Driving', 'Teaching', 'Health Aid', 'Nurturing']);
@@ -236,6 +236,7 @@ class VolunteerSeeder extends Seeder
             $consent_data['media_consent']                            = $faker->randomElement(['Yes', 'No']);
             $consent_data['agree_to_code_of_conduct']                 = $faker->randomElement(['Yes', 'No']);
             $consent_data['agree_to_child_protection_policy']         = $faker->randomElement(['Yes', 'No']);
+            $consent_data['age_under_18']                            = $faker->randomElement(['Yes', 'No']);
             Consent::create($consent_data);
 
             $check_data                                             = array();
@@ -243,7 +244,7 @@ class VolunteerSeeder extends Seeder
             $check_data['statutory_declaration_attached']           = $faker->randomElement(['Yes', 'No']);
             $check_data['code_of_conduct_attached']                 = $faker->randomElement(['Yes', 'No']);
             $check_data['signed_child_protection_policy_attached']  = $faker->randomElement(['Yes', 'No']);
-            $check_data['cv_attached']                              = $faker->randomElement(['Yes', 'No']);
+            $check_data['professional_volunteer']                              = $faker->randomElement(['Yes', 'No']);
             $check_data['base_location']                            = $faker->randomElement(['Branch', 'Office']);
             Check::create($check_data);
         }

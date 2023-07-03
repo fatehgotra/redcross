@@ -209,6 +209,26 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <div class="col-lg-6">
+                                <label for="age_under_18" class="col-form-label">Age Under 18 <span
+                                        class="text-danger">*</span></label>
+                                <select id="age_under_18"
+                                    class="form-select @error('age_under_18') is-invalid @enderror" name="age_under_18"
+                                    disabled>
+                                    <option value="">Select</option>
+                                    <option value="Yes"
+                                        {{ old('age_under_18', isset($consents) ? $consents->age_under_18 : '') == 'Yes' ? 'selected' : '' }}>
+                                        Yes
+                                    </option>
+                                    <option value="No"
+                                        {{ old('age_under_18', isset($consents) ? $consents->age_under_18 : '') == 'No' ? 'selected' : '' }}>
+                                        No
+                                    </option>
+                                </select>
+                                @error('age_under_18')
+                                    <small id="age_under_18-error" class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -282,22 +302,22 @@
                                 @enderror
                             </div>
                             <div class="col-lg-6">
-                                <label for="cv_attached" class="col-form-label">CV Attached <span
+                                <label for="professional_volunteer" class="col-form-label">Professional Volunteer <span
                                         class="text-danger">*</span></label>
-                                <select id="cv_attached" class="form-select @error('cv_attached') is-invalid @enderror"
-                                    name="cv_attached" disabled>
+                                <select id="professional_volunteer" class="form-select @error('professional_volunteer') is-invalid @enderror"
+                                    name="professional_volunteer" disabled>
                                     <option value="">Select</option>
                                     <option value="Yes"
-                                        {{ old('cv_attached', isset($checks) ? $checks->cv_attached : '') == 'Yes' ? 'selected' : '' }}>
+                                        {{ old('professional_volunteer', isset($checks) ? $checks->professional_volunteer : '') == 'Yes' ? 'selected' : '' }}>
                                         Yes
                                     </option>
                                     <option value="No"
-                                        {{ old('cv_attached', isset($checks) ? $checks->cv_attached : '') == 'No' ? 'selected' : '' }}>
+                                        {{ old('professional_volunteer', isset($checks) ? $checks->professional_volunteer : '') == 'No' ? 'selected' : '' }}>
                                         No
                                     </option>
                                 </select>
-                                @error('cv_attached')
-                                    <small id="cv_attached-error" class="text-danger">{{ $message }}</small>
+                                @error('professional_volunteer')
+                                    <small id="professional_volunteer-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="col-lg-12">

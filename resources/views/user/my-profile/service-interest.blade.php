@@ -74,9 +74,13 @@
                                         name="service_interest[]" data-toggle="select2"
                                         data-placeholder="Select Service Interest" multiple>
                                         <option value="">Select Service Interest(s)</option>
-                                        <option value="Marking, Events & Communications"
-                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Marking, Events & Communications') ? 'selected' : '' }}>
-                                            Marking, Events & Communications
+                                        <option value="Marketing"
+                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Marketing') ? 'selected' : '' }}>
+                                            Marketing
+                                        </option>
+                                        <option value="Communications"
+                                        {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Communications') ? 'selected' : '' }}>
+                                        Communications
                                         </option>
                                         <option value="Logistics"
                                             {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Logistics') ? 'selected' : '' }}>
@@ -98,9 +102,9 @@
                                             {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Health & PGI') ? 'selected' : '' }}>
                                             Health & PGI
                                         </option>
-                                        <option value="Youth"
-                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Youth') ? 'selected' : '' }}>
-                                            Youth
+                                        <option value="Legal"
+                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Legal') ? 'selected' : '' }}>
+                                            Legal
                                         </option>
                                         <option value="Administration"
                                             {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Administration') ? 'selected' : '' }}>
@@ -110,9 +114,9 @@
                                             {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('ICT') ? 'selected' : '' }}>
                                             ICT
                                         </option>
-                                        <option value="Finance"
-                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Finance') ? 'selected' : '' }}>
-                                            Finance
+                                        <option value="Accounting"
+                                            {{ collect(old('service_interest', isset($service_interest) ? $service_interest->service_interest : ''))->contains('Accounting') ? 'selected' : '' }}>
+                                            Accounting
                                         </option>
                                     </select>
                                     @error('service_interest')

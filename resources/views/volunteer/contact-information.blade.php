@@ -110,7 +110,7 @@
                                     <small id="email-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label for="landline_contact" class="col-form-label">Landline Contact <span
                                         class="text-danger">*</span></label>
                                 <input id="landline_contact" type="text"
@@ -122,7 +122,7 @@
                                     <small id="landline_contact-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <label for="primary_mobile_contact_number" class="col-form-label">Primary Mobile Contact
                                     Number <span class="text-danger">*</span></label>
                                 <input id="primary_mobile_contact_number" type="text"
@@ -137,7 +137,7 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-4">
+                            {{-- <div class="col-lg-4">
                                 <label for="primary_mobile_network_provider" class="col-form-label">Primary Mobile Network
                                     Provider <span class="text-danger">*</span></label>
                                 <select id="primary_mobile_network_provider"
@@ -160,7 +160,7 @@
                                     <small id="primary_mobile_contact_number-error"
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="col-lg-12">
                                 <label for="other_contact_numbers" class="col-form-label">Other Contact Numbers</label>
                                 <input id="other_contact_numbers" type="text"

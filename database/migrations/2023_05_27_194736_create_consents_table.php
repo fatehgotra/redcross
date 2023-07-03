@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('media_consent')->nullable();                   
             $table->string('agree_to_code_of_conduct')->nullable();        
             $table->string('agree_to_child_protection_policy')->nullable();
+            $table->string('age_under_18')->nullable();
             $table->timestamps();
         });
     }

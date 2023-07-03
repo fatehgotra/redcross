@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('statutory_declaration_attached')->nullable();
             $table->string('code_of_conduct_attached')->nullable();
             $table->string('signed_child_protection_policy_attached')->nullable();
-            $table->string('cv_attached')->nullable();
+            $table->string('professional_volunteer')->nullable();
             $table->string('base_location')->nullable();
             $table->timestamps();
         });

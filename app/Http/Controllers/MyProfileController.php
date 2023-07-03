@@ -152,7 +152,6 @@ class MyProfileController extends Controller
             'email'                             => 'required',
             'landline_contact'                  => 'required',
             'primary_mobile_contact_number'     => 'required',
-            'primary_mobile_network_provider'   => 'required',
             'full_name_of_emergency_contact'    => 'required',
             'relationship'                      => 'required',
             'contact_number'                    => 'required',
@@ -167,8 +166,7 @@ class MyProfileController extends Controller
             'postal_address.required'                   => 'Please enter Postal Address',
             'email.required'                            => 'Please enter Community Name.',
             'landline_contact.required'                 => 'Please enter Landline Contact',
-            'primary_mobile_contact_number.required'    => 'Please enter Primary Mobile Contact Number.',
-            'primary_mobile_network_provider.required'  => 'Please select Primary Mobile Network Provider.',
+            'primary_mobile_contact_number.required'    => 'Please enter Primary Mobile Contact Number.',            
             'full_name_of_emergency_contact.required'   => 'Please enter Full Name of Emergency Contact.',
             'relationship.required'                     => 'Please enter Relationship',
             'contact_number.required'                   => 'Please enter Contact Number',
@@ -185,8 +183,7 @@ class MyProfileController extends Controller
         $data['postal_address']                     = $request->postal_address;
         $data['email']                              = $request->email;
         $data['landline_contact']                   = $request->landline_contact;
-        $data['primary_mobile_contact_number']      = $request->primary_mobile_contact_number;
-        $data['primary_mobile_network_provider']    = $request->primary_mobile_network_provider;
+        $data['primary_mobile_contact_number']      = $request->primary_mobile_contact_number;       
         $data['other_contact_numbers']              = $request->other_contact_numbers;
         $data['full_name_of_emergency_contact']     = $request->full_name_of_emergency_contact;
         $data['relationship']                       = $request->relationship;
@@ -439,18 +436,18 @@ class MyProfileController extends Controller
     public function bankingInformation(Request $request)
     {
         $rules = [
-            'bank'                        => 'required',
-            'account_number'              => 'required',
-            'name_bank_account'           => 'required',
+            // 'bank'                        => 'required',
+            // 'account_number'              => 'required',
+            // 'name_bank_account'           => 'required',
             'mobile_bank'                 => 'required',
             'mobile_bank_number'          => 'required',
             'name_mobile_bank_account'    => 'required'
         ];
 
         $messages = [
-            'bank.required'                       => 'Please select your Bank',
-            'account_number.required'             => 'Please enter your Account Number',
-            'name_bank_account.required'          => 'Please enter Name as used with Bank Account',
+            // 'bank.required'                       => 'Please select your Bank',
+            // 'account_number.required'             => 'Please enter your Account Number',
+            // 'name_bank_account.required'          => 'Please enter Name as used with Bank Account',
             'mobile_bank.required'                => 'Please select your Mobile Bank',
             'mobile_bank_number.required'         => 'Please enter Mobile Number registered with Mobile banking Service',
             'name_mobile_bank_account.required'   => 'Please enter Name as registered with Mobile banking Service',
@@ -458,11 +455,11 @@ class MyProfileController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $personal_banking_data                                       = array();
-        $personal_banking_data['bank']                               = $request->bank;
-        $personal_banking_data['account_number']                     = $request->account_number;
-        $personal_banking_data['name_bank_account']                  = $request->name_bank_account;
-        PersonalBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $personal_banking_data);
+        // $personal_banking_data                                       = array();
+        // $personal_banking_data['bank']                               = $request->bank;
+        // $personal_banking_data['account_number']                     = $request->account_number;
+        // $personal_banking_data['name_bank_account']                  = $request->name_bank_account;
+        // PersonalBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $personal_banking_data);
 
         $mobile_banking_data                                       = array();
         $mobile_banking_data['mobile_bank']                        = $request->mobile_bank;
@@ -491,10 +488,11 @@ class MyProfileController extends Controller
             'media_consent'                           => 'required',
             'agree_to_code_of_conduct'                => 'required',
             'agree_to_child_protection_policy'        => 'required',
+            'age_under_18'                            => 'required',
             'statutory_declaration_attached'          => 'required',
             'code_of_conduct_attached'                => 'required',
             'signed_child_protection_policy_attached' => 'required',
-            'cv_attached'                             => 'required',
+            'professional_volunteer'                  => 'required',
             'base_location'                           => 'required',
         ];
 
@@ -505,10 +503,11 @@ class MyProfileController extends Controller
             'media_consent.required'                           => 'Please select Media Consent',
             'agree_to_code_of_conduct.required'                => 'Please select if agree to code of conduct',
             'agree_to_child_protection_policy.required'        => 'Please select if agree to child protection policy',
+            'age_under_18.required'                            => 'Please select if age is under 18', 
             'statutory_declaration_attached.required'          => 'Please select if Statutory declaration attached',
             'code_of_conduct_attached.required'                => 'Please select if code of conduct attached',
             'signed_child_protection_policy_attached.required' => 'Please select if signed child protection policy attached',
-            'cv_attached.required'                             => 'Please select if CV attached',
+            'professional_volunteer.required'                             => 'Please select if CV attached',
             'base_location.required'                           => 'Please select base location',
         ];
 
@@ -521,13 +520,14 @@ class MyProfileController extends Controller
         $consent_data['media_consent']                            = $request->media_consent;
         $consent_data['agree_to_code_of_conduct']                 = $request->agree_to_code_of_conduct;
         $consent_data['agree_to_child_protection_policy']         = $request->agree_to_child_protection_policy;
+        $consent_data['age_under_18']                             = $request->age_under_18;
         Consent::updateOrCreate(['user_id' => Auth::user()->id], $consent_data);
 
         $check_data                                             = array();
         $check_data['statutory_declaration_attached']           = $request->statutory_declaration_attached;
         $check_data['code_of_conduct_attached']                 = $request->code_of_conduct_attached;
         $check_data['signed_child_protection_policy_attached']  = $request->signed_child_protection_policy_attached;
-        $check_data['cv_attached']                              = $request->cv_attached;
+        $check_data['professional_volunteer']                              = $request->professional_volunteer;
         $check_data['base_location']                            = $request->base_location;
         Check::updateOrCreate(['user_id' => Auth::user()->id], $check_data);
 

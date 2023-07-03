@@ -61,7 +61,7 @@
                     <form action="{{ route('my-profile.banking-information') }}" method="POST"
                         id="bankingInformationForm">
                         @csrf
-                        <div class="card">
+                        {{-- <div class="card">
                             <div class="card-header">
                                 <h4 class="header-title text-center fw-bold">Personal Banking Information (Optional with
                                     Mobile Banking)</h4>
@@ -130,7 +130,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="header-title text-center fw-bold">Mobile Banking Information (Optional with
