@@ -128,9 +128,9 @@ class RegisterController extends Controller
             $personal_information_data['ethnic_background']                  = $personal_information['ethnic_background'];
             $personal_information_data['specify_ethnic_background']          = $personal_information['specify_ethnic_background'];        
             $personal_information_data['marital_status']                     = $personal_information['marital_status'];
-            $personal_information_data['no_of_dependents']                   = $personal_information['no_of_dependents'];
-            $personal_information_data['languages_spoken']                   = $personal_information['languages_spoken'];
-            $personal_information_data['specify_languages_spoken']           = $personal_information['specify_languages_spoken'];       
+            // $personal_information_data['no_of_dependents']                   = $personal_information['no_of_dependents'];
+            // $personal_information_data['languages_spoken']                   = $personal_information['languages_spoken'];
+            // $personal_information_data['specify_languages_spoken']           = $personal_information['specify_languages_spoken'];       
 
             PersonalInformation::create($personal_information_data);
         }
@@ -149,12 +149,12 @@ class RegisterController extends Controller
             $contact_information_data['email']                              = $contact_information['email'];
             $contact_information_data['landline_contact']                   = $contact_information['landline_contact'];
             $contact_information_data['primary_mobile_contact_number']      = $contact_information['primary_mobile_contact_number'];
-            $contact_information_data['primary_mobile_network_provider']    = $contact_information['primary_mobile_network_provider'];
+            // $contact_information_data['primary_mobile_network_provider']    = $contact_information['primary_mobile_network_provider'];
             $contact_information_data['other_contact_numbers']              = $contact_information['other_contact_numbers'];
-            $contact_information_data['full_name_of_emergency_contact']     = $contact_information['full_name_of_emergency_contact'];
-            $contact_information_data['relationship']                       = $contact_information['relationship'];
-            $contact_information_data['resedential_address_separate']       = $contact_information['resedential_address_separate'];
-            $contact_information_data['contact_number']                     = $contact_information['contact_number'];
+            // $contact_information_data['full_name_of_emergency_contact']     = $contact_information['full_name_of_emergency_contact'];
+            // $contact_information_data['relationship']                       = $contact_information['relationship'];
+            // $contact_information_data['resedential_address_separate']       = $contact_information['resedential_address_separate'];
+            // $contact_information_data['contact_number']                     = $contact_information['contact_number'];
 
             ContactInformation::create($contact_information_data);
         }
@@ -199,61 +199,61 @@ class RegisterController extends Controller
 
             EducationBackground::create($education_background_data);
 
-            if(!empty($education_background['qualifications']) && is_array($education_background['qualifications'])){
-                foreach($education_background['qualifications'] as $key => $qualification){
-                    if(isset($qualification['evidence'])){
-                        Storage::move('/public/uploads/temp/'.$qualification['evidence'], '/public/uploads/users/'.$user->id.'/'.'qualifications/'.$qualification['evidence']);
-                    }  
-                    $qual                  = new Qualification;
-                    $qual->user_id         = $user->id;
-                    $qual->year            = $qualification['year'];
-                    $qual->institution     = $qualification['institution'];
-                    $qual->course          = $qualification['course'];
-                    $qual->course_status   = $qualification['course_status'];
-                    $qual->evidence        = isset($qualification['evidence']) ? $qualification['evidence'] : null;
-                    $qual->save();
-                }
-            }
+            // if(!empty($education_background['qualifications']) && is_array($education_background['qualifications'])){
+            //     foreach($education_background['qualifications'] as $key => $qualification){
+            //         if(isset($qualification['evidence'])){
+            //             Storage::move('/public/uploads/temp/'.$qualification['evidence'], '/public/uploads/users/'.$user->id.'/'.'qualifications/'.$qualification['evidence']);
+            //         }  
+            //         $qual                  = new Qualification;
+            //         $qual->user_id         = $user->id;
+            //         $qual->year            = $qualification['year'];
+            //         $qual->institution     = $qualification['institution'];
+            //         $qual->course          = $qualification['course'];
+            //         $qual->course_status   = $qualification['course_status'];
+            //         $qual->evidence        = isset($qualification['evidence']) ? $qualification['evidence'] : null;
+            //         $qual->save();
+            //     }
+            // }
 
-            if(!empty($education_background['skills']) && is_array($education_background['skills'])){
-                foreach($education_background['skills'] as $key => $skill){
-                    if(isset($skill['evidence'])){
-                        Storage::move('/public/uploads/temp/'.$skill['evidence'], '/public/uploads/users/'.$user->id.'/'.'skills/'.$skill['evidence']);
-                    }  
-                    $skil                  = new Skill();
-                    $skil->user_id         = $user->id;
-                    $skil->skill           = $skill['skill'];  
-                    $skil->evidence        = isset($skill['evidence']) ? $skill['evidence'] : null;                 
-                    $skil->save();
-                }
-            }
+            // if(!empty($education_background['skills']) && is_array($education_background['skills'])){
+            //     foreach($education_background['skills'] as $key => $skill){
+            //         if(isset($skill['evidence'])){
+            //             Storage::move('/public/uploads/temp/'.$skill['evidence'], '/public/uploads/users/'.$user->id.'/'.'skills/'.$skill['evidence']);
+            //         }  
+            //         $skil                  = new Skill();
+            //         $skil->user_id         = $user->id;
+            //         $skil->skill           = $skill['skill'];  
+            //         $skil->evidence        = isset($skill['evidence']) ? $skill['evidence'] : null;                 
+            //         $skil->save();
+            //     }
+            // }
         }
 
         $special_information = Session::get('special-information');
 
         if(isset($special_information)){
-            $special_information_data                                       = array();
-            $special_information_data['user_id']                            = $user->id;
-            $special_information_data['any_police_records']                 = $special_information['any_police_records'];
-            $special_information_data['any_special_needs']                  = $special_information['any_special_needs'];
-            $special_information_data['specify_special_needs']              = $special_information['specify_special_needs'];
-            $special_information_data['any_medical_conditions']             = $special_information['any_medical_conditions'];
-            $special_information_data['specify_medical_conditions']         = $special_information['specify_medical_conditions'];
-            $special_information_data['know_how_to_swim']                   = $special_information['know_how_to_swim'];
-            $special_information_data['full_covid_vaccination']             = $special_information['full_covid_vaccination'];
-            $special_information_data['date_first_vaccine']                 = $special_information['date_first_vaccine'];
-            $special_information_data['date_second_vaccine']                = $special_information['date_second_vaccine'];
-            $special_information_data['date_booster']                       = $special_information['date_booster']; 
+            // $special_information_data                                       = array();
+            // $special_information_data['user_id']                            = $user->id;
+            // $special_information_data['any_police_records']                 = $special_information['any_police_records'];
+            // $special_information_data['any_special_needs']                  = $special_information['any_special_needs'];
+            // $special_information_data['specify_special_needs']              = $special_information['specify_special_needs'];
+            // $special_information_data['any_medical_conditions']             = $special_information['any_medical_conditions'];
+            // $special_information_data['specify_medical_conditions']         = $special_information['specify_medical_conditions'];
+            // $special_information_data['know_how_to_swim']                   = $special_information['know_how_to_swim'];
+            // $special_information_data['full_covid_vaccination']             = $special_information['full_covid_vaccination'];
+            // $special_information_data['date_first_vaccine']                 = $special_information['date_first_vaccine'];
+            // $special_information_data['date_second_vaccine']                = $special_information['date_second_vaccine'];
+            // $special_information_data['date_booster']                       = $special_information['date_booster']; 
            
-            SpecialInformation::create($special_information_data);
+            // SpecialInformation::create($special_information_data);
 
-            $blood_information                                       = array();
-            $blood_information['user_id']                            = $user->id;
-            $blood_information['blood_donar']                        = $special_information['blood_donar'];
-            $blood_information['know_your_blood_group']              = $special_information['know_your_blood_group'];
-            $blood_information['blood_group']                        = $special_information['blood_group'];
+            // $blood_information                                       = array();
+            // $blood_information['user_id']                            = $user->id;
+            // $blood_information['blood_donar']                        = $special_information['blood_donar'];
+            // $blood_information['know_your_blood_group']              = $special_information['know_your_blood_group'];
+            // $blood_information['blood_group']                        = $special_information['blood_group'];
 
-            BloodInformation::create($blood_information);
+            // BloodInformation::create($blood_information);
 
             if(!empty($special_information['volunteers']) && is_array($special_information['volunteers'])){
                 foreach($special_information['volunteers'] as $key => $volunteer){                    

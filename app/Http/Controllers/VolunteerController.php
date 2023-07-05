@@ -63,9 +63,9 @@ class VolunteerController extends Controller
             'ethnic_background'                     => 'required|array|min:1',
             'specify_ethnic_background'             => is_array($request->ethnic_background) ? (in_array('Other', $request->ethnic_background) ? 'required' : '') : '',
             'marital_status'                        => 'required',
-            'no_of_dependents'                      => 'required',
-            'languages_spoken'                      => 'required|array|min:1',
-            'specify_languages_spoken'              => is_array($request->languages_spoken) ? (in_array('Other Languages', $request->languages_spoken) ? 'required' : '') : '',
+            // 'no_of_dependents'                      => 'required',
+            // 'languages_spoken'                      => 'required|array|min:1',
+            // 'specify_languages_spoken'              => is_array($request->languages_spoken) ? (in_array('Other Languages', $request->languages_spoken) ? 'required' : '') : '',
         ];
 
         $messages = [
@@ -79,9 +79,9 @@ class VolunteerController extends Controller
             'ethnic_background.required'            => 'Please select Ethnic background.',
             'specify_ethnic_background.required'    => 'Please specify Ethnic background.',
             'marital_status.required'               => 'Please select Marital Status.',
-            'no_of_dependents.required'             => 'Please enter No. of Dependents.',
-            'languages_spoken.required'             => 'Please select Languages Spoken.',
-            'specify_languages_spoken.required'     => 'Please specify Languages Spoken.',
+            // 'no_of_dependents.required'             => 'Please enter No. of Dependents.',
+            // 'languages_spoken.required'             => 'Please select Languages Spoken.',
+            // 'specify_languages_spoken.required'     => 'Please specify Languages Spoken.',
         ];
 
         $this->validate($request, $rules, $messages);
@@ -98,9 +98,9 @@ class VolunteerController extends Controller
         $data['ethnic_background']                  = $request->ethnic_background;
         $data['specify_ethnic_background']          = $request->specify_ethnic_background;        
         $data['marital_status']                     = $request->marital_status;
-        $data['no_of_dependents']                   = $request->no_of_dependents;
-        $data['languages_spoken']                   = $request->languages_spoken;
-        $data['specify_languages_spoken']           = $request->specify_languages_spoken;       
+        // $data['no_of_dependents']                   = $request->no_of_dependents;
+        // $data['languages_spoken']                   = $request->languages_spoken;
+        // $data['specify_languages_spoken']           = $request->specify_languages_spoken;       
 
         Session::put('personal-information', $data);
 
@@ -125,9 +125,9 @@ class VolunteerController extends Controller
                 'email'                             => 'required',
                 'landline_contact'                  => 'required',
                 'primary_mobile_contact_number'     => 'required',
-                'full_name_of_emergency_contact'    => 'required',
-                'relationship'                      => 'required',
-                'contact_number'                    => 'required',
+                // 'full_name_of_emergency_contact'    => 'required',
+                // 'relationship'                      => 'required',
+                // 'contact_number'                    => 'required',
             ];
     
             $messages = [
@@ -140,9 +140,9 @@ class VolunteerController extends Controller
                 'email.required'                            => 'Please enter Community Name.',
                 'landline_contact.required'                 => 'Please enter Landline Contact',
                 'primary_mobile_contact_number.required'    => 'Please enter Primary Mobile Contact Number.',
-                'full_name_of_emergency_contact.required'   => 'Please enter Full Name of Emergency Contact.',
-                'relationship.required'                     => 'Please enter Relationship',
-                'contact_number.required'                   => 'Please enter Contact Number',
+                // 'full_name_of_emergency_contact.required'   => 'Please enter Full Name of Emergency Contact.',
+                // 'relationship.required'                     => 'Please enter Relationship',
+                // 'contact_number.required'                   => 'Please enter Contact Number',
             ];
     
             $this->validate($request, $rules, $messages);
@@ -158,10 +158,10 @@ class VolunteerController extends Controller
             $data['landline_contact']                   = $request->landline_contact;
             $data['primary_mobile_contact_number']      = $request->primary_mobile_contact_number;
             $data['other_contact_numbers']              = $request->other_contact_numbers;
-            $data['full_name_of_emergency_contact']     = $request->full_name_of_emergency_contact;
-            $data['relationship']                       = $request->relationship;
-            $data['resedential_address_separate']       = $request->resedential_address_separate;
-            $data['contact_number']                     = $request->contact_number;     
+            // $data['full_name_of_emergency_contact']     = $request->full_name_of_emergency_contact;
+            // $data['relationship']                       = $request->relationship;
+            // $data['resedential_address_separate']       = $request->resedential_address_separate;
+            // $data['contact_number']                     = $request->contact_number;     
 
             Session::put('contact-information', $data);
     
@@ -253,38 +253,38 @@ class VolunteerController extends Controller
             $data                                       = array();
             $data['highest_level_of_education']         = $request->highest_level_of_education;
 
-            if(!empty($request->qualification) && is_array($request->qualification)){
-                foreach($request->qualification as $key => $qualification){
-                    $data['qualifications'][$key]['year']          = $qualification['year'];
-                    $data['qualifications'][$key]['institution']   = $qualification['institution'];
-                    $data['qualifications'][$key]['course']        = $qualification['course'];
-                    $data['qualifications'][$key]['course_status'] = $qualification['course_status'];
+            // if(!empty($request->qualification) && is_array($request->qualification)){
+            //     foreach($request->qualification as $key => $qualification){
+            //         $data['qualifications'][$key]['year']          = $qualification['year'];
+            //         $data['qualifications'][$key]['institution']   = $qualification['institution'];
+            //         $data['qualifications'][$key]['course']        = $qualification['course'];
+            //         $data['qualifications'][$key]['course_status'] = $qualification['course_status'];
 
-                    if ($request->hasFile('qualification.'.$key.'.evidence')) {
-                        $qualification_evidence                     = $qualification['evidence'];
-                        $qualification_evidence_name                = time().$key.'.'.$qualification_evidence->getClientOriginalExtension();                       
-                        $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
-                    }  
+            //         if ($request->hasFile('qualification.'.$key.'.evidence')) {
+            //             $qualification_evidence                     = $qualification['evidence'];
+            //             $qualification_evidence_name                = time().$key.'.'.$qualification_evidence->getClientOriginalExtension();                       
+            //             $qualification_evidence->storeAs('uploads/temp/', $qualification_evidence_name, 'public');                
+            //         }  
 
-                    $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification.'.$key.'.evidence') ? $qualification_evidence_name : '';
-                }
-            }else{
-                $data['qualifications'] = [];
-            }
+            //         $data['qualifications'][$key]['evidence']       = $request->hasFile('qualification.'.$key.'.evidence') ? $qualification_evidence_name : '';
+            //     }
+            // }else{
+            //     $data['qualifications'] = [];
+            // }
 
-            if(!empty($request->skill) && is_array($request->skill)){
-                foreach($request->skill as $key => $skill){
-                    $data['skills'][$key]['skill']                   = $skill['skill'];                  
-                    if ($request->hasFile('skill.'.$key.'.evidence')) {
-                        $skill_evidence                             = $skill['evidence'];
-                        $skill_evidence_name                        = time().$key.'.'.$skill_evidence->getClientOriginalExtension();
-                        $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
-                    }  
-                    $data['skills'][$key]['evidence']               = $request->hasFile('skill.'.$key.'.evidence') ? $skill_evidence_name : '';
-                }
-            }else{
-                $data['skills'] = [];
-            }
+            // if(!empty($request->skill) && is_array($request->skill)){
+            //     foreach($request->skill as $key => $skill){
+            //         $data['skills'][$key]['skill']                   = $skill['skill'];                  
+            //         if ($request->hasFile('skill.'.$key.'.evidence')) {
+            //             $skill_evidence                             = $skill['evidence'];
+            //             $skill_evidence_name                        = time().$key.'.'.$skill_evidence->getClientOriginalExtension();
+            //             $skill_evidence->storeAs('uploads/temp/', $skill_evidence_name, 'public');                
+            //         }  
+            //         $data['skills'][$key]['evidence']               = $request->hasFile('skill.'.$key.'.evidence') ? $skill_evidence_name : '';
+            //     }
+            // }else{
+            //     $data['skills'] = [];
+            // }
                
 
             Session::put('education-background', $data);
@@ -302,48 +302,48 @@ class VolunteerController extends Controller
  
      public function specialInformation(Request $request)
      {
-         $rules = [
-             'any_police_records'             => 'required',  
-             'any_special_needs'              => 'required',
-             'specify_special_needs'          => $request->any_special_needs == "Yes" ? 'required' : '',                  
-             'any_medical_conditions'         => 'required',  
-             'specify_medical_conditions'     => $request->any_medical_conditions == "Yes" ? 'required' : '',  
-             'know_how_to_swim'               => 'required', 
-             'full_covid_vaccination'         => 'required', 
-             'blood_donar'                    => 'required',
-             'know_your_blood_group'          => 'required',
-             'blood_group'                    => $request->know_your_blood_group == "Yes" ? 'required' : ''
-        ];
+        //  $rules = [
+        //      'any_police_records'             => 'required',  
+        //      'any_special_needs'              => 'required',
+        //      'specify_special_needs'          => $request->any_special_needs == "Yes" ? 'required' : '',                  
+        //      'any_medical_conditions'         => 'required',  
+        //      'specify_medical_conditions'     => $request->any_medical_conditions == "Yes" ? 'required' : '',  
+        //      'know_how_to_swim'               => 'required', 
+        //      'full_covid_vaccination'         => 'required', 
+        //      'blood_donar'                    => 'required',
+        //      'know_your_blood_group'          => 'required',
+        //      'blood_group'                    => $request->know_your_blood_group == "Yes" ? 'required' : ''
+        // ];
 
-         $messages = [
-             'any_police_records.required'           => 'Please select if there is any police records',
-             'any_special_needs.required'            => 'Please select if there is any police needs', 
-             'specify_special_needs.required'        => 'Please specify special needs', 
-             'any_medical_conditions.required'       => 'Please select if there are any medical conditions', 
-             'specify_medical_conditions.required'   => 'Please specify Medical conditions',  
-             'know_how_to_swim.required'             => 'Please select if you know how to swim',
-             'full_covid_vaccination.required'       => 'Please select if you are Full Covid 19 Vaccinated',                   
-             'blood_donar.required'                  => 'Please select if you are a Blood  donar',
-             'know_your_blood_group.required'        => 'Please select if you know your Blood Group',
-             'blood_group'                           => 'Please select Blood Group'
-         ];
+        //  $messages = [
+        //      'any_police_records.required'           => 'Please select if there is any police records',
+        //      'any_special_needs.required'            => 'Please select if there is any police needs', 
+        //      'specify_special_needs.required'        => 'Please specify special needs', 
+        //      'any_medical_conditions.required'       => 'Please select if there are any medical conditions', 
+        //      'specify_medical_conditions.required'   => 'Please specify Medical conditions',  
+        //      'know_how_to_swim.required'             => 'Please select if you know how to swim',
+        //      'full_covid_vaccination.required'       => 'Please select if you are Full Covid 19 Vaccinated',                   
+        //      'blood_donar.required'                  => 'Please select if you are a Blood  donar',
+        //      'know_your_blood_group.required'        => 'Please select if you know your Blood Group',
+        //      'blood_group'                           => 'Please select Blood Group'
+        //  ];
  
-         $this->validate($request, $rules, $messages);
+        //  $this->validate($request, $rules, $messages);
 
-         $data                                       = array();
-         $data['any_police_records']                 = $request->any_police_records;
-         $data['any_special_needs']                  = $request->any_special_needs;
-         $data['specify_special_needs']              = $request->specify_special_needs;
-         $data['any_medical_conditions']             = $request->any_medical_conditions;
-         $data['specify_medical_conditions']         = $request->specify_medical_conditions;
-         $data['know_how_to_swim']                   = $request->know_how_to_swim;
-         $data['full_covid_vaccination']             = $request->full_covid_vaccination;
-         $data['date_first_vaccine']                 = $request->date_first_vaccine;
-         $data['date_second_vaccine']                = $request->date_second_vaccine;
-         $data['date_booster']                       = $request->date_booster; 
-         $data['blood_donar']                        = $request->blood_donar;
-         $data['know_your_blood_group']              = $request->know_your_blood_group;
-         $data['blood_group']                        = $request->blood_group;        
+        //  $data                                       = array();
+        //  $data['any_police_records']                 = $request->any_police_records;
+        //  $data['any_special_needs']                  = $request->any_special_needs;
+        //  $data['specify_special_needs']              = $request->specify_special_needs;
+        //  $data['any_medical_conditions']             = $request->any_medical_conditions;
+        //  $data['specify_medical_conditions']         = $request->specify_medical_conditions;
+        //  $data['know_how_to_swim']                   = $request->know_how_to_swim;
+        //  $data['full_covid_vaccination']             = $request->full_covid_vaccination;
+        //  $data['date_first_vaccine']                 = $request->date_first_vaccine;
+        //  $data['date_second_vaccine']                = $request->date_second_vaccine;
+        //  $data['date_booster']                       = $request->date_booster; 
+        //  $data['blood_donar']                        = $request->blood_donar;
+        //  $data['know_your_blood_group']              = $request->know_your_blood_group;
+        //  $data['blood_group']                        = $request->blood_group;        
          
          if(!empty($request->volunteer) && is_array($request->volunteer)){
             foreach($request->volunteer as $key => $volunteer){
@@ -357,7 +357,7 @@ class VolunteerController extends Controller
 
          Session::put('special-information', $data);
  
-         return redirect()->route('service-interest.form')->with('success', 'Special Information saved successfully');
+         return redirect()->route('consents-and-checks.form')->with('success', 'Banking Information saved successfully');
      }
 
       // Tab 7

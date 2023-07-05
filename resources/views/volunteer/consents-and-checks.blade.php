@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Referee Information</h4>
-                        <p class="text-center text-muted">Step 14</p>
+                        <p class="text-center text-muted">Step 8</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -82,7 +82,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Consents </h4>
-                        <p class="text-center text-muted">Step 15</p>
+                        <p class="text-center text-muted">Step 9</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
@@ -211,7 +211,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Checks </h4>
-                        <p class="text-center text-muted">Step 16</p>
+                        <p class="text-center text-muted">Step 10</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

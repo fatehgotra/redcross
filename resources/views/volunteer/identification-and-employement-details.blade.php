@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Valid National Identification</h4>
-                        <p class="text-center text-muted">Step 5</p>
+                        <p class="text-center text-muted">Step 4</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">                           
@@ -73,7 +73,7 @@
                                         class="text-danger">*</span></label>
                                 <input id="id_expiry_date" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" 
                                     class="form-control @error('id_expiry_date') is-invalid @enderror" name="id_expiry_date"
-                                    value="{{ old('id_expiry_date', isset($identification_employment_details) ? $identification_employment_details['id_expiry_date'] : '') }}" autocomplete="id_expiry_date" placeholder="ID Card Number">
+                                    value="{{ old('id_expiry_date', isset($identification_employment_details) ? $identification_employment_details['id_expiry_date'] : '') }}" autocomplete="id_expiry_date" placeholder="ID Expiry Date">
                                 @error('id_expiry_date')
                                     <small id="id_expiry_date-error" class="text-danger">{{ $message }}</small>
                                 @enderror
@@ -107,7 +107,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Employment Details </h4>
-                        <p class="text-center text-muted">Step 6</p>
+                        <p class="text-center text-muted">Step 5</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

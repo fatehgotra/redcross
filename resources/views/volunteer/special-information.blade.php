@@ -14,7 +14,7 @@
             <form action="{{ route('special-information') }}" method="POST"
                 id="specialInformationForm" enctype="multipart/form-data">
                 @csrf
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Special Information</h4>
                         <p class="text-center text-muted">Step 8</p>
@@ -235,11 +235,11 @@
                             </div>
                         </div>
                     </div>                    
-                </div>
+                </div> --}}
                 <div class="card">
                     <div class="card-header">
                         <h4 class="header-title text-center fw-bold">Volunteering Information </h4>
-                        <p class="text-center text-muted">Step 10</p>
+                        <p class="text-center text-muted">Step 7</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

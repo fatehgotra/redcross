@@ -118,7 +118,7 @@
                                 @enderror
                             </div>
                            
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <label for="ethnic_background" class="col-form-label">Ethnic Background <span
                                         class="text-danger">*</span></label>
                                 <select id="ethnic_background"
@@ -192,7 +192,7 @@
                                     <small id="citizenship-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <label for="no_of_dependents" class="col-form-label">Number of Dependents (person who relies on you e.g. children)<span
                                         class="text-danger">*</span></label>
                                 <input id="no_of_dependents" type="number" min="0"
@@ -246,7 +246,7 @@
                                 @error('specify_languages_spoken')
                                     <small id="specify_languages_spoken-error" class="text-danger">{{ $message }}</small>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
                 </div>

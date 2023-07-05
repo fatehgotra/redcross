@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="header-title text-center fw-bold">Education Background</h4>
-                    <p class="text-center text-muted">Step 7</p>
+                    <p class="text-center text-muted">Step 6</p>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('education-background') }}" method="POST" id="educationBackgroundForm" enctype="multipart/form-data">
@@ -60,7 +60,7 @@
                                 <small id="highest_level_of_education-error" class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>  
-                        <div class="col-lg-12">
+                        {{-- <div class="col-lg-12">
                             <label class="col-form-label">Tertiary Qualifications Attained (including Vocational Programs) </label>
                         </div>
                         <div class="col-lg-12 table-responsive">
@@ -142,8 +142,8 @@
                                     </tr>
                                 </tfoot>                                
                             </table>
-                        </div>
-                        <div class="col-lg-12">
+                        </div> --}}
+                        {{-- <div class="col-lg-12">
                             <label class="col-form-label">List Other Work or Professional Skills: (e.g. driver, carpentdr, welder etc.)</label>
                         </div>
                         <div class="col-lg-12 table-responsive">
@@ -189,7 +189,7 @@
                                     </tr>
                                 </tfoot>                                
                             </table>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
                 <div class="card-footer">
@@ -214,7 +214,7 @@
         </div>
     </section>
 @endsection
-@push('scripts')
+{{-- @push('scripts')
 <script>
     @isset($education_background)
         @if(count($education_background['qualifications']) > 0)
@@ -262,4 +262,4 @@
         skill_row++;
     }
 </script>
-@endpush
+@endpush --}}

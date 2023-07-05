@@ -174,63 +174,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="header-title text-center fw-bold">Emergency Contact </h4>
-                        <p class="text-center text-muted">Step 4</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group row">
-
-                            <div class="col-lg-6">
-                                <label for="full_name_of_emergency_contact" class="col-form-label">Full Name of Emergency <span class="text-danger">*</span>
-                                    Contact</label>
-                                <input id="full_name_of_emergency_contact" type="text"
-                                    class="form-control @error('full_name_of_emergency_contact') is-invalid @enderror"
-                                    name="full_name_of_emergency_contact"
-                                    value="{{ old('full_name_of_emergency_contact', isset($contact_information) ? $contact_information['full_name_of_emergency_contact'] : '') }}"
-                                    autocomplete="full_name_of_emergency_contact"
-                                    placeholder="Full Name of Emergency Contact">
-                                @error('full_name_of_emergency_contact')
-                                    <small id="full_name_of_emergency_contact-error"
-                                        class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="relationship" class="col-form-label">Relationship <span class="text-danger">*</span></label>
-                                <input id="relationship" type="text"
-                                    class="form-control @error('relationship') is-invalid @enderror" name="relationship"
-                                    value="{{ old('relationship', isset($contact_information) ? $contact_information['relationship'] : '') }}" autocomplete="relationship"
-                                    placeholder="Relationship">
-                                @error('relationship')
-                                    <small id="registering_year-error" class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="resedential_address_separate" class="col-form-label">Resedential Address (If
-                                    residing in a separate household)</label>
-                                <input id="resedential_address_separate" type="text"
-                                    class="form-control @error('resedential_address_separate') is-invalid @enderror"
-                                    name="resedential_address_separate" value="{{ old('resedential_address_separate', isset($contact_information) ? $contact_information['resedential_address_separate'] : '') }}"
-                                    autocomplete="resedential_address_separate" placeholder="Resedential Address">
-                                @error('resedential_address_separate')
-                                    <small id="resedential_address_separate-error"
-                                        class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="contact_number" class="col-form-label">Contact Number <span class="text-danger">*</span></label>
-                                <input id="contact_number" type="text"
-                                    class="form-control @error('contact_number') is-invalid @enderror"
-                                    name="contact_number" value="{{ old('contact_number', isset($contact_information) ? $contact_information['contact_number'] : '') }}"
-                                    autocomplete="contact_number" placeholder="Contact Number">
-                                @error('contact_number')
-                                    <small id="contact_number-error" class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
                     <div class="card-footer">
                         <a href="{{ route('personal-information.form') }}"
                             class="btn btn-sm btn-warning float-start">Previous
@@ -239,6 +182,7 @@
                             class="btn btn-sm btn-success float-end">Next
                             Step</button>
                     </div>
+                </div>               
             </form>
         </div>
     </section>
