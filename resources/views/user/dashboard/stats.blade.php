@@ -50,6 +50,7 @@
                     <div class="w-100 overflow-hidden">
                         <h2 class="mt-0">Reward Points</h2>
                         <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-star-circle-outline"></i> {{ Auth::user()->rewards->sum('points') }}</b> <small>Points earned </small></h3>
+                        <a href="{{ route('learning.courses') }}"><h3 class="m-0 fw-normal cta-box-title"><small>Earn more points</small></h3></a>
                     </div>
                     <img class="ms-3" src="assets/images/reward-campaign.jpg" width="140" alt="Generic placeholder image">
                 </div>
