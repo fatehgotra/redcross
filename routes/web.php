@@ -129,6 +129,9 @@ Route::get('learning/courses', [LearningController::class, 'courses'])->name('le
 /* Get Test Route */
 Route::get('learning/courses/take-test/{id}', [LearningController::class, 'takeTest'])->name('learning.take-test');
 
+/* Exit Test Route */
+Route::put('learning/courses/exit-test/{id}', [LearningController::class, 'exitTest'])->name('learning.exit-test');
+
 /* Submit Test Route */
 Route::put('learning/courses/take-test/{id}', [LearningController::class, 'submitTest'])->name('learning.submit-test');
 

@@ -43,7 +43,7 @@
                                 @error('name')
                                     <code id="name-error" class="text-danger">{{ $message }}</code>
                                 @enderror
-                            </div>
+                            </div>                           
                                                         
                             <div class="col-md-6 mb-2">
                                 <label for="statuses" class="form-label">Status<span
@@ -57,6 +57,24 @@
                                     <code id="supplier_id-error" class="text-danger">{{ $message }}</code>
                                 @enderror
                             </div>    
+
+                            <div class="col-md-6 mb-2">
+                                <label for="test_reward_points" class="form-label">Test Reward Points <span class="text-danger">*</span></label>
+                                <input type="number" min="0" class="form-control" name="test_reward_points" id="test_reward_points" placeholder="Test Reward Points"
+                                    value="{{ old('test_reward_points') }}">
+                                @error('test_reward_points')
+                                    <code id="name-error" class="text-danger">{{ $message }}</code>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 mb-2">
+                                <label for="video_reward_points" class="form-label">Video Reward Points <span class="text-danger">*</span></label>
+                                <input type="number" min="0" class="form-control" name="video_reward_points" id="video_reward_points" placeholder="Video Reward Points"
+                                    value="{{ old('video_reward_points') }}">
+                                @error('video_reward_points')
+                                    <code id="name-error" class="text-danger">{{ $message }}</code>
+                                @enderror
+                            </div>
                             
                             <div class="col-md-12 mb-2">
                                 <label for="description" class="form-label">Course description <span class="text-danger">*</span></label>

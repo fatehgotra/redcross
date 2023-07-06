@@ -12,6 +12,8 @@ class Course extends Model
     protected $fillable = [
         'name',
         'description',
+        'test_reward_points',
+        'video_reward_points',
         'status'
     ];
 

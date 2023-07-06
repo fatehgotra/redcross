@@ -1,5 +1,64 @@
 <div class="row">
     <div class="col-xl-6">
+        @if(Auth::user()->status == "approve" && Auth::user()->approved_by == "HQ")
+        <div class="card cta-box bg-success text-white py-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="w-100 overflow-hidden">
+                        <h2 class="mt-0">Application Status</h2>
+                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Approved</b></h3>
+                    </div>
+                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
+                </div>
+            </div>
+            <!-- end card-body -->
+        </div>
+        @elseif(Auth::user()->status == "decline")
+        <div class="card cta-box bg-danger text-white py-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="w-100 overflow-hidden">
+                        <h2 class="mt-0">Application Status</h2>
+                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Declined</b></h3>
+                    </div>
+                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
+                </div>
+            </div>
+            <!-- end card-body -->
+        </div>
+        @else
+        <div class="card cta-box bg-danger text-white py-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="w-100 overflow-hidden">
+                        <h2 class="mt-0">Application Status</h2>
+                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Pending for Review</b></h3>
+                    </div>
+                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
+                </div>
+            </div>
+            <!-- end card-body -->
+        </div>
+        @endif
+        <!-- end card-->       
+
+    </div>
+    <div class="col-xl-6">
+        <div class="card cta-box bg-dark text-white py-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="w-100 overflow-hidden">
+                        <h2 class="mt-0">Reward Points</h2>
+                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-star-circle-outline"></i> {{ Auth::user()->rewards->sum('points') }}</b> <small>Points earned </small></h3>
+                    </div>
+                    <img class="ms-3" src="assets/images/reward-campaign.jpg" width="140" alt="Generic placeholder image">
+                </div>
+            </div>
+            <!-- end card-body -->
+        </div>  
+
+    </div>
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title mb-2">Track Application Status</h4>
@@ -73,50 +132,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-xl-6">
-        @if(Auth::user()->status == "approve" && Auth::user()->approved_by == "HQ")
-        <div class="card cta-box bg-success text-white py-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="w-100 overflow-hidden">
-                        <h2 class="mt-0">Application Status</h2>
-                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Approved</b></h3>
-                    </div>
-                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
-                </div>
-            </div>
-            <!-- end card-body -->
-        </div>
-        @elseif(Auth::user()->status == "decline")
-        <div class="card cta-box bg-danger text-white py-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="w-100 overflow-hidden">
-                        <h2 class="mt-0">Application Status</h2>
-                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Declined</b></h3>
-                    </div>
-                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
-                </div>
-            </div>
-            <!-- end card-body -->
-        </div>
-        @else
-        <div class="card cta-box bg-danger text-white py-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="w-100 overflow-hidden">
-                        <h2 class="mt-0">Application Status</h2>
-                        <h3 class="m-0 fw-normal cta-box-title"><b><i class="mdi mdi-bullhorn-outline"></i> Pending for Review</b></h3>
-                    </div>
-                    <img class="ms-3" src="assets/images/email-campaign.png" width="140" alt="Generic placeholder image">
-                </div>
-            </div>
-            <!-- end card-body -->
-        </div>
-        @endif
-        <!-- end card-->       
-
     </div>
     @isset(Auth::user()->decline_reason)
             <div class="col-xl-12">

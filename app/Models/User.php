@@ -133,4 +133,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Check::class, 'user_id', 'id');
     }
+
+    public function rewards()
+    {
+        return $this->hasMany(UserReward::class, 'user_id', 'id');
+    }
 }

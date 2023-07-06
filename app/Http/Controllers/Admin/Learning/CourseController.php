@@ -38,13 +38,17 @@ class CourseController extends Controller
         $rules = [
             'name'                  => ['required', 'string', 'max:255'],  
             'description'           => ['required'],   
-            'status'                => ['required'],          
+            'status'                => ['required'],
+            'test_reward_points'    => ['required'],  
+            'video_reward_points'   => ['required'],        
         ];
 
         $messages = [
-            'name.required'         => 'Please enter course name.', 
-            'description'           => 'Please enter course description.', 
-            'status.required'       => 'Please enter course status.',          
+            'name.required'                     => 'Please enter course name.', 
+            'description'                       => 'Please enter course description.', 
+            'status.required'                   => 'Please enter course status.',
+            'test_reward_points.required'       => 'Please enter test reward points.',                
+            'video_reward_points.required'      => 'Please enter video reward points.',          
         ];
 
         $this->validate($request, $rules, $messages);
@@ -52,6 +56,8 @@ class CourseController extends Controller
         $course                   = Course::create([
             'name'                => $request->name,
             'description'         => $request->description,
+            'test_reward_points'  => $request->test_reward_points,
+            'video_reward_points' => $request->video_reward_points,
             'status'              => $request->status           
         ]);        
 
@@ -83,13 +89,17 @@ class CourseController extends Controller
         $rules = [
             'name'                  => ['required', 'string', 'max:255'],  
             'description'           => ['required'],   
-            'status'                => ['required'],          
+            'status'                => ['required'],  
+            'test_reward_points'    => ['required'],  
+            'video_reward_points'   => ['required'],          
         ];
 
         $messages = [
-            'name.required'         => 'Please enter course name.', 
-            'description'           => 'Please enter course description.', 
-            'status.required'       => 'Please enter course status.',          
+            'name.required'                     => 'Please enter course name.', 
+            'description'                       => 'Please enter course description.', 
+            'status.required'                   => 'Please enter course status.', 
+            'test_reward_points.required'       => 'Please enter test reward points.',                
+            'video_reward_points.required'      => 'Please enter video reward points.',       
         ];
 
         $this->validate($request, $rules, $messages);
@@ -97,6 +107,8 @@ class CourseController extends Controller
         $course                   = Course::find($id)->update([
             'name'                => $request->name,
             'description'         => $request->description,
+            'test_reward_points'  => $request->test_reward_points,
+            'video_reward_points' => $request->video_reward_points,
             'status'              => $request->status           
         ]);        
 

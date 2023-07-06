@@ -20,47 +20,65 @@ class LearningSeeder extends Seeder
         
         Course::create([
             'name' => 'Course A',
-            'description' => 'Description for Course A'
+            'description' => 'Description for Course A',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course B',
-            'description' => 'Description for Course B'
+            'description' => 'Description for Course B',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course C',
-            'description' => 'Description for Course C'
+            'description' => 'Description for Course C',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course D',
-            'description' => 'Description for Course D'
+            'description' => 'Description for Course D',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course E',
-            'description' => 'Description for Course E'
+            'description' => 'Description for Course E',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course F',
-            'description' => 'Description for Course F'
+            'description' => 'Description for Course F',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course G',
-            'description' => 'Description for Course G'
+            'description' => 'Description for Course G',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course H',
-            'description' => 'Description for Course H'
+            'description' => 'Description for Course H',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         Course::create([
             'name' => 'Course I',
-            'description' => 'Description for Course I'
+            'description' => 'Description for Course I',
+            'test_reward_points' => 50,
+            'video_reward_points' => 50
         ]);
 
         $courses = Course::get();

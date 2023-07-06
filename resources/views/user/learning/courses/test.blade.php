@@ -18,52 +18,59 @@
             </div>
         </div>
         @include('user.includes.flash-message')
-        <form method="POST" action="{{ route('learning.submit-test', $course->id) }}" id="testForm">
-            @csrf
-            @method('PUT')
-            <input type="hidden" name="test_attempt_id" value="{{ $attempt->id }}">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card bg-info">
-                        <div class="card-body profile-user-box">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="row align-items-center">
 
-                                        <div class="col">
-                                            <div>
-                                                <h4 class="mt-1 mb-1 text-white">{{ $course->name }}</h4>
-                                                <p class="font-13 text-dark-50"> {{ $course->description }}</p>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card bg-info">
+                    <div class="card-body profile-user-box">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="row align-items-center">
 
-                                                <ul class="mb-0 list-inline text-light">
-                                                    <li class="list-inline-item me-3">
-                                                        <h5 class="mb-1">50</h5>
-                                                        <p class="mb-0 font-13 text-dark">Total Rewards Points</p>
-                                                    </li>
-                                                    <li class="list-inline-item me-3">
-                                                        <h5 class="mb-1">{{ count($course->questions) }}</h5>
-                                                        <p class="mb-0 font-13 text-dark">Number of Questions</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <div class="col">
+                                        <div>
+                                            <h4 class="mt-1 mb-1 text-white">{{ $course->name }}</h4>
+                                            <p class="font-13 text-dark-50"> {{ $course->description }}</p>
+
+                                            <ul class="mb-0 list-inline text-light">
+                                                <li class="list-inline-item me-3">
+                                                    <h5 class="mb-1">50</h5>
+                                                    <p class="mb-0 font-13 text-dark">Total Rewards Points</p>
+                                                </li>
+                                                <li class="list-inline-item me-3">
+                                                    <h5 class="mb-1">{{ count($course->questions) }}</h5>
+                                                    <p class="mb-0 font-13 text-dark">Number of Questions</p>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-sm-4">
-                                    <div class="text-center mt-sm-0 mt-3 text-sm-end">
-                                        <a href="{{ route('learning.courses') }}" class="btn btn-danger"><i
-                                                class="dripicons-exit me-1"></i>Exit</a>
-                                        <button type="submit" class="btn btn-dark" form="testForm">
-                                            <i class="dripicons-rocket me-1"></i> Submit Test
-                                        </button>
-                                    </div>
+                            <div class="col-sm-4">
+                                <div class="text-center mt-sm-0 mt-3 text-sm-end">
+                                    <a href="javascript:void(0)" onclick="confirmExit()" class="btn btn-danger"><i
+                                            class="dripicons-exit me-1"></i>Exit</a>
+                                    
+                                    <button type="submit" class="btn btn-dark" form="testForm">
+                                        <i class="dripicons-rocket me-1"></i> Submit Test
+                                    </button>
+                                    <form id='exit-form' action='{{ route('learning.exit-test', $attempt->id) }}'
+                                        method='POST'>
+                                        <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                                        <input type='hidden' name='_method' value='PUT'>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <form method="POST" action="{{ route('learning.submit-test', $course->id) }}" id="testForm">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="test_attempt_id" value="{{ $attempt->id }}">
             <div class="row">
                 @forelse($course->questions as $question)
                     <div class="col-md-12 col-lg-12">
@@ -74,7 +81,7 @@
                             <div class="card-header bg-warning">
                                 {{ $question->question }}
                             </div>
-                            <div class="card-body">                                
+                            <div class="card-body">
                                 <input type="hidden" name="question[{{ $loop->iteration }}][question_id]"
                                     value="{{ $question->id }}">
                                 <div class="form-check form-radio-success mb-2">
@@ -131,3 +138,23 @@
         </form>
     </div>
 @endsection
+@push('scripts')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function confirmExit() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to cancel and exit the test!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Exit Test!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('exit-form').submit();
+                }
+            })
+        };
+    </script>
+@endpush

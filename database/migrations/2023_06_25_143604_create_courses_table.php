@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();            
-            $table->text('description')->nullable();       
+            $table->text('description')->nullable();   
+            $table->unsignedBigInteger('test_reward_points')->default(0);    
+            $table->unsignedBigInteger('video_reward_points')->default(0);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Question;
 use App\Models\TestAttempt;
 use App\Models\TestResponse;
+use App\Models\UserReward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,9 +38,22 @@ class LearningController extends Controller
         return view('user.learning.courses.test', compact('course', 'attempt'));
     }
 
+    public function exitTest(Request $request, $id)
+    {
+        TestAttempt::where('id', $id)->delete();
+        return redirect()->route('learning.courses')->with('success', 'Test has been cancelled successfully');
+    }
+
     public function videos($id)
     {
         $course = Course::with('questions', 'videos')->find($id);
+        UserReward::updateOrCreate([
+            'course_id' => $id,
+            'user_id' => Auth::user()->id,
+            'reward_for' => 'video'
+        ], [            
+            'points'    => Course::find($id)->video_reward_points
+        ]);
         return view('user.learning.courses.videos', compact('course'));
     }
 
@@ -71,6 +85,14 @@ class LearningController extends Controller
             'correct'        => $correct,
             'incorrect'      => $incorrect,
             'unattempted'    => $unattempted
+        ]);
+
+        UserReward::updateOrCreate([
+            'course_id' => $id,
+            'user_id' => Auth::user()->id,
+            'reward_for' => 'test'
+        ], [            
+            'points'    => Course::find($id)->test_reward_points
         ]);
 
         return redirect()->route('learning.result', $response->test_attempt_id)->with('success', 'Test has been submitted successfully');
