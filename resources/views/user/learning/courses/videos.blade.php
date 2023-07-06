@@ -33,8 +33,8 @@
 
                                             <ul class="mb-0 list-inline text-light">
                                                 <li class="list-inline-item me-3">
-                                                    <h5 class="mb-1">50</h5>
-                                                    <p class="mb-0 font-13 text-dark">Total Rewards Points</p>
+                                                    <h5 class="mb-1">{{ $course->video_reward_points }}</h5>
+                                                    <p class="mb-0 font-13 text-dark">Video Rewards Points</p>
                                                 </li>
                                                 <li class="list-inline-item me-3">
                                                     <h5 class="mb-1">{{ count($course->videos) }}</h5>
