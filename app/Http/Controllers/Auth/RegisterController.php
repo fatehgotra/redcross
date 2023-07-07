@@ -104,8 +104,7 @@ class RegisterController extends Controller
             $lodgement_information_data['user_id']                           = $user->id;
             $lodgement_information_data['date_of_lodgement']                 = $lodgement_information['date_of_lodgement'];
             $lodgement_information_data['registering_year']                  = $lodgement_information['registering_year'];
-            $lodgement_information_data['division']                          = $lodgement_information['division'];
-            $lodgement_information_data['registration_location']             = $lodgement_information['registration_location'];
+            $lodgement_information_data['division']                          = $lodgement_information['division'];           
             $lodgement_information_data['registration_location_type']        = $lodgement_information['registration_location_type'];
 
             LodgementInformation::create($lodgement_information_data);

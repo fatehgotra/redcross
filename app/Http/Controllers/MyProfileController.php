@@ -43,7 +43,6 @@ class MyProfileController extends Controller
             'date_of_lodgement'                    => 'required',
             'registering_year'                     => 'required',
             'division'                             => 'required',
-            'registration_location'                => 'required',
             'registration_location_type'           => 'required',
         ];
 
@@ -51,8 +50,7 @@ class MyProfileController extends Controller
             'date_of_lodgement.required'           => 'Please enter Date of Lodgement',
             'registering_year.required'            => 'Please enter Registering Year.',
             'division.required'                    => 'Please select Division',
-            'registration_location.required'       => 'Please enter Registration Location.',
-            'registration_location_type.required'  => 'Please select Location Type.'
+            'registration_location_type.required'  => 'Please select your nearest branch.'
         ];
 
         $this->validate($request, $rules, $messages);
@@ -61,7 +59,6 @@ class MyProfileController extends Controller
         $data['date_of_lodgement']                 = $request->date_of_lodgement;
         $data['registering_year']                  = $request->registering_year;
         $data['division']                          = $request->division;
-        $data['registration_location']             = $request->registration_location;
         $data['registration_location_type']        = $request->registration_location_type;
 
         LodgementInformation::updateOrCreate(['user_id' => Auth::user()->id], $data);
@@ -436,18 +433,18 @@ class MyProfileController extends Controller
     public function bankingInformation(Request $request)
     {
         $rules = [
-            // 'bank'                        => 'required',
-            // 'account_number'              => 'required',
-            // 'name_bank_account'           => 'required',
+            'bank'                        => 'required',
+            'account_number'              => 'required',
+            'name_bank_account'           => 'required',
             'mobile_bank'                 => 'required',
             'mobile_bank_number'          => 'required',
             'name_mobile_bank_account'    => 'required'
         ];
 
         $messages = [
-            // 'bank.required'                       => 'Please select your Bank',
-            // 'account_number.required'             => 'Please enter your Account Number',
-            // 'name_bank_account.required'          => 'Please enter Name as used with Bank Account',
+            'bank.required'                       => 'Please select your Bank',
+            'account_number.required'             => 'Please enter your Account Number',
+            'name_bank_account.required'          => 'Please enter Name as used with Bank Account',
             'mobile_bank.required'                => 'Please select your Mobile Bank',
             'mobile_bank_number.required'         => 'Please enter Mobile Number registered with Mobile banking Service',
             'name_mobile_bank_account.required'   => 'Please enter Name as registered with Mobile banking Service',
@@ -455,11 +452,11 @@ class MyProfileController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        // $personal_banking_data                                       = array();
-        // $personal_banking_data['bank']                               = $request->bank;
-        // $personal_banking_data['account_number']                     = $request->account_number;
-        // $personal_banking_data['name_bank_account']                  = $request->name_bank_account;
-        // PersonalBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $personal_banking_data);
+        $personal_banking_data                                       = array();
+        $personal_banking_data['bank']                               = $request->bank;
+        $personal_banking_data['account_number']                     = $request->account_number;
+        $personal_banking_data['name_bank_account']                  = $request->name_bank_account;
+        PersonalBankingInformation::updateOrCreate(['user_id' => Auth::user()->id], $personal_banking_data);
 
         $mobile_banking_data                                       = array();
         $mobile_banking_data['mobile_bank']                        = $request->mobile_bank;
