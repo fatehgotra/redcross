@@ -16,9 +16,13 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('statutory_declaration_attached')->nullable();
+            $table->string('statutory_declaration')->nullable();
             $table->string('code_of_conduct_attached')->nullable();
+            $table->string('code_of_conduct')->nullable();
             $table->string('signed_child_protection_policy_attached')->nullable();
+            $table->string('signed_child_protection_policy')->nullable();
             $table->string('professional_volunteer')->nullable();
+            $table->string('professional_volunteer_attachment')->nullable();
             $table->string('base_location')->nullable();
             $table->timestamps();
         });

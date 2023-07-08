@@ -12,9 +12,13 @@ class Check extends Model
     protected $fillable = [
         'user_id',
         'statutory_declaration_attached',
+        'statutory_declaration',
         'code_of_conduct_attached',
+        'code_of_conduct',
         'signed_child_protection_policy_attached',
+        'signed_child_protection_policy',
         'professional_volunteer',
+        'professional_volunteer_attachment',
         'base_location'
     ];
 

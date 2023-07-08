@@ -334,6 +334,30 @@ class RegisterController extends Controller
             $check_data['professional_volunteer']                   = $consents_and_checks['professional_volunteer'];
             $check_data['base_location']                            = $consents_and_checks['base_location']; 
 
+            if(isset($check_data['statutory_declaration'])){
+                Storage::move('/public/uploads/temp/'.$check_data['statutory_declaration'], '/public/uploads/users/'.$user->id.'/checks'.'/'.$check_data['statutory_declaration']);
+            }            
+
+            $check_data['statutory_declaration']                           = isset($check_data['statutory_declaration']) ? $check_data['statutory_declaration'] : null;
+
+            if(isset($check_data['code_of_conduct'])){
+                Storage::move('/public/uploads/temp/'.$check_data['code_of_conduct'], '/public/uploads/users/'.$user->id.'/checks'.'/'.$check_data['code_of_conduct']);
+            }            
+
+            $check_data['code_of_conduct']                           = isset($check_data['code_of_conduct']) ? $check_data['code_of_conduct'] : null;
+
+            if(isset($check_data['signed_child_protection_policy'])){
+                Storage::move('/public/uploads/temp/'.$check_data['signed_child_protection_policy'], '/public/uploads/users/'.$user->id.'/checks'.'/'.$check_data['signed_child_protection_policy']);
+            }            
+
+            $check_data['signed_child_protection_policy']                           = isset($check_data['signed_child_protection_policy']) ? $check_data['signed_child_protection_policy'] : null;
+
+            if(isset($check_data['professional_volunteer_attachment'])){
+                Storage::move('/public/uploads/temp/'.$check_data['professional_volunteer_attachment'], '/public/uploads/users/'.$user->id.'/checks'.'/'.$check_data['professional_volunteer_attachment']);
+            }            
+
+            $check_data['professional_volunteer_attachment']                           = isset($check_data['professional_volunteer_attachment']) ? $check_data['professional_volunteer_attachment'] : null;
+
             Check::create($check_data);
         }
 

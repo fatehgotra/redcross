@@ -159,7 +159,7 @@
                                         <input id="photo_id" type="file"
                                             class="form-control @error('photo_id') is-invalid @enderror" name="photo_id">
                                         @isset($identification_details->photo_id)
-                                            <a href="{{ asset('storage/uploads/temp/' . $identification_details->photo_id) }}"
+                                            <a href="{{ asset('storage/uploads/users/'.Auth::user()->id.'/' . $identification_details->photo_id) }}"
                                                 download="" class="btn btn-warning download-label"><i
                                                     class="mdi mdi-download"></i></a>
                                         @endisset

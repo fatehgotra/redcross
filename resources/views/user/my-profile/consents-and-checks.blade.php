@@ -20,7 +20,7 @@
             </div>
         </div>
         @include('user.includes.flash-message')
-        <form action="{{ route('my-profile.consents-and-checks') }}" method="POST" id="consentAndChecksForm">
+        <form action="{{ route('my-profile.consents-and-checks') }}" method="POST" id="consentAndChecksForm" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-sm-3">
@@ -246,6 +246,21 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
+                                    <label for="statutory_declaration" class="col-form-label">Upload Statutory Declaration</label>
+                                    <div class="input-group">
+                                        <input id="statutory_declaration" type="file"
+                                            class="form-control @error('statutory_declaration') is-invalid @enderror" name="statutory_declaration">
+                                        @isset($checks->statutory_declaration)
+                                            <a href="{{ asset('storage/uploads/users/'.Auth::user()->id.'/checks'.'/'. $checks->statutory_declaration) }}"
+                                                download="" class="btn btn-warning download-label"><i
+                                                    class="mdi mdi-download"></i></a>
+                                        @endisset
+                                    </div>
+                                    @error('statutory_declaration')
+                                        <small id="statutory_declaration-error" class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6">
                                     <label for="code_of_conduct_attached" class="col-form-label">Code of Conduct Attached
                                         <span class="text-danger">*</span></label>
                                     <select id="code_of_conduct_attached"
@@ -264,6 +279,21 @@
                                     @error('code_of_conduct_attached')
                                         <small id="code_of_conduct_attached-error"
                                             class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="code_of_conduct" class="col-form-label">Upload Code of Conduct</label>
+                                    <div class="input-group">
+                                        <input id="code_of_conduct" type="file"
+                                            class="form-control @error('code_of_conduct') is-invalid @enderror" name="code_of_conduct">
+                                        @isset($checks->code_of_conduct)
+                                            <a href="{{ asset('storage/uploads/users/'.Auth::user()->id.'/checks'.'/'. $checks->code_of_conduct) }}"
+                                                download="" class="btn btn-warning download-label"><i
+                                                    class="mdi mdi-download"></i></a>
+                                        @endisset
+                                    </div>
+                                    @error('code_of_conduct')
+                                        <small id="code_of_conduct-error" class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
@@ -288,6 +318,21 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
+                                    <label for="signed_child_protection_policy" class="col-form-label">Upload Signed Child Protection Policy</label>
+                                    <div class="input-group">
+                                        <input id="signed_child_protection_policy" type="file"
+                                            class="form-control @error('signed_child_protection_policy') is-invalid @enderror" name="signed_child_protection_policy">
+                                        @isset($checks->signed_child_protection_policy)
+                                            <a href="{{ asset('storage/uploads/users/'.Auth::user()->id.'/checks'.'/'. $checks->signed_child_protection_policy) }}"
+                                                download="" class="btn btn-warning download-label"><i
+                                                    class="mdi mdi-download"></i></a>
+                                        @endisset
+                                    </div>
+                                    @error('signed_child_protection_policy')
+                                        <small id="signed_child_protection_policy-error" class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6">
                                     <label for="professional_volunteer" class="col-form-label">Professional Volunteer <span
                                             class="text-danger">*</span></label>
                                     <select id="professional_volunteer"
@@ -304,6 +349,21 @@
                                     </select>
                                     @error('professional_volunteer')
                                         <small id="professional_volunteer-error" class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="professional_volunteer_attachment" class="col-form-label">Professional Volunteer Attachment</label>
+                                    <div class="input-group">
+                                        <input id="professional_volunteer_attachment" type="file"
+                                            class="form-control @error('professional_volunteer_attachment') is-invalid @enderror" name="professional_volunteer_attachment">
+                                        @isset($checks->professional_volunteer_attachment)
+                                            <a href="{{ asset('storage/uploads/users/'.Auth::user()->id.'/checks'.'/'. $checks->professional_volunteer_attachment) }}"
+                                                download="" class="btn btn-warning download-label"><i
+                                                    class="mdi mdi-download"></i></a>
+                                        @endisset
+                                    </div>
+                                    @error('professional_volunteer_attachment')
+                                        <small id="professional_volunteer_attachment-error" class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="col-lg-12">

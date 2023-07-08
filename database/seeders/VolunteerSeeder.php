@@ -242,9 +242,13 @@ class VolunteerSeeder extends Seeder
             $check_data                                             = array();
             $check_data['user_id']                                  = $user->id;
             $check_data['statutory_declaration_attached']           = $faker->randomElement(['Yes', 'No']);
+            $check_data['statutory_declaration']                    = '1.png';
             $check_data['code_of_conduct_attached']                 = $faker->randomElement(['Yes', 'No']);
+            $check_data['code_of_conduct']                          = '2.png';
             $check_data['signed_child_protection_policy_attached']  = $faker->randomElement(['Yes', 'No']);
-            $check_data['professional_volunteer']                              = $faker->randomElement(['Yes', 'No']);
+            $check_data['signed_child_protection_policy']           = '3.png';
+            $check_data['professional_volunteer']                   = $faker->randomElement(['Yes', 'No']);
+            $check_data['professional_volunteer_attachment']        = '4.png';
             $check_data['base_location']                            = $faker->randomElement(['Branch', 'Office']);
             Check::create($check_data);
         }

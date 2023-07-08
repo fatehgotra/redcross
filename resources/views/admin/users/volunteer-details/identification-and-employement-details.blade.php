@@ -176,7 +176,7 @@
                                         class="form-control @error('photo_id') is-invalid @enderror" name="photo_id"
                                         disabled>
                                     @isset($identification_details->photo_id)
-                                        <a href="{{ asset('storage/uploads/temp/' . $identification_details->photo_id) }}"
+                                        <a href="{{ asset('storage/uploads/users/'.$user->id.'/' . $identification_details->photo_id) }}"
                                             download="" class="btn btn-warning download-label"><i
                                                 class="mdi mdi-download"></i></a>
                                     @endisset
