@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\MyAccountController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\CourseDocumentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\Admin\Learning\QuestionController;
@@ -88,6 +89,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             'store'         => 'courses.store',
             'show'          => 'courses.show',
             'destroy'       => 'courses.destroy',
+        ]
+    ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Course Documents Route
+    |--------------------------------------------------------------------------
+    */
+
+
+    Route::resource('learning/course-documents', CourseDocumentController::class, [
+        'names' => [
+            'index'         => 'course-documents.index',
+            'create'        => 'course-documents.create',
+            'update'        => 'course-documents.update',
+            'edit'          => 'course-documents.edit',
+            'store'         => 'course-documents.store',
+            'show'          => 'course-documents.show',
+            'destroy'       => 'course-documents.destroy',
         ]
     ]);
 

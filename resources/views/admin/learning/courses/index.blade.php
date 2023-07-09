@@ -61,6 +61,9 @@
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{ route('admin.course-documents.index', ['course_id' => $course->id]) }}"
+                                                            class="dropdown-item"><i class="mdi mdi-file-document"></i>
+                                                            Course Document</a>
                                                         <a href="{{ route('admin.courses.edit', $course->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-account-edit-outline"></i>
                                                             Edit Course</a>

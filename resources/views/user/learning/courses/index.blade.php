@@ -26,10 +26,11 @@
                             @foreach ($courses as $course)
                             <div class="col-md-4">
                                 <div class="card border-warning border">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-center">{{ $course->name }}</h5>
-                                        <p class="card-text text-center">{{ $course->description }}</p>
-                                        <p class="card-text text-center text-info"><i class="mdi mdi-star me-1"></i>{{ $course->test_reward_points +  $course->video_reward_points }} Reward Points</p>                                                                              
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $course->name }}</h5>
+                                        <p class="card-text">{{ $course->description }}</p>
+                                        <p class="card-text text-info"><i class="mdi mdi-star me-1"></i>{{ $course->test_reward_points +  $course->video_reward_points }} Reward Points</p>
+                                        <a href="{{ route('learning.documents', $course->id) }}">Study Material</a>                                                                             
                                     </div>
                                     <div class="card-footer">
                                         <div class="row text-center">

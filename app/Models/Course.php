@@ -17,6 +17,11 @@ class Course extends Model
         'status'
     ];
 
+    public function documents()
+    {
+        return $this->hasMany(CourseDocument::class, 'course_id');
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class, 'course_id')->where('status', true);

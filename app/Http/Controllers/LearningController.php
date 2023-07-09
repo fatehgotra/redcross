@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseDocument;
 use App\Models\Question;
 use App\Models\TestAttempt;
 use App\Models\TestResponse;
@@ -14,7 +15,7 @@ class LearningController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'approved']);
     }
 
     public function courses()
@@ -55,6 +56,13 @@ class LearningController extends Controller
             'points'    => Course::find($id)->video_reward_points
         ]);
         return view('user.learning.courses.videos', compact('course'));
+    }
+
+    public function documents($id)
+    {
+        $course    = Course::find($id);
+        $documents = CourseDocument::with('course')->where('course_id', $id)->get();
+        return view('user.learning.courses.documents', compact('course', 'documents'));
     }
 
     public function submitTest(Request $request, $id)
