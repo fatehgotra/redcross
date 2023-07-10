@@ -56,7 +56,7 @@
                                     $q->where('registration_location_type', $branch);
                                 });
                             })->count() }}</span>
-                    <span> Volunteers </span>
+                   
                 @endrole
                 </a>
                 <div class="{{ request()->is('admin/volunteers') || request()->is('admin/volunteers/*') ? 'collapse show' : 'collapse' }}" id="volunteers">
