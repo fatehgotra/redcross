@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AlertController;
 use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
@@ -207,4 +208,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('change-password', [ChangePasswordController::class, 'changePasswordForm'])->name('password.form');
 
     Route::post('change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alerts Route
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('alerts', AlertController::class);
+
+
 });
