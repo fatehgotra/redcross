@@ -358,7 +358,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('banking-information.form') }}"
+                        <a href="{{ route('special-information.form') }}"
                             class="btn btn-sm btn-warning float-start">Previous
                             Step</a>
                         <button type="submit" form="consentAndChecksForm" class="btn btn-sm btn-success float-end">Next
