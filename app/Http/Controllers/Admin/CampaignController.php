@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\CampaignAttendance;
+use App\Models\CampaignUser;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -60,7 +64,11 @@ class CampaignController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $campaign = Campaign::find($id);
+        $user_ids = CampaignUser::where('campaign_id', $id)->pluck('user_id')->toArray();
+        $users    = User::whereIn('id', $user_ids)->get();
+        $present_users = CampaignAttendance::where('date', Carbon::now()->format('Y-m-d'))->where('campaign_id', $id)->pluck('user_id')->toArray();
+        return view('admin.campaigns.attendance', compact('campaign', 'users', 'present_users'));
     }
 
     /**
@@ -103,5 +111,20 @@ class CampaignController extends Controller
     {
         Campaign::find($id)->delete();
         return redirect()->route('admin.campaigns.index')->with('sucess', 'Campaign deleted successfully!');
+    }
+
+    public function markAttendance(Request $request, $id){
+
+        CampaignAttendance::where('date', Carbon::now()->format('Y-m-d'))->where('campaign_id', $id)->delete();
+        if(!empty($request->attendance) && is_array($request->attendance)){
+            foreach($request->attendance as $key => $attendance){
+                CampaignAttendance::create([
+                    'date' => Carbon::now()->format('Y-m-d'),
+                    'user_id' => $attendance,
+                    'campaign_id' => $id
+                ]);
+            }
+        }       
+        return redirect()->back()->with('sucess', 'Attendance updated successfully!');
     }
 }

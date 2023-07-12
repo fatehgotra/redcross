@@ -235,5 +235,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('campaigns', CampaignController::class);
 
+    Route::put('campaign/mark-attendence/{id}', [CampaignController::class, 'markAttendance'])->name('mark.attendance');
+
 
 });

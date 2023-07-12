@@ -58,6 +58,10 @@
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
+                                                        <a href="{{ route('admin.campaigns.show', $campaign->id) }}"
+                                                            class="dropdown-item"><i
+                                                                class="mdi mdi-eye"></i>
+                                                            Attendance</a>
                                                         <a href="{{ route('admin.campaigns.edit', $campaign->id) }}"
                                                             class="dropdown-item"><i
                                                                 class="mdi mdi-account-edit-outline"></i>

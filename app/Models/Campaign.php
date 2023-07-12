@@ -16,4 +16,9 @@ class Campaign extends Model
         'ends_at',
         'status'
     ];
+
+    public function attendences()
+    {
+        return $this->hasMany(CampaignAttendance::class, 'campaign_id');
+    }
 }
