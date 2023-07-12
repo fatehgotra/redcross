@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\MyAccountController;
 use App\Http\Controllers\Admin\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CourseDocumentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
@@ -216,6 +217,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     */
 
     Route::resource('alerts', AlertController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Updates Route
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('updates', BlogController::class);
 
 
 });

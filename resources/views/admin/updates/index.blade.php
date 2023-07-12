@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Alerts')
+@section('title', 'Updates')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -13,10 +13,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Alerts</li>
+                            <li class="breadcrumb-item active">Updates</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Alerts</h4>
+                    <h4 class="page-title">Updates</h4>
                 </div>
             </div>
         </div>
@@ -27,8 +27,8 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <a href="{{ route('admin.alerts.create') }}" class="btn btn-sm btn-dark float-end">Add
-                                    Alert</a>
+                                <a href="{{ route('admin.updates.create') }}" class="btn btn-sm btn-dark float-end">Add
+                                    Update</a>
                             </div>
                         </div>
                     </div>
@@ -41,35 +41,33 @@
                                             <th>Id</th>
                                             <th>Title</th>
                                             <th>Status</th>
-                                            <th>Priority</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($alerts as $alert)
+                                        @foreach ($updates as $update)
                                             <tr>
-                                                <td>{{ $alert->id }}</td>
-                                                <td>{{ $alert->title }}</td>
-                                                <td>{!! $alert->status == false
+                                                <td>{{ $update->id }}</td>
+                                                <td>{{ $update->title }}</td>
+                                                <td>{!! $update->status == false
                                                     ? '<span class="badge badge-outline-danger">Draft</span>'
                                                     : '<span class="badge badge-outline-success">Published</span>' !!}</td>
-                                                <td>{{ $alert->priority }}</td>
                                                 <td>
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                        <a href="{{ route('admin.alerts.edit', $alert->id) }}"
+                                                        <a href="{{ route('admin.updates.edit', $update->id) }}"
                                                             class="dropdown-item"><i
                                                                 class="mdi mdi-account-edit-outline"></i>
-                                                            Edit Alert</a>
+                                                            Edit Update</a>
                                                         <a href="javascript:void(0);"
-                                                            onclick="confirmDelete({{ $alert->id }})"
+                                                            onclick="confirmDelete({{ $update->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
-                                                            Delete Alert</a>
-                                                        <form id='delete-form{{ $alert->id }}'
-                                                            action='{{ route('admin.alerts.destroy', $alert->id) }}'
+                                                            Delete Update</a>
+                                                        <form id='delete-form{{ $update->id }}'
+                                                            action='{{ route('admin.updates.destroy', $update->id) }}'
                                                             method='POST'>
                                                             <input type='hidden' name='_token'
                                                                 value='{{ csrf_token() }}'>
