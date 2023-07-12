@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\AlertController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSkuController;
+use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\VolunteerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -143,3 +146,16 @@ Route::get('learning/courses/watch-videos/{id}', [LearningController::class, 'vi
 
 /* Get Test Result Routes */
 Route::get('learning/results/{id}', [LearningController::class, 'result'])->name('learning.result');
+
+
+/* Get Alerts Routes */
+Route::get('alerts', [AlertController::class, 'index'])->name('alerts.index');
+
+/* Get Updates Routes */
+Route::get('updates', [UpdateController::class, 'index'])->name('updates.index');
+
+/* Get Campaigns Routes */
+Route::get('campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
+
+/* Join Campaign Route */
+Route::put('campaigns/join/{id}', [CampaignController::class, 'join'])->name('join.campaign');
