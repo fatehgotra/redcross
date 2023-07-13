@@ -12,7 +12,7 @@
                 aria-expanded="false">
                 <span class="account-user-avatar"> 
                     @isset(Auth::user()->avatar)
-                        <img src="{{ asset('storage/uploads/admin/'.Auth::user()->avatar) }}" alt="user-image" class="rounded-circle">
+                        <img src="{{ asset('storage/uploads/users/'.Auth::user()->id.'/'.Auth::user()->avatar) }}" alt="user-image" class="rounded-circle">
                     @else
                         <img src="{{ asset('assets/images/users/avatar.png') }}" alt="user-image" class="rounded-circle">
                     @endif

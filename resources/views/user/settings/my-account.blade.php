@@ -35,10 +35,18 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="name" class="col-form-label">Full Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Full Name" value="{{ old('name', $user->name) }}">
-                            @error('name')
+                            <label for="firstname" class="col-form-label">First Name</label>
+                            <input type="text" class="form-control" id="firstname" name="firstname"
+                                placeholder="Enter Full Name" value="{{ old('firstname', $user->firstname) }}">
+                            @error('firstname')
+                                <code id="name-error" class="text-danger">{{ $message }}</code>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="col-form-label">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" name="lastname"
+                                placeholder="Enter Full Name" value="{{ old('lastname', $user->lastname) }}">
+                            @error('lastname')
                                 <code id="name-error" class="text-danger">{{ $message }}</code>
                             @enderror
                         </div>
@@ -75,7 +83,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-warning" form="accountForm">Update Account Details</button>
+                    <button type="submit" class="btn btn-warning" form="accountForm">Update</button>
                 </div>
             </div>
         </div>

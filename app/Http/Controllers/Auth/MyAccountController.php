@@ -4,11 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Models\Bank;
-use App\Models\Country;
-use App\Models\Credential;
-use App\Models\UserBankDetail;
-use App\Models\UserExhibitor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -72,11 +67,9 @@ class MyAccountController extends Controller
     public function edit(User $user)
     {
         $id                 = Auth::user()->id;
-        $exhibitor          = User::find($id);
-        $countries          = Country::get();
-        $banks              = Bank::get();
-        $exhibitor->avatar  = isset($exhibitor->avatar) ? asset('storage/uploads/suppliers/' . $id . '/' . $exhibitor->avatar) : URL::to('assets/images/users/avatar.png');
-        return view('exhibitor.settings.my-account', compact('exhibitor', 'countries', 'banks'));
+        $user               = User::find($id);
+        $user->avatar       = isset($user->avatar) ? asset('storage/uploads/users/' . $id . '/' . $user->avatar) : URL::to('assets/images/users/avatar.png');
+        return view('user.settings.my-account', compact('user'));
     }
 
     /**
@@ -88,28 +81,19 @@ class MyAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $exhibitor          = User::find($id);
+        $user          = User::find($id);
 
         $rules = [
-            'name'                  => ['required', 'string', 'max:255'],
-            'surname'               => ['required', 'string', 'max:255'],
-            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
-            'company_name'          => ['required', 'string', 'max:255'],
-            'mobile_contact_number' => ['required', 'max:255'],
-            'company_address'       => ['required', 'string', 'max:255'],
-            'city'                  => ['required', 'string', 'max:255'],
-            'province'              => ['required', 'string', 'max:255'],
-            'postal_code'           => ['required', 'string', 'max:255'],
-            'country'               => ['required', 'string', 'max:255'],
-            'bank'                  => ['required', 'string', 'max:255'],
-            'account_no'            => ['required', 'string', 'max:255'],
-            'proof_of_banking'      => isset($exhibitor->bank->proof_of_banking) ? [] : ['required'],
+            'firstname'                  => ['required', 'string', 'max:255'],
+            'lastname'               => ['required', 'string', 'max:255'],
+            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],            
+            'phone' => ['required', 'max:255'],            
         ];
 
         $messages = [
-            'name.required'                         => 'Please enter Supplier name.',
-            'surname.required'                      => 'Please enter Supplier surname.',
-            'email.required'                        => 'Please enter Supplier email address.',
+            'firstname.required'                         => 'Please enter Supplier name.',
+            'lasyname.required'                      => 'Please enter Supplier surname.',
+            'email.required'                        => 'Please enter email address.',
             'company_name.required'                 => 'Please enter Company name.',
             'mobile_contact_number.required'        => 'Please enter Company mobile contact number.',
             'company_address.required'              => 'Please enter Company address.',
@@ -123,8 +107,10 @@ class MyAccountController extends Controller
         ];
 
         
-        $exhibitor->name    = $request->name;
-        $exhibitor->email   = $request->email;
+        $user->firstname    = $request->firstname;
+        $user->lastname    = $request->lastname;
+        $user->email   = $request->email;
+        $user->phone   = $request->phone;
 
         if ($request->hasfile('avatar')) {
 
@@ -132,86 +118,22 @@ class MyAccountController extends Controller
 
             $name       = $image->getClientOriginalName();
 
-            $image->storeAs('uploads/suppliers/' . $id, $name, 'public');
+            $image->storeAs('uploads/users/' . $id, $name, 'public');
 
-            if (isset($exhibitor->avatar)) {
+            if (isset($user->avatar)) {
 
-                $path   = 'public/uploads/suppliers/' . $id . '/' . $exhibitor->avatar;
-
-                Storage::delete($path);
-            }
-
-            $exhibitor->avatar = $name;
-        }
-
-        $exhibitor->save();
-
-        UserExhibitor::updateOrCreate(
-            [
-                'user_id'               => $exhibitor->id,
-            ],
-            [
-
-                'company_name'          => $request->company_name,
-                'mobile_contact_number' => $request->mobile_contact_number,
-                'company_address'       => $request->company_address,
-                'city'                  => $request->city,
-                'province'              => $request->province,
-                'postal_code'           => $request->postal_code,
-                'country'               => $request->country,
-            ]
-        );
-
-        if ($request->hasfile('proof_of_banking')) {
-
-            $file      = $request->file('proof_of_banking');
-
-            $name       = $file->getClientOriginalName();
-
-            $file->storeAs('uploads/suppliers/' . $id, $name, 'public');
-
-            if (isset($exhibitor->bank->proof_of_banking)) {
-
-                $path   = 'public/uploads/suppliers/' . $id . '/' . $exhibitor->bank->proof_of_banking;
+                $path   = 'public/uploads/users/' . $id . '/' . $user->avatar;
 
                 Storage::delete($path);
             }
+
+            $user->avatar = $name;
         }
 
-        UserBankDetail::updateOrCreate(
-            [
-                'user_id'               => $exhibitor->id,
-            ],
-            [
-                'bank'                  => $request->bank,
-                'account_no'            => $request->account_no,
-                'proof_of_banking'      => $request->hasfile('proof_of_banking') ? $name : $exhibitor->bank->proof_of_banking,
-            ]
-        );
-        $credentials = Credential::first();
-        if(isset($exhibitor->vendhq_supplier_id)){
-            Http::withToken($credentials->personal_access_token)->post('https://'.$credentials->domain_prefix.'.vendhq.com/api/supplier', [                
-                'id'                        => $exhibitor->vendhq_supplier_id,
-                'name'                      => $exhibitor->name . ' ' . $exhibitor->surname,
-                'description'               => 'Created at: ' . $exhibitor->created_at,
-                'contact'                   => [
-                    'first_name'            => $exhibitor->name,
-                    'last_name'             => $exhibitor->surname,
-                    'company_name'          => $exhibitor->exhibitor->company_name ? $exhibitor->exhibitor->company_name : null,
-                    'mobile'                => $exhibitor->exhibitor->mobile_contact_number ? $exhibitor->exhibitor->mobile_contact_number : null,
-                    'email'                 => $exhibitor->email ? $exhibitor->email : null,
-                    'physical_address1'     => $exhibitor->exhibitor->company_address ? $exhibitor->exhibitor->company_address : null,
-                    'physical_suburb'       => $exhibitor->exhibitor->city ? $exhibitor->exhibitor->city : null,
-                    'physical_city'         => $exhibitor->exhibitor->city ? $exhibitor->exhibitor->city : null,
-                    'physical_state'        => $exhibitor->exhibitor->province ? $exhibitor->exhibitor->province : null,
-                    'physical_postcode'     => $exhibitor->exhibitor->postal_code ? $exhibitor->exhibitor->postal_code : null,
-                    'physical_country_id'   => $exhibitor->exhibitor->country ? $exhibitor->exhibitor->country : null,
-                ],
+        $user->save();
+        
 
-            ]);
-        }
-
-        return redirect()->route('my-account.edit', $exhibitor->id)->with('success', 'Account updated successfully!');
+        return redirect()->route('my-account.edit', $user->id)->with('success', 'Account updated successfully!');
     }
 
     /**
