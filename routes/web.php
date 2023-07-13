@@ -159,3 +159,6 @@ Route::get('campaigns', [CampaignController::class, 'index'])->name('campaigns.i
 
 /* Join Campaign Route */
 Route::put('campaigns/join/{id}', [CampaignController::class, 'join'])->name('join.campaign');
+
+/* Leave Campaign Route */
+Route::put('campaigns/leave/{id}', [CampaignController::class, 'leave'])->name('leave.campaign');

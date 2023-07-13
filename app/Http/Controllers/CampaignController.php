@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\CampaignAttendance;
 use App\Models\CampaignUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,5 +29,13 @@ class CampaignController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'You have joined the campaign successfully');
+    }
+
+    public function leave(Request $request, $id)
+    {
+        CampaignUser::where('user_id', Auth::user()->id)->where('campaign_id', $id)->delete();
+        CampaignAttendance::where('user_id', Auth::user()->id)->where('campaign_id', $id)->delete();
+
+        return redirect()->back()->with('success', 'You have left the campaign successfully');
     }
 }

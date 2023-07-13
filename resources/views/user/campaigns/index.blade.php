@@ -34,7 +34,13 @@
                                             </div>
                                             <div class="col-6 text-end">
                                                 @if(in_array($campaign->id, $user_campaigns))
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-danger text-white me-1" onclick="confirmExit()"><i class="dripicons-exit me-1"></i>Leave</a>
                                                 <a href="javascript:void(0)" class="btn btn-sm btn-success text-dark"><i class="dripicons-checkmark me-1"></i>Joined</a>
+                                                <form id='leave-form' action='{{ route('leave.campaign', $campaign->id) }}'
+                                                    method='POST'>
+                                                    <input type='hidden' name='_token' value='{{ csrf_token() }}'>
+                                                    <input type='hidden' name='_method' value='PUT'>
+                                                </form>
                                                 @else
                                                 <a href="javascript:void(0)" onclick="confirmJoin()" class="btn btn-sm btn-warning text-dark"><i class="dripicons-enter me-1"></i>Join Campaign</a>
                                                     <form id='join-form' action='{{ route('join.campaign', $campaign->id) }}'
@@ -93,4 +99,22 @@
             })
         };
     </script>
+
+<script type="text/javascript">
+    function confirmExit() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to leave this campaign!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Leave Campaign!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('leave-form').submit();
+            }
+        })
+    };
+</script>
 @endpush

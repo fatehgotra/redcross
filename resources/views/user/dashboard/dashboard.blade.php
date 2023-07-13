@@ -18,6 +18,9 @@
                 </div>
             </div>
         </div>
-        @include('user.dashboard.stats')      
+        @include('user.dashboard.stats')  
+        @include('user.dashboard.alerts')    
+        @include('user.dashboard.updates')
+        @include('user.dashboard.campaigns')
     </div>
 @endsection
