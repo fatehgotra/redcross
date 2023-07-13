@@ -91,19 +91,10 @@ class MyAccountController extends Controller
         ];
 
         $messages = [
-            'firstname.required'                         => 'Please enter Supplier name.',
-            'lasyname.required'                      => 'Please enter Supplier surname.',
+            'firstname.required'                         => 'Please enter  firstname.',
+            'lastname.required'                      => 'Please enter  lastname.',
             'email.required'                        => 'Please enter email address.',
-            'company_name.required'                 => 'Please enter Company name.',
-            'mobile_contact_number.required'        => 'Please enter Company mobile contact number.',
-            'company_address.required'              => 'Please enter Company address.',
-            'city.required'                         => 'Please enter Company city.',
-            'province.required'                     => 'Please enter Company province.',
-            'postal_code.required'                  => 'Please enter Company postal code.',
-            'country.required'                      => 'Please choose Company country.',
-            'bank.required'                         => 'Please choose Bank.',
-            'account_no.required'                   => 'Please enter Bank A/C number.',
-            'proof_of_banking.required'             => 'Please upload Proof of banking.',
+            'phone.required'        => 'Please enter Phone number.',            
         ];
 
         

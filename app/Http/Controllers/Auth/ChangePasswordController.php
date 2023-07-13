@@ -19,7 +19,7 @@ class ChangePasswordController extends Controller
     {
         $id         = Auth::user()->id;
         $user       = User::find($id);
-        return view('exhibitor.settings.change-password', compact('user'));
+        return view('user.settings.change-password', compact('user'));
     }
 
     public function changePassword(Request $request)
