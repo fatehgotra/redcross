@@ -43,7 +43,6 @@ class AdminController extends Controller
             'email'                 => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'password'              => ['required', 'string', 'min:6'],
             'phone'                 => ['required', 'max:255'],
-            'branch'                => ['required'],
             'roles'                 => ['required', 'array', 'min:1']
         ];
 
@@ -61,7 +60,8 @@ class AdminController extends Controller
             'name'                  => $request->name,
             'email'                 => $request->email,
             'phone'                 => $request->phone,
-            'password'              => Hash::make($request->password)
+            'password'              => Hash::make($request->password),
+            'branch'                => $request->branch
         ]);
 
         $roles = $request->input('roles') ? $request->input('roles') : [];
@@ -99,7 +99,6 @@ class AdminController extends Controller
             'name'                  => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'string', 'email', 'max:255', 'unique:admins,email,' . $id],
             'phone'                 => ['required', 'max:255'],
-            'branch'                => ['required'],
             'roles'                 => ['required', 'array', 'min:1']         
         ];
 
@@ -115,7 +114,8 @@ class AdminController extends Controller
         $user                   = Admin::find($id);
         $user->name             = $request->name;
         $user->phone            = $request->phone;
-        $user->email            = $request->email;
+        $user->email            = $request->email;        
+        $user->branch           = $request->branch;
         if (isset($request->password)) {
             $user->password     = Hash::make($request->password);
         }

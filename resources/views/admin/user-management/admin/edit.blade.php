@@ -87,78 +87,78 @@
                                 @enderror
                             </div>      
                             <div class="col-md-6">
-                                <label for="branch" class="form-label">Branch <span class="text-danger">*</span></label>
+                                <label for="branch" class="form-label">Branch </label>
                                 <select id="branch"
-                                    class="form-select"
-                                    name="branch">
+                                    class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple"
+                                    name="branch[]">
                                     <option value="">Please Select</option>
                                     <optgroup label="Central / Eastern">
                                         <option value="Rotuma"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Rotuma' ? 'selected' : '' }}>
+                                            {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Rotuma') ? 'selected' : '' }}>
                                             Rotuma
                                         </option>
                                         <option value="Levuka"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Levuka' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Levuka') ? 'selected' : '' }}>
                                             Levuka
                                         </option>
                                         <option value="Suva"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Suva' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Suva') ? 'selected' : '' }}>
                                             Suva
                                         </option>
                                     </optgroup>
                                     <optgroup label="Western">
                                         <option value="Sigatoka"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Sigatoka' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Sigatoka') ? 'selected' : '' }}>
                                             Sigatoka
                                         </option>
                                         <option value="Nadi"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Nadi' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Nadi') ? 'selected' : '' }}>
                                             Nadi
                                         </option>
                                         <option value="Lautoka"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Lautoka' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Lautoka') ? 'selected' : '' }}>
                                             Lautoka
                                         </option>
                                         <option value="Ba"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Ba' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Ba') ? 'selected' : '' }}>
                                             Ba
                                         </option>
                                         <option value="Tavua"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Tavua' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Tavua') ? 'selected' : '' }}>
                                             Tavua
                                         </option>
                                         <option value="Rakiraki"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Rakiraki' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Rakiraki') ? 'selected' : '' }}>
                                             Rakiraki
                                         </option>
                                         <option value="Nalawa"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Nalawa' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Nalawa') ? 'selected' : '' }}>
                                             Nalawa
                                         </option>
                                     </optgroup>
                                     <optgroup label="Northern">
                                         <option value="Bua"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Bua' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Bua') ? 'selected' : '' }}>
                                             Bua
                                         </option>
                                         <option value="Seaqaqa"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Seaqaqa' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Seaqaqa') ? 'selected' : '' }}>
                                             Seaqaqa
                                         </option>
                                         <option value="Savusavu"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Savusavu' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Savusavu') ? 'selected' : '' }}>
                                             Savusavu
                                         </option>
                                         <option value="Labasa"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Labasa' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Labasa') ? 'selected' : '' }}>
                                             Labasa
                                         </option>
                                         <option value="Taveuni"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Taveuni' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Taveuni') ? 'selected' : '' }}>
                                             Taveuni
                                         </option>
                                         <option value="Rabi"
-                                            {{ old('branch', isset($user) ? $user->branch : '') == 'Rabi' ? 'selected' : '' }}>
+                                        {{ collect(old('branch', isset($user) ? $user->branch : ''))->contains('Rabi') ? 'selected' : '' }}>
                                             Rabi
                                         </option>
                                     </optgroup>

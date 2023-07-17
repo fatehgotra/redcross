@@ -50,7 +50,14 @@
                                             <tr>
                                                 <td>{{ $user->id }}</td>
                                                 <td>{{ $user->name }}</td>
-                                                <td>{{ $user->branch }}</td>
+                                                <td> @empty ($user->branch)
+                                                   
+                                                    @else
+                                                    @foreach ($user->branch as $branch)
+                                                    <span class="badge badge-outline-secondary">{{ ucfirst($branch) }}</span>
+                                                    @endforeach
+                                                    
+                                                    @endempty</td>
                                                 <td>
                                                     @foreach ($user->roles as $role)
                                                     <span class="badge badge-outline-danger">{{ ucfirst(str_replace('-', ' ', $role->name)) }}</span>

@@ -39,6 +39,21 @@
             @endforeach
 
     </div>
+
+    <div class="p-3">
+
+        <!-- Settings -->
+        <h5 class="mt-3">Branch</h5>
+        <hr class="mt-1" />
+        @empty(Auth::guard('admin')->user()->branch)
+
+        @else
+        @foreach (Auth::guard('admin')->user()->branch as $branch)
+        <i class="dripicons-jewel text-primary"></i> {{ ucfirst($branch) }}<br>
+        @endforeach
+        @endempty
+
+</div>
 </div>
 
 <div class="rightbar-overlay"></div>

@@ -53,7 +53,7 @@
                     <span
                         class="badge bg-dark float-end me-1">{{ \App\Models\User::with('lodgementInformation')->whereHas('lodgementInformation', function ($q) use ($branch) {
                                 $q->where(function ($q) use ($branch) {
-                                    $q->where('registration_location_type', $branch);
+                                    $q->whereIn('registration_location_type', $branch);
                                 });
                             })->count() }}</span>
                    

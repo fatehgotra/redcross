@@ -34,7 +34,7 @@ class UserController extends Controller
         } else {
             $users->whereHas('lodgementInformation', function ($q) use ($branch) {
                 $q->where(function ($q) use ($branch) {
-                    $q->where('registration_location_type', $branch);
+                    $q->whereIn('registration_location_type', $branch);
                 });
             });
 
