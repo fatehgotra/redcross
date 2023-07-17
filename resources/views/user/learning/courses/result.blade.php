@@ -113,11 +113,15 @@
                                 <div class="card tilebox-one">
                                     <div class="card-body">
                                         @php
-                                            $starts_at = \Carbon\Carbon::parse($attempt->starts_at);
+                                            $percentage = ($attempt->correct / count($attempt->responses) * 100);
                                             $ends_at = \Carbon\Carbon::parse($attempt->ends_at);
                                         @endphp
-                                        <h2 class="m-b-20">{{ $ends_at->diff($starts_at)->format('%H:%I:%S') }}</h2>
-                                        <span class="text-muted">Time Spent</span>
+                                        @if($percentage > 80)
+                                            <h2 class="m-b-20 text-success">Pass</h2>
+                                        @else
+                                            <h2 class="m-b-20 text-danger">Fail</h2>
+                                        @endif
+                                        <span class="text-muted">{{round($percentage, 2)}} %</span>
                                     </div> <!-- end card-body-->
                                 </div>
                                 <!--end card-->
@@ -182,7 +186,8 @@
                                 @elseif($response->option == 1 && $response->question->correct_option !== 1)
                                     <i class="mdi mdi-close-circle font-18 text-danger mr-2"></i>
                                 @elseif($response->option !== 1 && $response->question->correct_option == 1)
-                                    <i class="mdi mdi-check-circle font-18 text-success mr-2"></i>
+                                    {{-- <i class="mdi mdi-check-circle font-18 text-success mr-2"></i> --}}
+                                    <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @else
                                     <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @endif
@@ -197,7 +202,8 @@
                                 @elseif($response->option == 2 && $response->question->correct_option !== 2)
                                     <i class="mdi mdi-close-circle font-18 text-danger mr-2"></i>
                                 @elseif($response->option !== 2 && $response->question->correct_option == 2)
-                                    <i class="mdi mdi-check-circle font-18 text-success mr-2"></i>
+                                    {{-- <i class="mdi mdi-check-circle font-18 text-success mr-2"></i> --}}
+                                    <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @else
                                     <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @endif
@@ -212,7 +218,8 @@
                                 @elseif($response->option == 3 && $response->question->correct_option !== 3)
                                     <i class="mdi mdi-close-circle font-18 text-danger mr-2"></i>
                                 @elseif($response->option !== 3 && $response->question->correct_option == 3)
-                                    <i class="mdi mdi-check-circle font-18 text-success mr-2"></i>
+                                    {{-- <i class="mdi mdi-check-circle font-18 text-success mr-2"></i> --}}
+                                    <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @else
                                     <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @endif
@@ -228,7 +235,8 @@
                                 @elseif($response->option == 4 && $response->question->correct_option !== 4)
                                     <i class="mdi mdi-close-circle font-18 text-danger mr-2"></i>
                                 @elseif($response->option !== 4 && $response->question->correct_option == 4)
-                                    <i class="mdi mdi-check-circle font-18 text-success mr-2"></i>
+                                    {{-- <i class="mdi mdi-check-circle font-18 text-success mr-2"></i> --}}
+                                    <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @else
                                     <i class="mdi mdi-circle-double font-18 text-light mr-2"></i>
                                 @endif

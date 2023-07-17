@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\TestAttempt;
 use App\Models\TestResponse;
 use App\Models\UserReward;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,15 +23,19 @@ class LearningController extends Controller
     {
         $courses = Course::with('questions', 'videos')->where('status', true)->orderBy('id', 'desc')->get();
         $courses->map(function ($item) {
-            $item->attempted    = TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->exists(); 
-            $item->attempt_id   = $item->attempted ? TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->first()->id : null;           
+            $item->attempted        = TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->exists(); 
+            $item->unblock_after    = $item->attempted ? Carbon::parse(TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->first()->created_at)->diffInDays(Carbon::now()) : 3;
+            $item->attempt_id       = $item->attempted ? TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->first()->id : null;           
             return $item;
         });
+        
         return view('user.learning.courses.index', compact('courses'));
     }
 
     public function takeTest($id)
     {
+        TestAttempt::where('course_id', $id)->where('user_id', Auth::user()->id)->delete();
+        TestResponse::where('course_id', $id)->where('user_id', Auth::user()->id)->delete();
         $course                             = Course::with('questions', 'videos')->find($id);
         $attempt                            = new TestAttempt();
         $attempt->user_id                   = Auth::user()->id;
