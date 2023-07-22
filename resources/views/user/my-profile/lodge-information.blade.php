@@ -199,6 +199,29 @@
                                             class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="col-lg-12">
+                                    <label for="role" class="col-form-label">Role <span
+                                            class="text-danger">*</span></label>
+                                    <select id="role" class="form-select @error('role') is-invalid @enderror"
+                                        name="role" disabled>
+                                        <option value="">Select Role</option>
+                                        <option value="volunteer"
+                                            {{ old('role', isset($user) ? $user->role : '') == 'volunteer' ? 'selected' : '' }}>
+                                            Volunteer
+                                        </option>
+                                        <option value="member"
+                                            {{ old('role', isset($user) ? $user->role : '') == 'member' ? 'selected' : '' }}>
+                                            Member
+                                        </option>
+                                        <option value="both"
+                                            {{ old('role', isset($user) ? $user->role : '') == 'both' ? 'selected' : '' }}>
+                                            Both
+                                        </option>
+                                    </select>
+                                    @error('role')
+                                        <small id="role-error" class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>  
                             </div>
                         </form>
                     </div>

@@ -33,8 +33,9 @@ class MyProfileController extends Controller
     // Tab 1
     public function lodgeInformationForm()
     {
+        $user = Auth::user();
         $lodgement_information = Auth::user()->lodgementInformation;
-        return view('user.my-profile.lodge-information', compact('lodgement_information'));
+        return view('user.my-profile.lodge-information', compact('lodgement_information', 'user'));
     }
 
     public function lodgeInformation(Request $request)
