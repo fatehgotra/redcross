@@ -19,7 +19,7 @@
                 </span>
                 <span>
                     <span class="account-user-name">{{ Auth::user()->firstname }}{{ Auth::user()->lastname }}</span>
-                    <span class="account-position">Volunteer</span>
+                    <span class="account-position">{{ Auth::user()->role == 'both' ? 'Volunteer | Member' : ucfirst(Auth::user()->role) }}</span>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
