@@ -29,6 +29,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
+Route::get('/payment-details', function () {
+    return view('payment-detail');
+})->name('payment-details');
+
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

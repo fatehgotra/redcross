@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Volunteer Details')
+@section('title', 'Member Details')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -11,11 +11,11 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item">Volunteer Details</li>
+                            <li class="breadcrumb-item">Member Details</li>
                             <li class="breadcrumb-item active">Lodgement Information</li>
                         </ol>
                     </div>
-                    <h4 class="page-title"><i class="uil-home-alt"></i> Volunteer Details</h4>
+                    <h4 class="page-title"><i class="uil-home-alt"></i> Member Details</h4>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                         <div class="float-start">
                             <p><strong>{{ $user->firstname }} {{ $user->lastname }}</strong></p>
                         </div>
-                        @include('admin.users.volunteer-details.section.approval-section')
+                        @include('admin.members.volunteer-details.section.approval-section')
                     </div>
                 </div>
             </div>
@@ -36,39 +36,39 @@
                     <div class="card-body p-0">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active show"
-                                href="{{ route('admin.volunteer-detail.lodge-information.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.lodge-information.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Lodgement Information
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.personal-information.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.personal-information.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Personal Information
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.contact-information.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.contact-information.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Contact Information
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.identification-and-employement-details.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.identification-and-employement-details.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Identification Details
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.education-background.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.education-background.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Education Background
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.special-information.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.special-information.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Special Information
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.service-interest.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.service-interest.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Service Interests
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.banking-information.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.banking-information.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Banking Information
                             </a>
                             <a class="nav-link"
-                                href="{{ route('admin.volunteer-detail.consents-and-checks.form', $user->id) }}">
+                                href="{{ route('admin.member-detail.consents-and-checks.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Consent and Checks
                             </a>
                         </div>
@@ -214,7 +214,7 @@
                                         <small id="registration_location_type-error"
                                             class="text-danger">{{ $message }}</small>
                                     @enderror
-                            </div>  
+                            </div> 
                             <div class="col-lg-12">
                                 <label for="role" class="col-form-label">Role <span
                                         class="text-danger">*</span></label>
@@ -237,17 +237,17 @@
                                 @error('role')
                                     <small id="role-error" class="text-danger">{{ $message }}</small>
                                 @enderror
-                            </div>                          
+                            </div>                           
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('admin.volunteers.index') }}" class="btn btn-sm btn-dark float-end">Back</a>
+                        <a href="{{ route('admin.members.index') }}" class="btn btn-sm btn-dark float-end">Back</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('admin.users.volunteer-details.modals.decline-modal')
+    @include('admin.members.volunteer-details.modals.decline-modal')
 @endsection
 @push('scripts')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Volunteers')
+@section('title', 'Members')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -14,20 +14,21 @@
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
                             @if(request()->get('status'))
-                            <li class="breadcrumb-item active">{{ ucfirst(request()->get('status')) }} Volunteers</li>
+                            <li class="breadcrumb-item active">{{ ucfirst(request()->get('status')) }} Members</li>
                             @endif
         
                             @if(request()->get('active'))
-                            <li class="breadcrumb-item active">{{ request()->get('active') == 'yes' ? 'Active': 'Inactive' }} Volunteers</li>
+                            <li class="breadcrumb-item active">{{ request()->get('active') == 'yes' ? 'Active': 'Inactive' }} Members</li>
                             @endif
+                           
                         </ol>
-                    </div>
+                    </div>                    
                     @if(request()->get('status'))
-                    <h4 class="page-title">{{ ucfirst(request()->get('status')) }} Volunteers</h4>
+                    <h4 class="page-title">{{ ucfirst(request()->get('status')) }} Members</h4>
                     @endif
 
                     @if(request()->get('active'))
-                        <h4 class="page-title">{{ request()->get('active') == 'yes' ? 'Active': 'Inactive' }} Volunteers</h4>
+                        <h4 class="page-title">{{ request()->get('active') == 'yes' ? 'Active': 'Inactive' }} Members</h4>
                     @endif
                 </div>
             </div>
@@ -76,10 +77,10 @@
                                                         <i class="mdi mdi-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-end">                                                        
-                                                        <a href="{{ route('admin.volunteer-detail.lodge-information.form', $user->id) }}"
+                                                        <a href="{{ route('admin.member-detail.lodge-information.form', $user->id) }}"
                                                             class="dropdown-item"><i class="mdi mdi-eye"></i>
                                                             Show Details</a>  
-                                                            <a href="{{ route('admin.volunteer.approval-history', $user->id) }}"
+                                                            <a href="{{ route('admin.member.approval-history', $user->id) }}"
                                                                 class="dropdown-item"><i class="mdi mdi-information-variant"></i>
                                                                 Approval History</a>        
                                                             <a href="javascript:void(0);" class="dropdown-item change-password"
@@ -90,9 +91,9 @@
                                                             onclick="confirmDelete({{ $user->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
                                                             Delete
-                                                            Volunteer</a>
+                                                            Member</a>
                                                         <form id='delete-form{{ $user->id }}'
-                                                            action='{{ route('admin.volunteers.destroy', $user->id) }}'
+                                                            action='{{ route('admin.members.destroy', $user->id) }}'
                                                             method='POST'>
                                                             <input type='hidden' name='_token'
                                                                 value='{{ csrf_token() }}'>

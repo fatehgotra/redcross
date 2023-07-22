@@ -25,6 +25,7 @@ return new class extends Migration
             $table->enum('approved_by', ['Administrator', 'Branch Level', 'Division Manager', 'HQ'])->nullable();
             $table->bigInteger('approver_id')->unsigned()->nullable();
             $table->text('decline_reason')->nullable();
+            $table->string('role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

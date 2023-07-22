@@ -20,13 +20,15 @@ class VolunteerController extends Controller
             'registering_year'                     => 'required',
             'division'                             => 'required',
             'registration_location_type'           => 'required',
+            'role'                                 => 'required',
         ];
 
         $messages = [
             'date_of_lodgement.required'           => 'Please enter Date of Lodgement',
             'registering_year.required'            => 'Please enter Registering Year.',
             'division.required'                    => 'Please select Division',
-            'registration_location_type.required'  => 'Please select your nearest branch.'
+            'registration_location_type.required'  => 'Please select your nearest branch.',
+            'role.required'                        => 'Please select role.',
         ];
 
         $this->validate($request, $rules, $messages);
@@ -36,6 +38,7 @@ class VolunteerController extends Controller
         $data['registering_year']                  = $request->registering_year;
         $data['division']                          = $request->division;
         $data['registration_location_type']        = $request->registration_location_type;
+        $data['role']                              = $request->role;
 
         Session::put('lodgement-information', $data);
 

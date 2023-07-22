@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class MemberController extends Controller
 {
     public function __construct()
     {
@@ -30,7 +30,6 @@ class UserController extends Controller
         if($filter_status){
             $users        = $users->where('status', $filter_status);
         }
-
         if($filter_active == 'yes'){
             $users        = $users->whereHas('rewards');
         }
@@ -38,9 +37,8 @@ class UserController extends Controller
         if($filter_active == 'no'){
             $users        = $users->whereDoesntHave('rewards');
         }
-
         if (Auth::guard('admin')->user()->hasRole('admin')) {
-            $users        = $users->whereIn('role', ['volunteer', 'both'])->orderBy('id', 'desc')->get();
+            $users        = $users->whereIn('role', ['member', 'both'])->orderBy('id', 'desc')->get();
         } else {
             $users->whereHas('lodgementInformation', function ($q) use ($branch) {
                 $q->where(function ($q) use ($branch) {
@@ -48,10 +46,10 @@ class UserController extends Controller
                 });
             });
 
-            $users        = $users->whereIn('role', ['volunteer', 'both'])->orderBy('id', 'desc')->get();
+            $users        = $users->whereIn('role', ['member', 'both'])->orderBy('id', 'desc')->get();
         }
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.members.index', compact('users'));
     }
 
     /**
@@ -95,7 +93,7 @@ class UserController extends Controller
             'password'              => Hash::make($request->password)
         ]);
 
-        return redirect()->route('admin.volunteers.index')->with('success', 'User added successfully!');
+        return redirect()->route('admin.members.index')->with('success', 'User added successfully!');
     }
 
     /**
@@ -105,7 +103,7 @@ class UserController extends Controller
     {
         $user            = User::find($id);
         $countries       = Country::get();
-        return view('admin.users.view', compact('user', 'countries'));
+        return view('admin.members.view', compact('user', 'countries'));
     }
 
     /**
@@ -115,7 +113,7 @@ class UserController extends Controller
     {
         $user                   = User::find($id);
         $countries              = Country::get();
-        return view('admin.users.edit', compact('user', 'countries'));
+        return view('admin.members.edit', compact('user', 'countries'));
     }
 
     /**
@@ -151,7 +149,7 @@ class UserController extends Controller
         }
         $user->country          = $request->country;
         $user->save();
-        return redirect()->route('admin.volunteers.index')->with('success', 'User updated successfully!');
+        return redirect()->route('admin.members.index')->with('success', 'User updated successfully!');
     }
 
     /**
@@ -160,7 +158,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         User::find($id)->delete();
-        return redirect()->route('admin.volunteers.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('admin.members.index')->with('success', 'User deleted successfully!');
     }
 
     public function changeStatus(Request $request, $id)
@@ -197,7 +195,7 @@ class UserController extends Controller
 
             User::find($id)->update([
                 'status'        => $request->status,
-                'approved_by'   => 'Division Manager',
+                'approved_by'   => 'HQ',
                 'approver_id'   => Auth::guard('admin')->id(),
                 'decline_reason' => $request->has('reason') ? $request->reason : null
             ]);
@@ -205,32 +203,24 @@ class UserController extends Controller
             ApprovalHistory::create([
                 'user_id'       => $id,
                 'status'        => $request->status,
-                'approved_by'   => 'Division Manager',
+                'approved_by'   => 'HQ',
                 'approver_id'   => Auth::guard('admin')->id()
             ]);
 
             if ($request->status == 'approve') {
-
-                ApprovalHistory::create([
-                    'user_id'       => $id,
-                    'status'        => 'pending',
-                    'approved_by'   => 'HQ',
-                    'approver_id'   => null
-                ]);
-
                 $user = User::find($id);
-                $user->notify(new ApprovalNotification('division-manager'));
+                $user->notify(new ApprovalNotification('hq'));
                 return redirect()->back()->with('success', 'Volunteer approved successfully!');
             } else {
                 $user = User::find($id);
-                $user->notify(new DeclineNotification('division-manager'));
+                $user->notify(new DeclineNotification('hq'));
                 return redirect()->back()->with('success', 'Volunteer declined successfully!');
             }
 
         } elseif (in_array('branch-level', $roles)) {
             User::find($id)->update([
                 'status'        => $request->status,
-                'approved_by'   => 'Branch Level',
+                'approved_by'   => 'HQ',
                 'approver_id'   => Auth::guard('admin')->id(),
                 'decline_reason' => $request->has('reason') ? $request->reason : null
             ]);
@@ -238,23 +228,17 @@ class UserController extends Controller
             ApprovalHistory::create([
                 'user_id'       => $id,
                 'status'        => $request->status,
-                'approved_by'   => 'Branch Level',
+                'approved_by'   => 'HQ',
                 'approver_id'   => Auth::guard('admin')->id()
             ]);
 
             if ($request->status == 'approve') {
-                ApprovalHistory::create([
-                    'user_id'       => $id,
-                    'status'        => 'pending',
-                    'approved_by'   => 'Division Manager',
-                    'approver_id'   => null
-                ]);
                 $user = User::find($id);
-                $user->notify(new ApprovalNotification('branch-level'));
+                $user->notify(new ApprovalNotification('hq'));
                 return redirect()->back()->with('success', 'Volunteer approved successfully!');
             } else {
                 $user = User::find($id);
-                $user->notify(new DeclineNotification('branch-level'));
+                $user->notify(new DeclineNotification('hq'));
                 return redirect()->back()->with('success', 'Volunteer declined successfully!');
             }
         } else {
@@ -266,7 +250,7 @@ class UserController extends Controller
     {
         $approval_history   = ApprovalHistory::where('user_id', $id)->orderBy('id', 'desc')->get();
         $user               = User::find($id);
-        return view('admin.users.approval-history', compact('approval_history', 'user'));
+        return view('admin.members.approval-history', compact('approval_history', 'user'));
     }
 
     public function resetPassword(Request $request)
@@ -275,6 +259,6 @@ class UserController extends Controller
             'password' => ['required', 'min:6', 'confirmed']
         ]);
         User::where('id', $request->id)->update(['password' => Hash::make($request->password)]);
-        return redirect()->route('admin.volunteers.index')->with('success', 'Volunteer password has been reset successfully!');
+        return redirect()->route('admin.members.index')->with('success', 'Volunteer password has been reset successfully!');
     }
 }

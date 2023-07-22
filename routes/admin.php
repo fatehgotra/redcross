@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\Admin\Learning\QuestionController;
 use App\Http\Controllers\Admin\Learning\VideoController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\MemberDetailController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -152,6 +154,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         ]
     ]);
 
+   
+
 
     /*
     |--------------------------------------------------------------------------
@@ -194,6 +198,47 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('volunteer/consents-and-checks/{id}', [VolunteerDetailController::class, 'consentsAndChecksForm'])->name('volunteer-detail.consents-and-checks.form');
 
     Route::put('volunteer/change-status/{id}', [UserController::class, 'changeStatus'])->name('change-status');
+
+     /*
+    |--------------------------------------------------------------------------
+    | Members Route
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('members', MemberController::class);
+
+    Route::get('member/approval-history/{id}', [MemberController::class, 'approvalHistory'])->name('member.approval-history');
+
+    Route::post('member/reset-password', [MemberController::class, 'resetPassword'])->name('member.reset-password');
+
+    /* Member Information > Lodge Information (Tab 1)*/
+    Route::get('member/lodge-information/{id}', [MemberDetailController::class, 'lodgeInformationForm'])->name('member-detail.lodge-information.form');
+
+    /* Member Information > Personal Information (Tab 2)*/
+    Route::get('member/personal-information/{id}', [MemberDetailController::class, 'personalInformationForm'])->name('member-detail.personal-information.form');
+
+    /* Member Information > Contact Information (Tab 3)*/
+    Route::get('member/contact-information/{id}', [MemberDetailController::class, 'contactInformationForm'])->name('member-detail.contact-information.form');
+
+    /* Member Information > Contact Information (Tab 4)*/
+    Route::get('member/identification-and-employement-details/{id}', [MemberDetailController::class, 'identificationAndEmployementDetailsForm'])->name('member-detail.identification-and-employement-details.form');
+
+    /* Member Information > Education Background (Tab 5)*/
+    Route::get('member/education-background/{id}', [MemberDetailController::class, 'educationBackgroundForm'])->name('member-detail.education-background.form');
+
+    /* Member Information > Special Information (Tab 6)*/
+    Route::get('member/special-information/{id}', [MemberDetailController::class, 'specialInformationForm'])->name('member-detail.special-information.form');
+
+    /* Member Information > Service Interest (Tab 7)*/
+    Route::get('member/service-interest/{id}', [MemberDetailController::class, 'serviceInterestForm'])->name('member-detail.service-interest.form');
+
+    /* Member Information > Banking Information (Tab 8)*/
+    Route::get('member/banking-information/{id}', [MemberDetailController::class, 'bankingInformationForm'])->name('member-detail.banking-information.form');
+
+    /* Member Information > Consent and checks (Tab 9)*/
+    Route::get('member/consents-and-checks/{id}', [MemberDetailController::class, 'consentsAndChecksForm'])->name('member-detail.consents-and-checks.form');
+
+    Route::put('member/change-status/{id}', [MemberController::class, 'changeStatus'])->name('member.change-status');
 
     /*
     |--------------------------------------------------------------------------

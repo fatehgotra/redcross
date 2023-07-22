@@ -65,10 +65,11 @@ class VolunteerSeeder extends Seeder
                 'lastname'          => $lastname,
                 'email'             => $email,
                 'email_verified_at' => now(),
-                'status'            => $i == 0 ? 'approved' : 'pending',
+                'status'            => $i == 0 ? 'approve' : 'pending',
                 'approved_by'       => $i == 0 ? 'HQ' : null,
                 'phone'             => $phone,
                 'password'          => Hash::make('password'),
+                'role'              => $faker->randomElement(['volunteer', 'member', 'both']),
             ]);
 
             LodgementInformation::create([

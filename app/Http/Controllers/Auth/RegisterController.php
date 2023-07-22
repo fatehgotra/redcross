@@ -89,14 +89,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+       
+        
+        $lodgement_information = Session::get('lodgement-information');
+
         $user = User::create([           
             'lastname'      => $data['firstname'],           
             'email'         => $data['email'],
             'phone'         => $data['phone'],
             'password'      => Hash::make($data['password']),
+            'role'          => isset($lodgement_information) ? :  $lodgement_information['role'],
         ]);     
-        
-        $lodgement_information = Session::get('lodgement-information');
 
         if(isset($lodgement_information)){
 
