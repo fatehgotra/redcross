@@ -211,6 +211,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::post('member/reset-password', [MemberController::class, 'resetPassword'])->name('member.reset-password');
 
+    Route::get('member-expiry/{id}', [MemberController::class, 'showExpiryForm'])->name('members.expiry');
+
+    Route::put('member/expiry/{id}', [MemberController::class, 'updateExpiry'])->name('members.expiry-update');
+
     /* Member Information > Lodge Information (Tab 1)*/
     Route::get('member/lodge-information/{id}', [MemberDetailController::class, 'lodgeInformationForm'])->name('member-detail.lodge-information.form');
 

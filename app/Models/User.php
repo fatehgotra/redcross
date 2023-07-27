@@ -28,7 +28,8 @@ class User extends Authenticatable
         'approved_by',
         'approver_id',
         'decline_reason',
-        'role'
+        'role',
+        'expiry_date'
     ];
 
     /**

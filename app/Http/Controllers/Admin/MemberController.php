@@ -261,4 +261,17 @@ class MemberController extends Controller
         User::where('id', $request->id)->update(['password' => Hash::make($request->password)]);
         return redirect()->route('admin.members.index')->with('success', 'Volunteer password has been reset successfully!');
     }
+
+    public function showExpiryForm($id){
+        $user = User::find($id);
+        return view('admin.members.expiry', compact('user'));
+    }
+
+    public function updateExpiry(Request $request, $id){
+        $this->validate($request, [
+            'expiry_date' => ['required']
+        ]);
+        $user = User::find($id)->update(['expiry_date' => $request->expiry_date]);
+        return redirect()->route('admin.members.expiry', $id)->with('success', 'Membership expiry date updated successfully!');
+    }
 }

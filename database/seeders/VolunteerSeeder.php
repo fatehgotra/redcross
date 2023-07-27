@@ -70,6 +70,7 @@ class VolunteerSeeder extends Seeder
                 'phone'             => $phone,
                 'password'          => Hash::make('password'),
                 'role'              => $faker->randomElement(['volunteer', 'member', 'both']),
+                'expiry_date'       => $faker->randomElement([Carbon::now()->addDays(14)->format('Y-m-d'), Carbon::now()->addDays(15)->format('Y-m-d'), Carbon::now()->addDays(13)->format('Y-m-d')]),
             ]);
 
             LodgementInformation::create([

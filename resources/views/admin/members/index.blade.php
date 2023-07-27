@@ -82,7 +82,10 @@
                                                             Show Details</a>  
                                                             <a href="{{ route('admin.member.approval-history', $user->id) }}"
                                                                 class="dropdown-item"><i class="mdi mdi-information-variant"></i>
-                                                                Approval History</a>        
+                                                                Approval History</a>    
+                                                                <a href="{{ route('admin.members.expiry', $user->id) }}"
+                                                                    class="dropdown-item"><i class="mdi mdi-calendar"></i>
+                                                                   Membership Expiry</a>        
                                                             <a href="javascript:void(0);" class="dropdown-item change-password"
                                                         data-bs-toggle="modal" data-bs-target="#modal-password"
                                                         data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i

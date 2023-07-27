@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSkuController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\VolunteerController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -166,3 +167,9 @@ Route::put('campaigns/join/{id}', [CampaignController::class, 'join'])->name('jo
 
 /* Leave Campaign Route */
 Route::put('campaigns/leave/{id}', [CampaignController::class, 'leave'])->name('leave.campaign');
+
+/* ExpirySchedule */
+Route::get('/expiry-schedule', function () {
+    Artisan::call('send:membership-notification');
+        return response()->json(['success', 'All members whose membership will expire in the next 14 days are notified.'], 200);
+})->name('expiry-schedule');
