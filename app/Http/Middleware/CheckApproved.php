@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,9 @@ class CheckApproved
     {
         if(auth()->check() && (auth()->user()->status !== 'approve') && (auth()->user()->approved_by !== 'HQ')){           
 
-            if(auth()->user()->role == 'volunteer'){
+            $lodgment = Session::get('lodgement-information');
+
+            if(auth()->user()->role == 'volunteer' || ( isset($lodgment) && $lodgment['role'] == 'volunteer' ) ){
                 Auth::logout();
                 $request->session()->invalidate();
 
@@ -30,6 +33,7 @@ class CheckApproved
                 $request->session()->invalidate();
 
                 $request->session()->regenerateToken();
+                
                 return redirect()->route('payment-details')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
             }
 

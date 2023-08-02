@@ -98,7 +98,7 @@ class RegisterController extends Controller
             'email'         => $data['email'],
             'phone'         => $data['phone'],
             'password'      => Hash::make($data['password']),
-            'role'          => isset($lodgement_information) ? :  $lodgement_information['role'],
+            'role'          => isset($lodgement_information) ? $lodgement_information['role'] :  auth()->user()->role,
         ]);     
 
         if(isset($lodgement_information)){

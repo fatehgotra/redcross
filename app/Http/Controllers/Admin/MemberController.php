@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\User;
 use App\Notifications\ApprovalNotification;
 use App\Notifications\DeclineNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class MemberController extends Controller
             $users        = $users->where('status', $filter_status);
         }
         if($filter_active == 'yes'){
-            $users        = $users->whereHas('rewards');
+            $users        = $users->whereHas('rewards')->orwhereDate('expiry_date','>=',Carbon::now());
         }
 
         if($filter_active == 'no'){
