@@ -340,7 +340,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Approve Volunteer!'
+                confirmButtonText: 'Yes, Approve Member!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('approve-form').submit();

@@ -5,15 +5,17 @@
         ->toArray();
 @endphp
 @hasanyrole('branch-level|division-manager|hq')
+
     @if (in_array('hq', $roles))
+   
         <div class="float-end">
             @if ($user->status == 'approve')
-                @if ($user->approved_by == 'HQ')
+                @if ($user->approved_by !== '')
                     <button class="btn btn-sm btn-success" disabled type="button"><i
-                            class="me-1 dripicons-checkmark"></i>Approved</button>
+                            class="me-1 dripicons-checkmark"></i>ApprovedX</button>
                 @else
                     <a href="javascript:void(0);" onclick="confirmAccept()" class="btn btn-sm btn-success"><i
-                            class="me-1 dripicons-checkmark"></i>Approve</a>
+                            class="me-1 dripicons-checkmark"></i>ApproveX</a>
                     <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#decline-alert-modal"
                         class="btn btn-sm btn-danger"><i class="me-1 dripicons-cross"></i>Decline</a>
 
@@ -41,9 +43,10 @@
             @endif
         </div>
     @elseif(in_array('division-manager', $roles))
+   
         <div class="float-end">
             @if ($user->status == 'approve')
-                @if ($user->approved_by == 'Division Manager')
+                @if ($user->approved_by !== '')
                     <button class="btn btn-sm btn-success" disabled type="button"><i
                             class="me-1 dripicons-checkmark"></i>Approved</button>
                 @else
@@ -76,9 +79,10 @@
             @endif
         </div>
     @elseif(in_array('branch-level', $roles))
+   
         <div class="float-end">
             @if ($user->status == 'approve')
-                @if ($user->approved_by == 'Branch Level')
+                @if ($user->approved_by !== '')
                     <button class="btn btn-sm btn-success" disabled type="button"><i
                             class="me-1 dripicons-checkmark"></i>Approved</button>
                 @else

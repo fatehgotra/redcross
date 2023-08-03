@@ -291,7 +291,7 @@
                                 @enderror
                             </div>
                             <div class="col-lg-12">
-                                <label for="resedential_address_separate" class="col-form-label">Resedential Address (If
+                                <label for="resedential_address_separate" class="col-form-label">Residential Address (If
                                     residing in a separate household)</label>
                                 <input id="resedential_address_separate" type="text"
                                     class="form-control @error('resedential_address_separate') is-invalid @enderror"
@@ -338,7 +338,7 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Approve Volunteer!'
+                    confirmButtonText: 'Yes, Approve Member!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         document.getElementById('approve-form').submit();
