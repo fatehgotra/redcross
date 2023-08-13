@@ -38,6 +38,11 @@
         </div>
     </div> <!-- end col-->
 </div>
+<style>
+    .widget-icon {
+    display: block!important;
+}
+    </style>
 <!------Gender--------->
 
 <div class="row">
@@ -148,6 +153,7 @@
     </div>
 </div>
 
+
 @push('scripts')
 {!! $month_user_chart->renderChartJsLibrary() !!}
 {!! $month_user_chart->renderJs() !!}
@@ -160,6 +166,7 @@
         'packages': ['corechart','bar']
     });
 </script>
+
   <script type="text/javascript">
   
     google.charts.setOnLoadCallback(drawChartVolunteerStatus);
@@ -240,6 +247,7 @@
 
         chart.draw(data, options);
     }
+
 </script>
 
 <script type="text/javascript">
@@ -323,6 +331,17 @@
 
         chart.draw(data, options);
     }
+</script>
+
+<script>
+$(window).resize(function(){
+    drawChartVolunteerStatus();
+    drawChartMemberStatus();
+    drawChartBranchMember();
+    drawChartVexpert();
+    drawChartMexpert();
+    drawChartBranch();
+});
 </script>
 
 @endpush

@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="title" class="form-label">Values <span class="text-danger">*</span>
-                                <small>Comma seprated (,) if multiples</small>
+                                <small>multiples seprated (,)</small>
                             </label>
                             <input type="text" name="values" class="form-control" placeholder="Add values">
                         </div>
