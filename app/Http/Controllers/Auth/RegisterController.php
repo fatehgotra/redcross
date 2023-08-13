@@ -24,6 +24,7 @@ use App\Models\User;
 use App\Models\ValidNationalIdentification;
 use App\Models\VolunteeringInformation;
 use App\Notifications\NewRegistrationNotification;
+use App\Notifications\RegisterUser;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\File;
@@ -99,6 +100,7 @@ class RegisterController extends Controller
             'phone'         => $data['phone'],
             'password'      => Hash::make($data['password']),
             'role'          => isset($lodgement_information) ? $lodgement_information['role'] :  auth()->user()->role,
+            'branch'        => $lodgement_information['registration_location_type']
         ]);     
 
         if(isset($lodgement_information)){
@@ -366,6 +368,7 @@ class RegisterController extends Controller
 
         $admins = Admin::role('branch-level')->where('branch', $lodgement_information['registration_location_type'])->get();
         $when   = Carbon::now()->addSecond(10);
+        $user->notify( new RegisterUser());
         Notification::send($admins, new NewRegistrationNotification());
              
         

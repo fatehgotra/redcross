@@ -82,7 +82,7 @@
                       
                       
                       
-                    <span class="ms-2"> Campaigns </span>
+                    <span class="ms-2"> Activites </span>
                 </a>
             </li>
            

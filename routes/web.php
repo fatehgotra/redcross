@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
@@ -173,3 +175,8 @@ Route::get('/expiry-schedule', function () {
     Artisan::call('send:membership-notification');
         return response()->json(['success', 'All members whose membership will expire in the next 14 days are notified.'], 200);
 })->name('expiry-schedule');
+
+//certificate
+Route::get('certificate/{id}/{course_id}/{attempt}',[CourseController::class,'certificate'])->name('certificate');
+Route::get('user-survey/{id}/{uid}',[VolunteerController::class,'userSurvey'])->name('user-survey');
+Route::post('submit-survey',[VolunteerController::class,'submitSurvey'])->name('submit-survey');

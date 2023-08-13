@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminSettingsController;
+use App\Http\Controllers\Admin\AdminSurveysController;
 use App\Http\Controllers\Admin\AlertController;
 use App\Http\Controllers\Admin\Auth\ChangePasswordController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
@@ -14,8 +16,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\Admin\Learning\QuestionController;
 use App\Http\Controllers\Admin\Learning\VideoController;
+use App\Http\Controllers\Admin\MappingController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\MemberDetailController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use Illuminate\Support\Facades\Route;
@@ -286,5 +290,57 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::put('campaign/mark-attendence/{id}', [CampaignController::class, 'markAttendance'])->name('mark.attendance');
 
+    Route::post('campagin-user',[CampaignController::class,'campaginUserAdd'])->name('campagin-user');
 
+    Route::post('flag',[CampaignController::class,'AddFlag'])->name('flag');
+
+    Route::get('community',[CampaignController::class,'community'])->name('community');
+
+    Route::get('community-activity',[CampaignController::class,'communityActivity'])->name('community-activity');
+
+    Route::post('community-store',[CampaignController::class,'communityStore'])->name('community-store');
+
+    Route::get('view-activity/{id}',[CampaignController::class,'viewActivity'])->name('view-activity');
+     /*
+    |--------------------------------------------------------------------------
+    | Survey Route
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('survey-forms',[AdminSurveysController::class,'index'])->name('survey-forms');
+    Route::get('survey',[AdminSurveysController::class,'survey'])->name('survey');
+    Route::post('add-survey',[AdminSurveysController::class,'addSurvey'])->name('add-survey');
+    Route::get('view-survey/{id}',[AdminSurveysController::class,'viewSurvey'])->name('view-survey');
+    Route::post('survey-delete/{id}',[AdminSurveysController::class,'surveyDelete'])->name('survey-delete');
+    Route::get('send-survey/{to}/{id}',[AdminSurveysController::class,'sendSurvey'])->name('send-survey');
+    Route::get('survey-entries/{id}',[AdminSurveysController::class,'entriesSurvey'])->name('survey-entries');
+    Route::get('view-entries/{id}/{uid}',[AdminSurveysController::class,'viewUserSurvey'])->name('view-entries');
+
+      /*
+    |--------------------------------------------------------------------------
+    | Mapping Route
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('mapping',[MappingController::class,'mapping'])->name('mapping');
+    Route::post('local-user',[MappingController::class,'getUsersByCity'])->name('local-user');
+    
+     /*
+    |--------------------------------------------------------------------------
+    | Report Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('generate-report',[ReportController::class,'generateReport'])->name('generate-report');
+    Route::get('export-excel',[ReportController::class,'exportExcel'])->name('export-excel');
+    Route::get('hours',[ReportController::class,'hoursView'])->name('hours');
+    Route::post('add-hours',[ReportController::class,'addHours'])->name('add-hours');
+    Route::post('export-hours/{id}',[ReportController::class,'exportHours'])->name('export-hours');
+
+      /*
+    |--------------------------------------------------------------------------
+    | Settings > site settings  Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('site-settings',[AdminSettingsController::class,'siteSetting'])->name('site-settings');
+    Route::post('setting-save',[AdminSettingsController::class,'saveSetting'])->name('setting-save');
 });

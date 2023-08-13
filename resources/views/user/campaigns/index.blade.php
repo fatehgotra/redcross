@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title', 'Campaigns')
+@section('title', 'Activities')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -8,10 +8,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>                           
-                            <li class="breadcrumb-item active">Campaigns</li>
+                            <li class="breadcrumb-item active">Activities</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Campaigns</h4>
+                    <h4 class="page-title">Activities</h4>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                                                     <input type='hidden' name='_method' value='PUT'>
                                                 </form>
                                                 @else
-                                                <a href="javascript:void(0)" onclick="confirmJoin()" class="btn btn-sm btn-warning text-dark"><i class="dripicons-enter me-1"></i>Join Campaign</a>
+                                                <a href="javascript:void(0)" onclick="confirmJoin()" class="btn btn-sm btn-warning text-dark"><i class="dripicons-enter me-1"></i>Join Activity</a>
                                                     <form id='join-form' action='{{ route('join.campaign', $campaign->id) }}'
                                                         method='POST'>
                                                         <input type='hidden' name='_token' value='{{ csrf_token() }}'>
@@ -86,12 +86,12 @@
         function confirmJoin() {
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You want to join this campaign!",
+                text: "You want to join this activity!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Join Campaign!'
+                confirmButtonText: 'Yes, Join activity!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('join-form').submit();
@@ -104,12 +104,12 @@
     function confirmExit() {
         Swal.fire({
             title: 'Are you sure?',
-            text: "You want to leave this campaign!",
+            text: "You want to leave this activity!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Leave Campaign!'
+            confirmButtonText: 'Yes, Leave activity!'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('leave-form').submit();

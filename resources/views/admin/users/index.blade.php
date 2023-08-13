@@ -86,6 +86,7 @@
                                                         data-bs-toggle="modal" data-bs-target="#modal-password"
                                                         data-id="{{ $user->id }}" data-name="{{ $user->firstname }} {{ $user->lastname }}"><i
                                                             class="mdi mdi-key"></i> Reset Password</a>                                                  
+                                                    
                                                         <a href="javascript:void(0);"
                                                             onclick="confirmDelete({{ $user->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>

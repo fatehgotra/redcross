@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\BloodInformation;
 use App\Models\Check;
+use App\Models\CommunityActivity;
+use App\Models\CommunityAttendees;
+use App\Models\CommunityDocs;
 use App\Models\Consent;
 use App\Models\ContactInformation;
 use App\Models\EducationBackground;
@@ -70,8 +73,11 @@ class VolunteerSeeder extends Seeder
                 'phone'             => $phone,
                 'password'          => Hash::make('password'),
                 'role'              => $faker->randomElement(['volunteer', 'member', 'both']),
+                'branch'            => $registration_location_type,
                 'expiry_date'       => $faker->randomElement([Carbon::now()->addDays(14)->format('Y-m-d'), Carbon::now()->addDays(15)->format('Y-m-d'), Carbon::now()->addDays(13)->format('Y-m-d')]),
+
             ]);
+
 
             LodgementInformation::create([
                 'user_id'                    => $user->id,
@@ -255,6 +261,42 @@ class VolunteerSeeder extends Seeder
             $check_data['professional_volunteer_attachment']        = '4.png';
             $check_data['base_location']                            = $faker->randomElement(['Branch', 'Office']);
             Check::create($check_data);
+        }
+
+
+        for ($i = 0; $i < 5; $i++) {
+
+            $community = CommunityActivity::create([
+
+                'name'      => 'Community Activity ' . $i + 1,
+                'breif'     => '<h2 style="margin: 0px 0px 10px; padding: 0px; font-weight: 400; font-family: DauphinPlain; font-size: 24px; line-height: 24px;">What is Lorem Ipsum?</h2> <p style="margin: 0px 0px 15px; padding: 0px; text-align: justify; font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px;"><strong style="margin: 0px; padding: 0px;">Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
+                'starts_at' =>  Carbon::today()->format('Y-m-d'),
+                'ends_at'   =>  Carbon::today()->addDay()->format('Y-m-d'),
+                'submit_by' =>  $faker->randomElement(['3', '4', '5', '6']),
+                'submit_to' =>  $faker->randomElement(['2', '3']),
+
+            ]);
+
+
+            for ($a = 0; $a <= 3; $a++) {
+
+                CommunityAttendees::create([
+                    'community_id' => $community->id,
+                    'attendee_id'  =>  $a+2,
+                ]);
+
+                CommunityDocs::create([
+                    'community_id' => $community->id,
+                    'type'         => 'image',
+                    'doc'          => $faker->randomElement(['1.jpeg', '2.jpg', '3.jpg', '4.jpg', '5.jpeg']),
+                ]);
+
+                CommunityDocs::create([
+                    'community_id' => $community->id,
+                    'type'         => 'doc',
+                    'doc'          => $faker->randomElement(['doc1.xlsx', 'doc2.xlsx', 'doc3.xlsx', 'doc4.pdf']),
+                ]);
+            }
         }
     }
 }

@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Campaign;
 use App\Models\CampaignAttendance;
 use App\Models\CampaignUser;
+use App\Models\CommunityActivity;
+use App\Models\CommunityAttendees;
+use App\Models\CommunityDocs;
+use App\Models\Flag;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class CampaignController extends Controller
 {
@@ -17,7 +24,7 @@ class CampaignController extends Controller
     {
         $this->middleware('auth:admin');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -113,18 +120,192 @@ class CampaignController extends Controller
         return redirect()->route('admin.campaigns.index')->with('sucess', 'Campaign deleted successfully!');
     }
 
-    public function markAttendance(Request $request, $id){
+    public function markAttendance(Request $request, $id)
+    {
 
         CampaignAttendance::where('date', Carbon::now()->format('Y-m-d'))->where('campaign_id', $id)->delete();
-        if(!empty($request->attendance) && is_array($request->attendance)){
-            foreach($request->attendance as $key => $attendance){
+        if (!empty($request->attendance) && is_array($request->attendance)) {
+            foreach ($request->attendance as $key => $attendance) {
                 CampaignAttendance::create([
                     'date' => Carbon::now()->format('Y-m-d'),
                     'user_id' => $attendance,
                     'campaign_id' => $id
                 ]);
             }
-        }       
+        }
         return redirect()->back()->with('sucess', 'Attendance updated successfully!');
+    }
+
+    public function campaginUserAdd(Request $request)
+    {
+
+        $user = User::create([
+            'firstname' => $request->firstname,
+            'lastname'  => $request->lastname,
+            'email'     => $request->email,
+            'phone'     => $request->phone,
+            'password'  => Hash::make($request->password),
+            'role'      => $request->role,
+            'branch'    => $request->branch,
+        ]);
+
+        CampaignUser::create([
+            'user_id' => $user->id,
+            'campaign_id' => $request->campagin
+        ]);
+
+        return redirect()->back()->with('success', 'User added to this activity successfully!');
+    }
+
+    public function AddFlag(Request $request)
+    {
+
+        Flag::create([
+            'campaign_id' => $request->campaign_id,
+            'user_id'     => $request->user_id,
+            'reason'      => $request->reason,
+        ]);
+
+        return redirect()->back()->with('success', 'Flag added to this user');
+    }
+
+    /******Community activity******/
+    public function community()
+    {
+        if (Auth::guard('admin')->id() == 1) {
+
+            $activities = CommunityActivity::all();
+        } else {
+            $activities = CommunityActivity::where('submit_to', '=', Auth::guard('admin')->id() )->get();
+        }
+
+        return view('admin.campaigns.community.index', compact('activities'));
+    }
+
+    public function communityActivity()
+    {
+
+        $admins = Admin::where('id', '!=', 1)->get();
+
+        return view('admin.campaigns.community.add', compact('admins'));
+    }
+
+    public function communityStore(Request $request)
+    {
+
+        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'xlsx'];
+        $docrestrict = ['jpg', 'png', 'jpeg'];
+        $imgrestrict = ['pdf', 'docx', 'xlxs'];
+
+        if (isset($request->image)) {
+            foreach ($request->image as $image) {
+
+                $file = $image['file'];
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedfileExtension);
+                $check2 = in_array($extension, $imgrestrict);
+
+                if (!$check) {
+
+                    return redirect()->back()->with('error', "Image upload failed only  jpeg, jpg , png are allowed.");
+                } else if ($check2) {
+
+                    return redirect()->back()->with('error', 'Document in image upload section is not allowed.');
+                }
+            }
+        }
+
+        if (isset($request->doc)) {
+            foreach ($request->doc as $doc) {
+
+                $file = $doc['file'];
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedfileExtension);
+                $check2 = in_array($extension, $docrestrict);
+
+                if (!$check) {
+
+                    return redirect()->back()->with('error', "Document upload failed only pdf , docx , xlsx are allowed.");
+                } else if ($check2) {
+
+                    return redirect()->back()->with('error', 'Images in document upload section is not allowed.');
+                }
+            }
+        }
+
+        $community = CommunityActivity::create([
+
+            'name'      => $request->name,
+            'breif'     => $request->breif,
+            'starts_at' => $request->starts_at,
+            'ends_at'   => $request->ends_at,
+            'submit_by' => Auth::guard('admin')->id(),
+            'submit_to' => $request->submit_to[0],
+
+        ]);
+
+        if (isset($request->attendees)) {
+            foreach ($request->attendees as $at) {
+
+                CommunityAttendees::create([
+                    'community_id' => $community->id,
+                    'attendee_id'  => $at,
+                ]);
+            }
+        }
+
+
+
+        if (isset($request->image)) {
+            foreach ($request->image as $image) {
+
+                $file = $image['file'];
+                $filename = $file->getClientOriginalName();
+                $name     = $filename . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('uploads/community/', $name, 'public');
+
+                CommunityDocs::create([
+                    'community_id' => $community->id,
+                    'type'         => 'image',
+                    'doc'          => $name,
+                ]);
+            }
+        }
+
+        if (isset($request->doc)) {
+            foreach ($request->doc as $doc) {
+
+
+                $file = $doc['file'];
+                $filename = $file->getClientOriginalName();
+                $name     = $filename . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('uploads/community/', $name, 'public');
+
+                CommunityDocs::create([
+                    'community_id' => $community->id,
+                    'type'         => 'doc',
+                    'doc'          => $name,
+                ]);
+            }
+        }
+
+
+        return redirect()->back()->with('success', 'Community Activity submitted successsfully!');
+    }
+
+    public function viewActivity($id)
+    {
+        $check =  CommunityActivity::where('submit_to', Auth::guard('admin')->id() )->where('id',$id)->get();
+        
+        if( count($check)  == 0 ){
+
+            return redirect()->back();
+        }
+      
+        $activity = CommunityActivity::with('attendees', 'attendees.user', 'submitBy', 'submitTo', 'docs')->where('id', $id)->get()->first();
+
+        return view('admin.campaigns.community.view', compact('activity'));
     }
 }

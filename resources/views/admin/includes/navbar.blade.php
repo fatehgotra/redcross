@@ -18,7 +18,7 @@
                     @endif
                 </span>
                 <span>
-                    <span class="account-user-name">{{ Auth::guard('admin')->user()->name }}</span>
+                    <span class="account-user-name">{{-- Auth::guard('admin')->user()->name --}}</span>
                     @role('admin')
                         <span class="account-position">Administrator</span>
                     @else

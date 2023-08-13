@@ -29,6 +29,7 @@ class User extends Authenticatable
         'approver_id',
         'decline_reason',
         'role',
+        'branch',
         'expiry_date'
     ];
 
@@ -139,5 +140,9 @@ class User extends Authenticatable
     public function rewards()
     {
         return $this->hasMany(UserReward::class, 'user_id', 'id');
+    }
+    public function hours(){
+
+        return $this->hasMany(userHours::class,'email','email');
     }
 }

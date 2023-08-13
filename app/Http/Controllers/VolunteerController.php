@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use MattDaneshvar\Survey\Models\Entry;
+use MattDaneshvar\Survey\Models\Survey;
 
 class VolunteerController extends Controller
 {
@@ -528,5 +531,43 @@ class VolunteerController extends Controller
         Session::put('consents-and-checks', $data);
 
         return redirect()->route('register')->with('success', 'Consents and Checks saved successfully');
+    }
+
+    public function userSurvey($id, $uid)
+    {
+
+        $survey = Survey::find(base64_decode($id));
+        $user   = User::find(base64_decode($uid));
+
+        return view('user.survey.survey', compact('survey', 'user'));
+    }
+
+    public function submitSurvey(Request $request)
+    {
+
+        $check =  Survey::where('id', $request->id)->with('entries');
+
+        $user = User::find($request->uid);
+
+        $check = $check->withWhereHas('entries', function ($query) use ($user) {
+            
+            $query->where('participant_id', $user->id);
+        });
+
+        $check = $check->get()->first();
+
+        if (!is_null($check)) {
+
+            return redirect()->back()->with('error', 'Your response is already recorded for this survey!');
+        }
+
+        $survey = Survey::with('questions')->find($request->id);
+
+
+        $answers = $this->validate($request, $survey->rules, ['required' => 'This field is required.']);
+
+        (new Entry)->for($survey)->by($user)->fromArray($answers)->push();
+
+        return redirect()->back()->with('success', 'Thanks for your submission, your response recorded successfully!');
     }
 }

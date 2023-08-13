@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Campaigns')
+@section('title', 'Activities')
 @section('head')
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -13,10 +13,10 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Campaigns</li>
+                            <li class="breadcrumb-item active">Activities</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Campaigns</h4>
+                    <h4 class="page-title">Activities</h4>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-12 text-end">
                                 <a href="{{ route('admin.campaigns.create') }}" class="btn btn-sm btn-dark float-end">Add
-                                    Campaign</a>
+                                Activity</a>
                             </div>
                         </div>
                     </div>
@@ -65,11 +65,11 @@
                                                         <a href="{{ route('admin.campaigns.edit', $campaign->id) }}"
                                                             class="dropdown-item"><i
                                                                 class="mdi mdi-account-edit-outline"></i>
-                                                            Edit Campaign</a>
+                                                            Edit Activity</a>
                                                         <a href="javascript:void(0);"
                                                             onclick="confirmDelete({{ $campaign->id }})"
                                                             class="dropdown-item"><i class="mdi mdi-trash-can"></i>
-                                                            Delete Campaign</a>
+                                                            Delete Activity</a>
                                                         <form id='delete-form{{ $campaign->id }}'
                                                             action='{{ route('admin.campaigns.destroy', $campaign->id) }}'
                                                             method='POST'>

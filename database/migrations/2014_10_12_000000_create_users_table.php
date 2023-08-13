@@ -26,6 +26,7 @@ return new class extends Migration
             $table->bigInteger('approver_id')->unsigned()->nullable();
             $table->text('decline_reason')->nullable();
             $table->string('role')->nullable();
+            $table->string('branch')->nullable();
             $table->date('expiry_date')->nullable();
             $table->rememberToken();
             $table->timestamps();

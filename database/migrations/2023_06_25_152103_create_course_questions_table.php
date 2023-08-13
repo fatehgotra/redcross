@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('course_questions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('course_id')->unsigned()->index()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');

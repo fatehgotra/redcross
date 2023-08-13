@@ -107,7 +107,7 @@ class LearningController extends Controller
         ], [            
             'points'    => Course::find($id)->test_reward_points
         ]);
-
+         
         return redirect()->route('learning.result', $response->test_attempt_id)->with('success', 'Test has been submitted successfully');
 
     }

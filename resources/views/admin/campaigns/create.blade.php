@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Add Campaign')
+@section('title', 'Add Activity')
 @section('content')
     <!-- Start Content-->
     <div class="container-fluid">
@@ -11,11 +11,11 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.campaigns.index') }}">Campaigns</a></li>
-                            <li class="breadcrumb-item active">Add Campaign</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.campaigns.index') }}">Activites</a></li>
+                            <li class="breadcrumb-item active">Add Activity</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Add Campaign</h4>
+                    <h4 class="page-title">Add Activity</h4>
                 </div>
             </div>
         </div>
@@ -30,16 +30,16 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <h3>Campaign Details</h3>
+                            <h3>Activity Details</h3>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <label for="title" class="form-label">Campaign Title <span
+                                <label for="title" class="form-label">Activity Title <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" name="title" id="title"
-                                    placeholder="Campaign Title" value="{{ old('title') }}">
+                                    placeholder="Activity Title" value="{{ old('title') }}">
                                 @error('title')
                                     <code id="title-error" class="text-danger">{{ $message }}</code>
                                 @enderror

@@ -2,7 +2,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Latest Campaigns</h3>
+                <h3 class="card-title">Latest Activites</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -34,7 +34,7 @@
                                             @else
                                                 <a href="javascript:void(0)" onclick="confirmJoin()"
                                                     class="btn btn-sm btn-warning text-dark"><i
-                                                        class="dripicons-enter me-1"></i>Join Campaign</a>
+                                                        class="dripicons-enter me-1"></i>Join Activity</a>
                                                 <form id='join-form'
                                                     action='{{ route('join.campaign', $campaign->id) }}' method='POST'>
                                                     <input type='hidden' name='_token' value='{{ csrf_token() }}'>
@@ -65,7 +65,7 @@
                         </div>
                     @empty
                         <div class="col-md-12">
-                            <p class="text-center py-5">No Campaign found</p>
+                            <p class="text-center py-5">No Activity found</p>
                         </div>
                     @endforelse
                 </div>
