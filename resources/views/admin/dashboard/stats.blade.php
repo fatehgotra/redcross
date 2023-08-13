@@ -103,8 +103,8 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header">Users by status</div>
-                <div id="piechart-volunteer" style="width: 500px; height: 200px;"></div>
-                <div id="piechart-member" style="width: 500px; height: 200px;"></div>
+                <div id="piechart-volunteer" sty1le="width: 500px; height: 200px;"></div>
+                <div id="piechart-member" style1="width: 500px; height: 200px;"></div>
             </div>
         </div>
     </div>
@@ -113,7 +113,7 @@
             <div class="card">
                 <div class="card-header">Volunteer by Branch</div>
                 <div class="card-body">
-                <div id="chart-volunteer-branch" style="width: 550px; height: 400px;"></div>
+                <div id="chart-volunteer-branch" style1="width: 550px; height: 400px;"></div>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
             <div class="card">
                 <div class="card-header">Member by Branch</div>
                 <div class="card-body">
-                <div id="chart-member-branch" style="width: 550px; height: 400px;"></div>
+                <div id="chart-member-branch" style1="width: 550px; height: 400px;"></div>
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
         <div class="card">
                 <div class="card-header">Volunteer expertise</div>
                 <div class="card-body">
-                <div id="chart-volunteer-expertise" style="width: 550px; height: 400px;"></div>
+                <div id="chart-volunteer-expertise" style1="width: 550px; height: 400px;"></div>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@
         <div class="card">
                 <div class="card-header">Member expertise</div>
                 <div class="card-body">
-                <div id="chart-member-expertise" style="width: 550px; height: 400px;"></div>
+                <div id="chart-member-expertise" style1="width: 550px; height: 400px;"></div>
                 </div>
             </div>
         </div>
