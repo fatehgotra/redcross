@@ -14,7 +14,9 @@ class AdminSurveysController extends Controller
 {
     public function __construct()
     {
+        
         $this->middleware('auth:admin');
+        $this->middleware(['role:admin']);
     }
 
     public function index()
@@ -102,7 +104,7 @@ class AdminSurveysController extends Controller
                 $answers[] = [$a->value];
             }
         }
-        $data[] = ['questions'=>$question,'answers'=>$answers];
+        $data[] = ['questions' => $question, 'answers' => $answers];
         return view('admin.survey.view-user-survey', compact('survey', 'data'));
     }
 

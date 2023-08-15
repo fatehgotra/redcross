@@ -60,6 +60,18 @@
                             <b>Breif </b>
                             <p> {!! $activity->breif !!} </p>
                         </div>
+                        @role('division-manager')
+                        <div class="col-md-4">
+                            @if( $activity->status == 'Approved')
+                            <span class="badge badge-outline-success"> Approved </span>
+                            @else
+                             <button class="btn btn-outline-success" onclick="confirmApprove({{ $activity->id }})"> Mark Approve </button>
+                             <form id="approve-form{{ $activity->id }}" method="POST" action="{{ route('admin.approve-activity',$activity->id) }}">
+                              @csrf
+                             </form>
+                            @endif
+                        </div>
+                        @endrole
                     </div>
 
                 </div>
@@ -203,7 +215,7 @@
 
 
 <script type="text/javascript">
-    function confirmDelete(no) {
+    function confirmApprove(no) {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -211,10 +223,10 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Yes, approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('delete-form' + no).submit();
+                document.getElementById('approve-form' + no).submit();
             }
         })
     };

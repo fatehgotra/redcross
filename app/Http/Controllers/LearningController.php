@@ -19,9 +19,18 @@ class LearningController extends Controller
         $this->middleware(['auth', 'approved']);
     }
 
-    public function courses()
+    public function courses(Request $request)
     {
-        $courses = Course::with('questions', 'videos')->where('status', true)->orderBy('id', 'desc')->get();
+        $search = $request->course;
+        if( !is_null($search) ){
+           
+            $courses = Course::with('questions', 'videos')->where('status', true)->where('name','like','%'.$request->course.'%')->orderBy('id', 'desc')->get();
+
+        } else{
+            $courses = Course::with('questions', 'videos')->where('status', true)->orderBy('id', 'desc')->get();
+        }
+      
+
         $courses->map(function ($item) {
             $item->attempted        = TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->exists(); 
             $item->unblock_after    = $item->attempted ? Carbon::parse(TestAttempt::where('course_id', $item->id)->where('user_id', Auth::user()->id)->first()->created_at)->diffInDays(Carbon::now()) : 3;
@@ -29,7 +38,7 @@ class LearningController extends Controller
             return $item;
         });
         
-        return view('user.learning.courses.index', compact('courses'));
+        return view('user.learning.courses.index', compact('courses','search'));
     }
 
     public function takeTest($id)

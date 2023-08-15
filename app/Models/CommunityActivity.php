@@ -18,6 +18,7 @@ class CommunityActivity extends Model
         'ends_at',
         'submit_by',
         'submit_to',
+        'status',
     ];
 
     public function attendees(){

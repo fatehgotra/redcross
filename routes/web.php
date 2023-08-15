@@ -6,6 +6,7 @@ use App\Http\Controllers\AlertController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\CourseChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\MyProfileController;
@@ -180,3 +181,16 @@ Route::get('/expiry-schedule', function () {
 Route::get('certificate/{id}/{course_id}/{attempt}',[CourseController::class,'certificate'])->name('certificate');
 Route::get('user-survey/{id}/{uid}',[VolunteerController::class,'userSurvey'])->name('user-survey');
 Route::post('submit-survey',[VolunteerController::class,'submitSurvey'])->name('submit-survey');
+
+//chat
+
+Route::get('chat',[CourseChatController::class,'index'])->name('chat');
+
+Route::get('ticket', [CourseChatController::class, 'index'])->name('ticket');
+Route::post('chat-request', [CourseChatController::class, 'chat_request'])->name('chat-request');
+Route::get('ticket-list', [CourseChatController::class, 'ticketlist'])->name('ticket-list');
+Route::get('user/chat-view-ticket/{id}/{user}',[CourseChatController::class,'showuser'])->name('chat-view-ticket');
+// Route::resource('messages', 'CourseChatController');userComment
+Route::post('userstoreConversations', [CourseChatController::class,'userComment'])->name('userstoreConversations');
+Route::post('storeConversations', [CourseChatController::class,'store'])->name('storeConversations');
+Route::get('getConversations', [CourseChatController::class, 'getConversations'])->name('getConversations');

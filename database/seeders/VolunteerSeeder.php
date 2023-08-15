@@ -38,6 +38,20 @@ class VolunteerSeeder extends Seeder
     {
         $faker = app(Generator::class);
 
+        $address = [
+            '74 Ragg Ave, Nmdi Hts,  Tamavua',
+            'Port Denarau, Denarau,  Nadi',
+            '4 Luke St, Nabua,  Suva',
+            '4 Malamala St,Nsri,',
+            'Nadi , Korotogo, Sigatoka,Sigatoka, Suva',
+            'Lot 4 Bulei Rd,Laucala Beach Estate,Nasinu',
+            'Lot 10, Rambissesar Rd,Manoca Industrial,Nausori',
+            'Wainivula Rd,Caubati,Nasinu',
+            '12 Nailuva Rd,Raiwai,Suva',
+            'Bulk 204 Statham St,Vatuwaqa,Suva',
+            '21 Milverton Rd,Raiwaqa,Suva'
+        ];
+
         for ($i = 0; $i < 30; $i++) {
 
             $firstname  =  $faker->firstname();
@@ -63,13 +77,15 @@ class VolunteerSeeder extends Seeder
                     break;
             }
 
+            
+
             $user = User::create([
                 'firstname'         => $firstname,
                 'lastname'          => $lastname,
                 'email'             => $email,
                 'email_verified_at' => now(),
-                'status'            => $i == 0 ? 'approve' : 'pending',
-                'approved_by'       => $i == 0 ? 'HQ' : null,
+                'status'            => $i <= 10 ? 'approve' : 'pending',
+                'approved_by'       => $i <= 10 ? 'HQ' : null,
                 'phone'             => $phone,
                 'password'          => Hash::make('password'),
                 'role'              => $faker->randomElement(['volunteer', 'member', 'both']),
@@ -106,14 +122,16 @@ class VolunteerSeeder extends Seeder
                 'specify_languages_spoken'      =>  $faker->randomElement(['Chinese', 'Hebrew', 'Other']),
             ]);
 
+            $adr = $faker->randomElement($address);
+
             $contact_data                                       = array();
             $contact_data['user_id']                            = $user->id;
-            $contact_data['resedential_address']                = $faker->address();
+            $contact_data['resedential_address']                = $adr;
             $contact_data['community_name']                     = 'Fijians';
             $contact_data['community_type']                     = $faker->randomElement(['Village', 'Settlement', 'Compound']);
             $contact_data['province']                           = $faker->randomElement(['Tailevu', 'Rewa', 'Namosi', 'Lau', 'Serua']);
             $contact_data['district']                           = $faker->randomElement(['Cakaudrove', 'Naitasiri', 'Lautoka', 'Macuata', 'Ra Province']);
-            $contact_data['postal_address']                     = $faker->address();
+            $contact_data['postal_address']                     = $adr;
             $contact_data['email']                              = $email;
             $contact_data['landline_contact']                   = $faker->numerify('7#9#8#2###');
             $contact_data['primary_mobile_contact_number']      = $faker->numerify('7#9#8#2###');
@@ -121,7 +139,7 @@ class VolunteerSeeder extends Seeder
             $contact_data['other_contact_numbers']              = $faker->numerify('7#9#8#2###');
             $contact_data['full_name_of_emergency_contact']     = $faker->name();
             $contact_data['relationship']                       = $faker->randomElement(['Son', 'Father', 'Uncle']);
-            $contact_data['resedential_address_separate']       = $faker->address();
+            $contact_data['resedential_address_separate']       = $adr;
             $contact_data['contact_number']                     = $faker->numerify('7#9#8#2###');
 
             ContactInformation::create($contact_data);
@@ -272,8 +290,9 @@ class VolunteerSeeder extends Seeder
                 'breif'     => '<h2 style="margin: 0px 0px 10px; padding: 0px; font-weight: 400; font-family: DauphinPlain; font-size: 24px; line-height: 24px;">What is Lorem Ipsum?</h2> <p style="margin: 0px 0px 15px; padding: 0px; text-align: justify; font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px;"><strong style="margin: 0px; padding: 0px;">Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
                 'starts_at' =>  Carbon::today()->format('Y-m-d'),
                 'ends_at'   =>  Carbon::today()->addDay()->format('Y-m-d'),
-                'submit_by' =>  $faker->randomElement(['3', '4', '5', '6']),
-                'submit_to' =>  $faker->randomElement(['2', '3']),
+                'submit_by' =>  4,
+                'submit_to' =>  3,
+                'status'    =>  ($i < 2) ? 'Approved' : 'Pending' 
 
             ]);
 

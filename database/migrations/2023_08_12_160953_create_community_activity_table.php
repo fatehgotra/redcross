@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('ends_at')->nullable();
             $table->unsignedBigInteger('submit_by');
             $table->unsignedBigInteger('submit_to');
+            $table->enum('status',['Pending','Approved'])->default('Pending');
             $table->timestamps();
         });
     }

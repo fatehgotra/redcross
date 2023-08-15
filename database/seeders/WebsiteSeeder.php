@@ -22,6 +22,7 @@ class WebsiteSeeder extends Seeder
         Role::create(['guard_name' => 'admin', 'name' => 'division-manager']);
         Role::create(['guard_name' => 'admin', 'name' => 'hq']);
         Role::create(['guard_name' => 'admin', 'name' => 'course-coordinator']);
+        Role::create(['guard_name' => 'admin', 'name' => 'community-head']);
 
             $branches[0] = "Rotuma";
             $branches[1] = "Levuka";
@@ -77,6 +78,17 @@ class WebsiteSeeder extends Seeder
 
             $division_manager->assignRole('division-manager');
 
+            $community_head = Admin::create([
+                'name'              => $faker->name(),
+                'email'             => $key == 0 ? 'community_head@admin.com': $faker->unique()->safeEmail(),
+                'phone'             => '9876543614',
+                'email_verified_at' => now(),
+                'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token'    => Str::random(10),
+            ]);
+    
+            $community_head->assignRole('community-head');
+
             $hq =  Admin::create([
                 'name'              => $faker->name(),
                 'email'             => $key == 0 ? 'hq@admin.com' : $faker->unique()->safeEmail(),
@@ -114,5 +126,7 @@ class WebsiteSeeder extends Seeder
         ]);
 
         $coordinator->assignRole('course-coordinator');
+
+       
     }
 }

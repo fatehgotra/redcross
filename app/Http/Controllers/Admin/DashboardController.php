@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\LodgementInformation;
 use App\Models\ServiceInterest;
 use App\Models\Skill;
@@ -80,6 +81,10 @@ class DashboardController extends Controller
         $non = $non->withWhereHas('personalInformation', function ($q) {
                         $q->Where('sex' ,'Non-Binary');
         })->count();
+
+        // $adm = Admin::find( Auth::guard('admin')->id() );
+
+        // dd($adm->roles);
  
         return view('admin.dashboard.dashboard', compact('month_user_chart', 'volunteer_status_data', 'members_status_data', 'volunteer_branch', 'member_branch', 'volunteer_expertise_chart','member_expertise_chart','male','female','non'));
     }

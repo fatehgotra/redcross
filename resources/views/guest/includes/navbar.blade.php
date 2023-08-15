@@ -41,7 +41,7 @@
                 @else
                 @if (Route::has('login'))
                     <li class="nav-item mx-lg-1">
-                        <a href="{{ route('login') }}" class="nav-link d-lg-none">Login</a>
+                        <a href="#sec" class="nav-link d-lg-none">Login</a>
                     </li>
                     <li class="nav-item mx-lg-1">
                         <a href="{{ route('admin.login') }}" class="nav-link d-lg-none">Department Login</a>
@@ -79,7 +79,7 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item me-0">
                         @if (Route::has('login'))
-                            <a href="{{ route('login') }}" class="btn btn-sm btn-outline-light d-none d-lg-inline-flex">
+                            <a href="#sec" class="btn btn-sm btn-outline-light d-none d-lg-inline-flex">
                                 Login
                             </a>
                             <a href="{{ route('admin.login') }}"

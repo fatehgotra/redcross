@@ -172,12 +172,16 @@ class CampaignController extends Controller
     /******Community activity******/
     public function community()
     {
-        if (Auth::guard('admin')->id() == 1) {
 
-            $activities = CommunityActivity::all();
+        if (Auth::guard('admin')->user()->hasRole('division-manager')) {
+
+            $activities = CommunityActivity::where('submit_to', '=', Auth::guard('admin')->id())->get();
         } else {
-            $activities = CommunityActivity::where('submit_to', '=', Auth::guard('admin')->id() )->get();
+
+            $activities = CommunityActivity::where('submit_by', '=', Auth::guard('admin')->id())->orWhere('status', 'Approved')->get();
         }
+
+        //dd(Auth::guard('admin')->id());
 
         return view('admin.campaigns.community.index', compact('activities'));
     }
@@ -185,7 +189,16 @@ class CampaignController extends Controller
     public function communityActivity()
     {
 
-        $admins = Admin::where('id', '!=', 1)->get();
+        $admins = Admin::where('id', '!=', 1);
+
+        $admin = $admins->whereHas('roles', function ($q) {
+            $q->where(function ($q) {
+
+                $q->where('name', 'division-manager');
+            });
+        });
+
+        $admins = $admins->get();
 
         return view('admin.campaigns.community.add', compact('admins'));
     }
@@ -297,15 +310,24 @@ class CampaignController extends Controller
 
     public function viewActivity($id)
     {
-        $check =  CommunityActivity::where('submit_to', Auth::guard('admin')->id() )->where('id',$id)->get();
-        
-        if( count($check)  == 0 ){
+        $check =  CommunityActivity::where('submit_to', Auth::guard('admin')->id())->where('id', $id)->orWhere('status', 'Approved')->get();
+
+        if (count($check)  == 0) {
 
             return redirect()->back();
         }
-      
+
         $activity = CommunityActivity::with('attendees', 'attendees.user', 'submitBy', 'submitTo', 'docs')->where('id', $id)->get()->first();
 
         return view('admin.campaigns.community.view', compact('activity'));
+    }
+
+    public function approve($id)
+    {
+        CommunityActivity::where('id', $id)->update([
+            'status' => 'Approved'
+        ]);
+
+        return redirect()->back()->with('success', 'Activity approved successfully.');
     }
 }

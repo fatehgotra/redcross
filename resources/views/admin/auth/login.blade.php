@@ -26,7 +26,7 @@
 
                             <!-- Logo -->
                             <div class="card-header pt-1 pb-1 text-center bg-dark">
-                                <a href="{{ route('admin.login') }}">
+                                <a href="{{ url('/') }}">
                                     <span><img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="img-fluid" /></span>
                                 </a>
                             </div>

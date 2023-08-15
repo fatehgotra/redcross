@@ -24,7 +24,12 @@
     @include('admin.includes.flash-message')
     <div class="row">
         <div class="col-12">
-            <h2 class="cname"></h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="cname"></h2>
+                </div>
+                <!-- <div class="col-md-6"><h2 class="total">Total users: 12</h2></div> -->
+            </div>
             <br>
             <br>
             <div id="mapa">
@@ -51,14 +56,17 @@
 <script src="{{ asset('assets/js/vendor/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/responsive.bootstrap4.min.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjzrBuBZeqiQaUzI7EJxZwtQEYFfkBnhs&li&callback=initAutocomplete&libraries=places&v=weekly" async defer></script>
+
 <script>
     function initAutocomplete() {
+
         const map = new google.maps.Map(document.getElementById("map"), {
             center: {
                 lat: -18.143370,
                 lng: 178.437164
             },
-            zoom: 14,
+            zoom: 11,
+
 
         });
 
@@ -67,11 +75,13 @@
 
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
+
         map.addListener("bounds_changed", () => {
             searchBox.setBounds(map.getBounds());
         });
 
         let markers = [];
+        let cmaker = [{}];
 
         searchBox.addListener("places_changed", () => {
             const places = searchBox.getPlaces();
@@ -101,7 +111,19 @@
                     scaledSize: new google.maps.Size(25, 25),
                 };
 
-                $('.cname').html('Search city : ' + place.name);
+                const svgMarker = {
+                    path: "M-1.547 12l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM0 0q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                    fillColor: "blue",
+                    fillOpacity: 1,
+                    strokeWeight: 0,
+                    rotation: 0,
+                    scale: 2,
+                    anchor: new google.maps.Point(0, 20),
+                };
+
+                //$('.cname').html('Search city : ' + place.name);
+
+
 
                 if (place.name != '') {
                     $.ajax({
@@ -113,6 +135,43 @@
                             city: place.name
                         },
                         success: function(res) {
+
+                            if (res.users.length > 0) {
+                                let usr = res.users;
+                                for (let u in usr) {
+
+                                    let address = (usr[u].contact_information.resedential_address);
+
+                                    var geocoder1 = new google.maps.Geocoder();
+
+                                    geocoder1.geocode({
+                                        'address': address
+                                    }, function(results, status) {
+
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            //  var latitude = results[0].geometry.location.lat();
+                                            // var longitude = results[0].geometry.location.lng();
+
+
+                                            markers.push(
+                                                new google.maps.Marker({
+                                                    map,
+                                                    title: usr[u].firstname + " " + usr[u].lastname,
+                                                    position: results[0].geometry.location,
+                                                    label: (usr[u].role == 'volunteer') ? 'V' : ((usr[u].role == 'member') ? 'M' : 'B')
+                                                })
+                                            );
+
+
+
+                                        }
+                                    });
+
+                                }
+
+                            }
+                            $m = (res.users.length > 0) ? "s." : '.';
+                            $('.cname').html('Search city : ' + place.name + " | Found : " + res.users.length + " record" + $m);
                             showUsers(res);
                         }
                     });
@@ -126,6 +185,7 @@
                         position: place.geometry.location,
                     }),
                 );
+
                 if (place.geometry.viewport) {
 
                     bounds.union(place.geometry.viewport);
@@ -136,6 +196,54 @@
             map.fitBounds(bounds);
         });
 
+        function placeMarker(users, location) {
+
+            markers.forEach((marker) => {
+                marker.setMap(null);
+            });
+            markers = [];
+
+            var geocoder1 = new google.maps.Geocoder();
+
+            if (users.length > 0) {
+                let usr = users;
+                for (let u in usr) {
+
+                    let address = (usr[u].contact_information.resedential_address);
+
+
+
+                    geocoder1.geocode({
+                        'address': address
+                    }, function(results, status) {
+
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            //  var latitude = results[0].geometry.location.lat();
+                            // var longitude = results[0].geometry.location.lng();
+
+
+                            markers.push(
+                                new google.maps.Marker({
+                                    map,
+                                    title: usr[u].firstname + " " + usr[u].lastname,
+                                    position: results[0].geometry.location,
+                                    label: (usr[u].role == 'volunteer') ? 'V' : ((usr[u].role == 'member') ? 'M' : 'B')
+                                })
+                            );
+
+
+
+
+                        }
+                    });
+
+                }
+
+            }
+
+        }
+
+        //click Map Start
         var geocoder = new google.maps.Geocoder();
         map.addListener('click', (event) => {
 
@@ -151,7 +259,7 @@
                             addressResult.address_components.forEach((component) => {
                                 if (component.types.includes('locality')) {
 
-                                    $('.cname').html('Search city : ' + component.long_name);
+
                                     if (component.long_name != '') {
                                         $.ajax({
                                             url: '{{ route("admin.local-user") }}',
@@ -162,6 +270,9 @@
                                                 city: component.long_name
                                             },
                                             success: function(res) {
+                                                placeMarker(res.users, event.latLng);
+                                                $m = (res.users.length > 0) ? "s." : '.';
+                                                $('.cname').html('Search city : ' + component.long_name + " | Found : " + res.users.length + " record" + $m);
                                                 showUsers(res);
                                             }
                                         });
@@ -173,6 +284,7 @@
                 }
             });
         });
+        //Click map end
     }
 
     window.initAutocomplete = initAutocomplete;
@@ -183,10 +295,10 @@
             let usr = res.users;
 
             for (let u in usr) {
-                let adr =  (usr[u].contact_information) ?  usr[u].contact_information.resedential_address:'NA';
+                let adr = (usr[u].contact_information) ? usr[u].contact_information.resedential_address : 'NA';
                 let cls = (usr[u].status == 'approve') ? 'text-success' : ((usr[u].status == 'pending') ? 'text-warning' : 'text-danger');
                 html += '<li class="lic">';
-                html += '<a href="/admin/volunteer/lodge-information/' + usr[u].id + '" target="_blank"><b><i class="mdi mdi-account-hard-hat"></i>' + usr[u].firstname + " " + usr[u].lastname + '<span class="float-end ' + cls + '"> ' + usr[u].status + '</span></b></a>';
+                html += '<a href="/admin/volunteer/lodge-information/' + usr[u].id + '" target="_blank"><b><i class="mdi mdi-account-hard-hat"></i>' + usr[u].firstname + " " + usr[u].lastname + '<span class="float-end ' + cls + '"> Approved </span></b></a>';
                 html += '<br><span><i class="mdi mdi-magnify"></i>Role : ' + usr[u].role + '</span>';
                 html += '<br><span><i class="mdi mdi-mail"></i>Email : ' + usr[u].email + '</span>';
                 html += '<br><span><i class="mdi mdi-phone"></i>Contact : ' + usr[u].phone + '</span>';

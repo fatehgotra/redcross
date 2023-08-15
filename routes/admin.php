@@ -301,6 +301,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('community-store',[CampaignController::class,'communityStore'])->name('community-store');
 
     Route::get('view-activity/{id}',[CampaignController::class,'viewActivity'])->name('view-activity');
+
+    Route::post('approve-activity/{id}',[CampaignController::class,'approve'])->name('approve-activity');
      /*
     |--------------------------------------------------------------------------
     | Survey Route

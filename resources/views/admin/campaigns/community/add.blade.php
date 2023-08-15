@@ -68,16 +68,18 @@
                             @enderror
                         </div>
                         <div class="col-md-12 mb-2">
-                            <label class="form-label">Submit To Branch Officer<span class="text-danger">*</span></label>
-                            <select id="available_days" required class="form-select select2 @error('submit_to') is-invalid @enderror" name="submit_to[]" required data-toggle="select2" data-placeholder="Select Branch Officer" >
-                                
-                                <option value="">--Select Branch Officer --</option>
+                            <label class="form-label">Submit To Division Officer<span class="text-danger">*</span></label>
+                            <select id="available_days" required class="form-select select2 @error('submit_to') is-invalid @enderror" name="submit_to[]" required data-toggle="select2" data-placeholder="Select Branch Officer">
+
+                                <option value="">--Select Division Officer --</option>
                                 @if( count($admins) > 0 )
                                 @foreach( $admins as $adm)
+
                                 @php
-                                  $b = "<b>".( ( !is_null($adm->branch) ) ? " | ".implode(' , ',(array)$adm->branch) : '' )."</b>";
+                                $b = "<b>".( ( !is_null($adm->branch) ) ? " | ".implode(' , ',(array)$adm->branch) : '' )."</b>";
                                 @endphp
                                 <option value="{{ $adm->id }}">{{ $adm->name }} {!! $b !!}</option>
+
                                 @endforeach
                                 @endif
 
@@ -152,15 +154,16 @@
 </script>
 <script>
     jQuery(document).ready(function($) {
-        let i =1, j= 1;
+        let i = 1,
+            j = 1;
         $('.adimg').click(function(e) {
-            let im = '<input name="image['+i+'][file]" class="form-control mb-2" type="file">';
+            let im = '<input name="image[' + i + '][file]" class="form-control mb-2" type="file">';
             $('.imr').append(im);
             i++;
         });
 
         $('.addoc').click(function(e) {
-            let im = '<input name="doc['+j+'][file]" class="form-control mb-2" type="file">';
+            let im = '<input name="doc[' + j + '][file]" class="form-control mb-2" type="file">';
             $('.dor').append(im);
             j++;
         });
