@@ -9,7 +9,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\ReportUser;
 use App\Imports\AddHours;
-use App\Models\userHours;
+use App\Models\Campaign;
+use App\Models\CampaignAttendance;
+use App\Models\CommunityActivity;
+use App\Models\CommunityAttendence;
 use Excel;
 
 class ReportController extends Controller
@@ -99,10 +102,66 @@ class ReportController extends Controller
             return $output;
         }
     }
-    public function hoursView()
+    public function hoursView(Request $request)
     {
+        $aname = '';
+        if (!is_null($request->start)) {
 
-        return view('admin.report.add-hours');
+            $users     = CommunityAttendence::with('user')->where('date', '=', Carbon::parse($request->start)->format('d-m-Y'))->get();
+            $campUsers = CampaignAttendance::with('user')->where('date', '=', Carbon::parse($request->start)->format('d-m-Y'))->get();
+
+        } else if (!is_null($request->event)) {
+
+            if (!is_null($request->type) && $request->type == 'community') {
+                $users     = CommunityAttendence::with('user')->where('activity_id', '=', $request->event)->get();
+                $aname     = CommunityActivity::find( $request->event )->name;
+                $campUsers = [];
+            } else {
+                $users = [];
+                $campUsers = CampaignAttendance::with('user')->where('campaign_id', '=', $request->event)->get();
+                $aname     = Campaign::find( $request->event )->title;
+            }
+
+
+        } else {
+
+            $users     = CommunityAttendence::with('user')->get();
+            $campUsers = CampaignAttendance::with('user')->get();
+        }
+
+        $campaigns = Campaign::all();
+        $community = CommunityActivity::where('status', 'Approved')->get();
+        $cam = [];
+        $com = [];
+
+        if (count($campaigns) > 0) {
+            foreach ($campaigns as $camp) {
+                $cam[] = [
+                    'id'    => $camp->id,
+                    'title' => $camp->title,
+                    'type'  => 'campaign',
+                    'start' => $camp->starts_at,
+                    'end'   => $camp->ends_at
+                ];
+            }
+        }
+
+        if (count($community) > 0) {
+            foreach ($community as $cm) {
+                $com[] = [
+                    'id'    => $cm->id,
+                    'title' => $cm->name,
+                    'type'  => 'community',
+                    'start' => $cm->starts_at,
+                    'end'   => $cm->ends_at
+                ];
+            }
+        }
+
+        $events = (array_merge($cam, $com));
+
+
+        return view('admin.report.add-hours', compact('users', 'events','campUsers','aname'));
     }
     public function addHours(Request $request)
     {
@@ -117,16 +176,35 @@ class ReportController extends Controller
     public function exportHours(Request $request, $id)
     {
         $email = User::find($id);
-        $hours = userHours::where('email', $email->email)->orderBy('date','ASC')->get();
+        $hours = CommunityAttendence::with('activity')->where('email', $email->email)->orderBy('date', 'ASC')->get();
+        $campaign = CampaignAttendance::with('activity')->where('user_id', $id)->orderBy('date', 'ASC')->get();
 
-        $users = [];
+        $_hour = [];
+        $camp = [];
+
         foreach ($hours as $hour) {
-            $users[] = [
-                'date' => $hour->date,
-                'start_time' => $hour->start_time,
-                'end_time' => $hour->end_time,
+            $_hour[] = [
+                'Activity'   => $hour->activity->name,
+                'date'       => $hour->date,
+                'start_time' => $hour->starts_at,
+                'end_time'   => $hour->ends_at,
             ];
         }
+
+        if (count($campaign) > 0) {
+
+            foreach ($campaign as $ca) {
+                $camp[] = [
+
+                    'Activity'   => $ca->activity->title,
+                    'date'       => $ca->date,
+                    'start_time' => $ca->starts_at,
+                    'end_time'   => $ca->ends_at,
+                ];
+            }
+        }
+        $users = array_merge($_hour, $camp);
+
         $output = Excel::download(new ExportHours($users), 'report-hours.xlsx');
 
         return $output;

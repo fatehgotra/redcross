@@ -14,6 +14,8 @@ class Flag extends Model
     protected $fillable = [
         
         'campaign_id',
+        'community_id',
+        'activity_id',
         'user_id',
         'reason'
     ];

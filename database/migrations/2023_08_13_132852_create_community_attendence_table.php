@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_hours', function (Blueprint $table) {
+        Schema::create('community_attendence', function (Blueprint $table) {
             $table->id();
             $table->string('email');
             $table->string('date')->nullable();
-            $table->string('start_time')->nullable();
-            $table->string('end_time')->nullable();
+            $table->string('activity_id')->nullable();
+            $table->string('starts_at');
+            $table->string('ends_at');
             $table->unsignedBigInteger('added_by');
             $table->timestamps();
         });

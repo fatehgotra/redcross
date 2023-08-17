@@ -22,12 +22,12 @@
     </div>
     @include('admin.includes.flash-message')
     <div class="row">
+   
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header"> Activity </h5>
-
+                        <h5 class="card-header"> Activity </h5>
                 <div class="card-body">
-
+                <a href="{{ route('admin.community-attendence',$activity->id) }}" class="btn btn-info float-end"> Attendence </a>
                     <div class="row">
                         <div class="col-md-4">
                             <b>Name </b>
@@ -65,10 +65,10 @@
                             @if( $activity->status == 'Approved')
                             <span class="badge badge-outline-success"> Approved </span>
                             @else
-                             <button class="btn btn-outline-success" onclick="confirmApprove({{ $activity->id }})"> Mark Approve </button>
-                             <form id="approve-form{{ $activity->id }}" method="POST" action="{{ route('admin.approve-activity',$activity->id) }}">
-                              @csrf
-                             </form>
+                            <button class="btn btn-outline-success" onclick="confirmApprove({{ $activity->id }})"> Mark Approve </button>
+                            <form id="approve-form{{ $activity->id }}" method="POST" action="{{ route('admin.approve-activity',$activity->id) }}">
+                                @csrf
+                            </form>
                             @endif
                         </div>
                         @endrole
@@ -164,7 +164,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($activity->attendees as $attendee)
-
+                                    @if( !is_null($attendee->user) )
                                     <tr>
                                         <td>{{ $attendee->user->id }}</td>
                                         <td>{{ $attendee->user->firstname." ".$attendee->user->lastname }}</td>
@@ -174,6 +174,7 @@
                                             <a href="{{ route('admin.volunteer-detail.lodge-information.form', $attendee->user->id) }}" class=" btn btn-info"><i class="mdi mdi-eye"></i></a>
                                         </td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

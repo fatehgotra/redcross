@@ -9,6 +9,7 @@ use App\Models\CampaignAttendance;
 use App\Models\CampaignUser;
 use App\Models\CommunityActivity;
 use App\Models\CommunityAttendees;
+use App\Models\CommunityAttendence;
 use App\Models\CommunityDocs;
 use App\Models\Flag;
 use App\Models\User;
@@ -74,8 +75,9 @@ class CampaignController extends Controller
         $campaign = Campaign::find($id);
         $user_ids = CampaignUser::where('campaign_id', $id)->pluck('user_id')->toArray();
         $users    = User::whereIn('id', $user_ids)->get();
-        $present_users = CampaignAttendance::where('date', Carbon::now()->format('Y-m-d'))->where('campaign_id', $id)->pluck('user_id')->toArray();
-        return view('admin.campaigns.attendance', compact('campaign', 'users', 'present_users'));
+        $present_users = CampaignAttendance::where('date', Carbon::now()->format('d-m-Y'))->where('campaign_id', $id)->pluck('user_id')->toArray();
+        $approvedUsers = User::where('status', 'approve')->get();
+        return view('admin.campaigns.attendance', compact('campaign', 'users', 'present_users', 'approvedUsers'));
     }
 
     /**
@@ -122,16 +124,81 @@ class CampaignController extends Controller
 
     public function markAttendance(Request $request, $id)
     {
+        //dd($request->all());
+        $time_ar = [];
+        $ca = CampaignAttendance::where('date', Carbon::now()->format('d-m-Y'))->where('campaign_id', $id)->get();
+        foreach ($ca as $c) {
+            $time_ar[$c->user_id] = [
+                'starts_at' => $c->starts_at,
+                'ends_at' => $c->ends_at,
+            ];
+        }
 
-        CampaignAttendance::where('date', Carbon::now()->format('Y-m-d'))->where('campaign_id', $id)->delete();
+        CampaignAttendance::where('date', Carbon::now()->format('d-m-Y'))->where('campaign_id', $id)->delete();
         if (!empty($request->attendance) && is_array($request->attendance)) {
             foreach ($request->attendance as $key => $attendance) {
                 CampaignAttendance::create([
-                    'date' => Carbon::now()->format('Y-m-d'),
+                    'date' => Carbon::now()->format('d-m-Y'),
+                    'starts_at' => isset($time_ar[$attendance]) ? $time_ar[$attendance]['starts_at'] : '',
+                    'ends_at' => isset($time_ar[$attendance]) ? $time_ar[$attendance]['ends_at'] : '',
                     'user_id' => $attendance,
                     'campaign_id' => $id
                 ]);
             }
+        }
+
+        if (!is_null($request->time_user)) {
+          
+            CampaignAttendance::where([
+                'campaign_id' => $id,
+                'date' => Carbon::now()->format('d-m-Y'),
+                'user_id' => $request->time_user,
+            ])->update([
+                'starts_at' => $request->starts_at,
+                'ends_at'   => $request->ends_at
+            ]);
+        }
+
+        return redirect()->back()->with('sucess', 'Attendance updated successfully!');
+    }
+
+    public function markCommunityAttendance(Request $request, $id)
+    {
+
+        $time_ar = [];
+        $ca = CommunityAttendence::where('date', Carbon::now()->format('d-m-Y'))->where('activity_id', $id)->get();
+        foreach ($ca as $c) {
+            $time_ar[$c->email] = [
+                'starts_at' => $c->starts_at,
+                'ends_at' => $c->ends_at,
+            ];
+        }
+       
+        CommunityAttendence::where('date', Carbon::now()->format('d-m-Y'))->where('activity_id', $id)->delete();
+        if (!empty($request->attendance) && is_array($request->attendance)) {
+            foreach ($request->attendance as $key => $attendance) {
+                $email =  User::where('id', $attendance)->get()->first()->email;
+                CommunityAttendence::create([
+                    'date' => Carbon::now()->format('d-m-Y'),
+                    'email' => $email ,
+                    'activity_id' => $id,
+                    'starts_at' => isset(  $time_ar[$email] ) ?  $time_ar[$email]['starts_at'] : '',
+                    'ends_at'   => isset(  $time_ar[$email] ) ?  $time_ar[$email]['ends_at'] : '',
+                    'added_by'  => Auth::guard('admin')->id(),
+                ]);
+            }
+        }
+
+        if (!is_null($request->time_user)) {
+         
+            CommunityAttendence::where([
+                'activity_id' => $id,
+                'date' => Carbon::now()->format('d-m-Y'),
+                'email' => User::find($request->time_user)->email,
+            ])->update([
+                'starts_at' => $request->starts_at,
+                'ends_at'   => $request->ends_at
+            ]);
         }
         return redirect()->back()->with('sucess', 'Attendance updated successfully!');
     }
@@ -139,37 +206,90 @@ class CampaignController extends Controller
     public function campaginUserAdd(Request $request)
     {
 
-        $user = User::create([
-            'firstname' => $request->firstname,
-            'lastname'  => $request->lastname,
-            'email'     => $request->email,
-            'phone'     => $request->phone,
-            'password'  => Hash::make($request->password),
-            'role'      => $request->role,
-            'branch'    => $request->branch,
-        ]);
 
-        CampaignUser::create([
-            'user_id' => $user->id,
-            'campaign_id' => $request->campagin
-        ]);
+        if (!is_null($request->activity)) {
 
-        return redirect()->back()->with('success', 'User added to this activity successfully!');
+            if (!is_null($request->user_id)) {
+
+                CommunityAttendees::create([
+                    'attendee_id' => $request->user_id,
+                    'community_id' => $request->activity
+                ]);
+
+                return redirect()->back()->with('success', 'User added to this activity successfully!');
+            }
+            $user = User::create([
+                'firstname' => $request->firstname,
+                'lastname'  => $request->lastname,
+                'email'     => $request->email,
+                'phone'     => $request->phone,
+                'password'  => Hash::make($request->password),
+                'role'      => $request->role,
+                'branch'    => $request->branch,
+            ]);
+
+            CommunityAttendees::create([
+                'attendee_id'  =>  $user->id,
+                'community_id' => $request->activity
+            ]);
+
+            return redirect()->back()->with('success', 'User added to this activity successfully!');
+        } else {
+
+            if (!is_null($request->user_id)) {
+
+                CampaignUser::create([
+                    'user_id' => $request->user_id,
+                    'campaign_id' => $request->campagin
+                ]);
+
+                return redirect()->back()->with('success', 'User added to this activity successfully!');
+            }
+            $user = User::create([
+                'firstname' => $request->firstname,
+                'lastname'  => $request->lastname,
+                'email'     => $request->email,
+                'phone'     => $request->phone,
+                'password'  => Hash::make($request->password),
+                'role'      => $request->role,
+                'branch'    => $request->branch,
+            ]);
+
+            CampaignUser::create([
+                'user_id' => $user->id,
+                'campaign_id' => $request->campagin
+            ]);
+
+            return redirect()->back()->with('success', 'User added to this activity successfully!');
+        }
     }
 
     public function AddFlag(Request $request)
     {
 
-        Flag::create([
-            'campaign_id' => $request->campaign_id,
-            'user_id'     => $request->user_id,
-            'reason'      => $request->reason,
-        ]);
+
+        if (!is_null($request->activity_id)) {
+
+            Flag::create([
+                'activity_id' => $request->activity_id,
+                'user_id'     => $request->user_id,
+                'reason'      => $request->reason,
+            ]);
+        } else {
+
+            Flag::create([
+                'campaign_id' => $request->campaign_id,
+                'user_id'     => $request->user_id,
+                'reason'      => $request->reason,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Flag added to this user');
     }
 
     /******Community activity******/
+
+
     public function community()
     {
 
@@ -181,9 +301,18 @@ class CampaignController extends Controller
             $activities = CommunityActivity::where('submit_by', '=', Auth::guard('admin')->id())->orWhere('status', 'Approved')->get();
         }
 
-        //dd(Auth::guard('admin')->id());
 
         return view('admin.campaigns.community.index', compact('activities'));
+    }
+
+    public function showAttendence(string $id)
+    {
+        $community = CommunityActivity::find($id);
+        $user_ids = CommunityAttendees::where('community_id', $id)->pluck('attendee_id')->toArray();
+        $users    = User::whereIn('id', $user_ids)->get();
+        $present_users = CommunityAttendence::where('date', Carbon::now()->format('d-m-Y'))->where('activity_id', $id)->pluck('email')->toArray();
+        $approvedUsers = User::where('status', 'approve')->get();
+        return view('admin.campaigns.community.attendence', compact('community', 'users', 'present_users', 'approvedUsers'));
     }
 
     public function communityActivity()

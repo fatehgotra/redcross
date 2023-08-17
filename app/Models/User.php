@@ -143,6 +143,15 @@ class User extends Authenticatable
     }
     public function hours(){
 
-        return $this->hasMany(userHours::class,'email','email');
+        return $this->hasMany(CommunityAttendence::class,'email','email');
     }
+    public function activities(){
+
+        return $this->hasMany(CommunityAttendees::class,'attendee_id','id');
+    }
+    public function campagin(){
+
+        return $this->hasMany(CampaignUser::class,'user_id','id');
+    }
+   
 }

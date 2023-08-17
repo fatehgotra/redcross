@@ -6,6 +6,7 @@ use App\Models\BloodInformation;
 use App\Models\Check;
 use App\Models\CommunityActivity;
 use App\Models\CommunityAttendees;
+use App\Models\CommunityAttendence;
 use App\Models\CommunityDocs;
 use App\Models\Consent;
 use App\Models\ContactInformation;
@@ -38,18 +39,42 @@ class VolunteerSeeder extends Seeder
     {
         $faker = app(Generator::class);
 
+        $branches[0] = "Rotuma";
+        $branches[1] = "Levuka";
+        $branches[2] = "Suva";
+        $branches[3] = "Bua";
+        $branches[4] = "Seaqaqa";
+        $branches[5] = "Savusavu";
+        $branches[6] = "Labasa";
+        $branches[7] = "Taveuni";
+        $branches[8] = "Rabi";
+        $branches[9] = "Sigatoka";
+        $branches[10] = "Nadi";
+        $branches[11] = "Lautoka";
+        $branches[12] = "Ba";
+        $branches[13] = "Tavua";
+        $branches[14] = "Rakiraki";
+        $branches[15] = "Nalawa";
+    
+
         $address = [
-            '74 Ragg Ave, Nmdi Hts,  Tamavua',
-            'Port Denarau, Denarau,  Nadi',
-            '4 Luke St, Nabua,  Suva',
-            '4 Malamala St,Nsri,',
-            'Nadi , Korotogo, Sigatoka,Sigatoka, Suva',
-            'Lot 4 Bulei Rd,Laucala Beach Estate,Nasinu',
-            'Lot 10, Rambissesar Rd,Manoca Industrial,Nausori',
-            'Wainivula Rd,Caubati,Nasinu',
-            '12 Nailuva Rd,Raiwai,Suva',
-            'Bulk 204 Statham St,Vatuwaqa,Suva',
-            '21 Milverton Rd,Raiwaqa,Suva'
+            
+           'Rotuma'    => [ 'Rotuma Airport (RTA), Fiji' ,'· Mountain peak, Rotuma', 'Hauameamea Island, Rotuma', 'Sisilo , Rotuma'],
+           'Levuka'    => ['Port of Levuka','Wharf Levuka, Fiji','8R8P+2W8, Levuka, Fiji','8R8M+WPM, Levuka, Fiji'],
+           'Suva'      => ['Albert Park, Suva', 'Fiji Museum, Suva','Thurston Gardens, Suva', 'Damodar City, Suva','Suva Municipal Market, Suva'],
+           'Bua'       => ['Dummy1 address, 123, Bua','Dummy2 address, 123, Bua','Dummy3 address, 123, Bua','Dummy4 address, 123, Bua'],
+           'Seaqaqa'   => ['Dummy1 address, 123, Seaqaqa','Dummy2 address, 123, Seaqaqa','Dummy3 address, 123, Seaqaqa','Dummy4 address, 123, Seaqaqa'],
+           'Savusavu'  => ['Dummy1 address, 123, Seaqaqa','Dummy2 address, 123, Seaqaqa','Dummy3 address, 123, Seaqaqa','Dummy4 address, 123, Seaqaqa'],
+           'Labasa'    => ['Dummy1 address, 123, Labasa','Dummy2 address, 123, Labasa','Dummy3 address, 123, Labasa','Dummy4 address, 123, Labasa'],
+           'Taveuni'   => ['Dummy1 address, 123, Taveuni','Dummy2 address, 123, Taveuni','Dummy3 address, 123, Taveuni','Dummy4 address, 123, Taveuni'],
+           'Rabi'      => ['Dummy1 address, 123, Rabi','Dummy2 address, 123, Rabi','Dummy3 address, 123, Rabi','Dummy4 address, 123, Rabi'],
+           'Sigatoka'  => ['Dummy1 address, 123, Sigatoka','Dummy2 address, 123, Sigatoka','Dummy3 address, 123, Sigatoka','Dummy4 address, 123, Sigatoka'],
+           'Nadi'      => ['Dummy1 address, 123, Nadi','Dummy2 address, 123, Nadi','Dummy3 address, 123, Nadi','Dummy4 address, 123, Nadi'],
+           'Lautoka'   => ['Dummy1 address, 123, Lautoka','Dummy2 address, 123, Lautoka','Dummy3 address, 123, Lautoka','Dummy4 address, 123, Lautoka'],
+           'Ba'        => ['Dummy1 address, 123, Ba','Dummy2 address, 123, Ba','Dummy3 address, 123, Ba','Dummy4 address, 123, Ba'],
+           'Tavua'     => ['Dummy1 address, 123, Tavua','Dummy2 address, 123, Tavua','Dummy3 address, 123, Tavua','Dummy4 address, 123, Tavua'],
+           'Rakiraki'  => ['Dummy1 address, 123, Rakiraki','Dummy2 address, 123, Rakiraki','Dummy3 address, 123, Rakiraki','Dummy4 address, 123, Rakiraki'],
+           'Nalawa'    => ['Dummy1 address, 123, Nalawa','Dummy2 address, 123, Nalawa','Dummy3 address, 123, Nalawa','Dummy4 address, 123, Nalawa'],
         ];
 
         for ($i = 0; $i < 30; $i++) {
@@ -122,7 +147,7 @@ class VolunteerSeeder extends Seeder
                 'specify_languages_spoken'      =>  $faker->randomElement(['Chinese', 'Hebrew', 'Other']),
             ]);
 
-            $adr = $faker->randomElement($address);
+            $adr = $faker->randomElement($address[$registration_location_type]);
 
             $contact_data                                       = array();
             $contact_data['user_id']                            = $user->id;
@@ -302,6 +327,15 @@ class VolunteerSeeder extends Seeder
                 CommunityAttendees::create([
                     'community_id' => $community->id,
                     'attendee_id'  =>  $a+2,
+                ]);
+
+                CommunityAttendence::create([
+                    'email' => User::find( $a+2 )->email,
+                    'date'  => Carbon::now()->format('d-m-Y'),
+                    'starts_at' => '10:00:00 AM',
+                    'ends_at' => '01:00:00 PM',
+                    'activity_id' => $community->id,
+                    'added_by' => 1,
                 ]);
 
                 CommunityDocs::create([

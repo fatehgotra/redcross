@@ -3,7 +3,7 @@
         ->user()
         ->getRoleNames()
         ->toArray();
-    $hours = \App\Models\userHours::where('email',$user->email)->first();
+    $hours = \App\Models\CommunityAttendence::where('email',$user->email)->first();
 
 @endphp
 @if( !is_null($hours) > 0)

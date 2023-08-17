@@ -23,7 +23,7 @@ class ExportHours implements FromArray, WithHeadings
         $collect = [];
         foreach(  $this->users as $k => $u){
             $collect[] = [
-
+                'Activity' => $u['Activity'],
                 'Date'=> $u['date'],
                 'StartTime'=> $u['start_time'],
                 'EndTime'=>$u['end_time']
@@ -37,6 +37,7 @@ class ExportHours implements FromArray, WithHeadings
     public function headings(): array
     {
         return [
+            'Activity',
             'Date',
             'StartTime',
             'EndTime',

@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('campaign_attendances', function (Blueprint $table) {
-            $table->date('date')->nullable();
+            $table->id();
+            $table->string('date')->nullable();
             $table->bigInteger('user_id')->unsigned()->index()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('campaign_id')->unsigned()->index()->nullable();
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
+            $table->string('starts_at');
+            $table->string('ends_at');
             $table->timestamps();
         });
     }

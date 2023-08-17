@@ -303,6 +303,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('view-activity/{id}',[CampaignController::class,'viewActivity'])->name('view-activity');
 
     Route::post('approve-activity/{id}',[CampaignController::class,'approve'])->name('approve-activity');
+
+    Route::get('community-attendence/{id}',[CampaignController::class,'showAttendence'])->name('community-attendence');
+
+    Route::put('community/mark-attendence/{id}', [CampaignController::class, 'markCommunityAttendance'])->name('mark.community-attendance');
+
      /*
     |--------------------------------------------------------------------------
     | Survey Route

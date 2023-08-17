@@ -22,6 +22,7 @@
     </div>
     @include('admin.includes.flash-message')
     <div class="row">
+        
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -29,24 +30,122 @@
                         @csrf
                         <div class="row">
 
-
                             <div class="col-md-8">
                                 <label for="title" class="form-label"><span class="text-danger"> please make sure you know the format or <a style="color:blue" href="{{ asset('assets/images/format-hours.xlsx') }}" download> download </a> and check it.</span></label>
                                 <input type="file" name="report" required class="form-control">
                             </div>
 
-
                             <div class="col-md-3 mt-4">
                                 <button class="form-control btn btn-info "> Import </button>
                             </div>
-
-
 
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Community Activities
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Branch</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @if( count($users) > 0 )
+                                    @foreach ($users as $user)
+                                    @if( !is_null($user->user) )
+                                    <tr>
+                                        <td>{{ $user->user->firstname." ".$user->user->lastname }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($user->date)->format('M d, Y') }}</td>
+                                        <td>{{ $user->user->branch}}</td>
+
+                                        <td>
+                                            <a href="/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="container card p-4">
+            <h3 class="card-header text-center">
+                @if( isset($_GET) && isset($_GET['start']) && !is_null($_GET['start']) )
+                {{ 'Search Date : '. $_GET['start'] }}
+                @elseif( isset($_GET) && isset($_GET['event']) && !is_null($_GET['event']) )
+                 {{ 'Search Activity : '. $aname }}
+                @endif
+            </h3>
+                <div id='calendar'></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+     
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Global Activities
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table id="basic-datatable-global" class="table dt-responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date</th>
+                                        <th>Branch</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if( count($campUsers) > 0 )
+                                    @foreach ($campUsers as $user)
+                                    @if( !is_null($user->user) )
+                                    <tr>
+                                        <td>{{ $user->user->firstname." ".$user->user->lastname }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($user->date)->format('M d, Y') }}</td>
+                                        <td>{{ $user->user->branch}}</td>
+
+                                        <td>
+                                            <a href="/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                    @endif
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
     </div>
 </div>
 @endsection
@@ -64,7 +163,21 @@
     $(function() {
         $("#basic-datatable").DataTable({
             "paging": true,
-            "pageLength": 20,
+            "pageLength": 10,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "order": [
+                [0, 'desc']
+            ]
+        });
+
+        $("#basic-datatable-global").DataTable({
+            "paging": true,
+            "pageLength": 10,
             "lengthChange": false,
             "searching": true,
             "ordering": true,
@@ -97,31 +210,88 @@
 
             var url = "{{ route('admin.add-hours') }}?" + $.param(data);
             $('#import').submit();
-            //window.location = url;
-
-            /*   $.ajax({
-
-                   url: "{{ route('admin.export-excel') }}",
-                   dataType: "JSON",
-                   type: "POST",
-                   data: {
-                       _token: "{{ csrf_token() }}",
-                       type,
-                       cndn,
-                       values,
-                   },
-                   success: function(res) {
-                       const url = window.URL.createObjectURL(new Blob([res.data]));
-                       console.log(url);
-                       const link = document.createElement('a');
-                       link.setAttribute('download', 'file.pdf');
-                       document.body.appendChild(link);
-                       link.click();
-                   }
-               });*/
 
 
         });
+
+        $(function() {
+            $('#basic-datatable').DataTable();
+            $.noConflict();
+            $("[name='action']").bootstrapSwitch();
+        });
+
+        $(function() {
+            $('#basic-datatable-global').DataTable();
+            $.noConflict();
+            $("[name='action']").bootstrapSwitch();
+        });
     });
+</script>
+
+
+
+<!----Fullcalender----->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css1" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<script>
+    $(document).ready(function() {
+
+        var SITEURL = "{{ url('/') }}";
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let event = @json($events);
+        console.log(event);
+
+        var calendar = $('#calendar').fullCalendar({
+            editable: true,
+            events: event,
+            displayEventTime: false,
+            editable: true,
+
+            eventRender: function(event, element, view) {
+                if (event.allDay === 'true') {
+                    event.allDay = true;
+                } else {
+                    event.allDay = false;
+                }
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function(start, end, allDay) {
+
+                var start = $.fullCalendar.formatDate(start, "DD-MM-Y");
+                var end = $.fullCalendar.formatDate(end, "DD-MM-YY");
+                window.history.pushState('page', 'Add Hour Report', '?start=' + start);
+                window.location.reload(true);
+
+            },
+
+            eventClick: function(event) {
+                
+                window.history.pushState('page', 'Add Hour Report', '?event=' + event.id+'&type='+( (event.type == 'campaign') ? 'global': 'community') );
+                window.location.reload(true);
+
+
+            }
+
+        });
+
+    });
+
+    function displayMessage(message) {
+        toastr.success(message, 'Event');
+    }
 </script>
 @endpush

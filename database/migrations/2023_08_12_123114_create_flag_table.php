@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('flag', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('campaign_id');
+            $table->unsignedBigInteger('campaign_id')->nullable();
+            $table->unsignedBigInteger('activity_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->longText('reason')->nullable();
             $table->timestamps();

@@ -33,11 +33,12 @@ class UserController extends Controller
         }
 
         if($filter_active == 'yes'){
-            $users        = $users->whereHas('rewards')->orwhereDate('expiry_date','>=',Carbon::now());;
+           // $users        = $users->whereHas('rewards')->orwhereDate('expiry_date','>=',Carbon::now());;
+           $users        = $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities');
         }
 
         if($filter_active == 'no'){
-            $users        = $users->whereDoesntHave('rewards');
+            $users        = $users->where('status','approve')->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities');
         }
 
         if (Auth::guard('admin')->user()->hasRole('admin')) {

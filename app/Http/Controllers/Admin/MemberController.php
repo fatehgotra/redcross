@@ -32,11 +32,11 @@ class MemberController extends Controller
             $users        = $users->where('status', $filter_status);
         }
         if($filter_active == 'yes'){
-            $users        = $users->whereHas('rewards')->orwhereDate('expiry_date','>=',Carbon::now());
+            $users        = $users->where('status','approve')->whereDate('expiry_date','>=',Carbon::now());
         }
 
         if($filter_active == 'no'){
-            $users        = $users->whereDoesntHave('rewards');
+            $users        = $users->where('status','approve')->whereDate('expiry_date','<',Carbon::now());
         }
         if (Auth::guard('admin')->user()->hasRole('admin')) {
             $users        = $users->whereIn('role', ['member', 'both'])->orderBy('id', 'desc')->get();

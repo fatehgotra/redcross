@@ -39,27 +39,27 @@
                                 <div class="col-12">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288" />
-                                    </svg> <span class="card-title ms-1 h5">{{ $campaign->title }}</span>
+                                    </svg> <span class="card-title ms-1 h5">{{ $community->title }}</span>
                                 </div>
                             </div>
 
                         </div>
                         <div class="card-body">
-                            {!! $campaign->description !!}
+                            {!! $community->breif !!}
                         </div>
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-6">
-                                    <span class="badge badge-outline-success text-center">Starts On: <br>{{ \Carbon\Carbon::parse($campaign->starts_at)->format('M d, Y') }}</span>
+                                    <span class="badge badge-outline-success text-center">Starts On: <br>{{ \Carbon\Carbon::parse($community->starts_at)->format('M d, Y') }}</span>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <span class="badge badge-outline-danger text-center">Ends On: <br>{{ \Carbon\Carbon::parse($campaign->ends_at)->format('M d, Y') }}</span>
+                                    <span class="badge badge-outline-danger text-center">Ends On: <br>{{ \Carbon\Carbon::parse($community->ends_at)->format('M d, Y') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <form method="POST"  id="submitAttendence"  action="{{ route('admin.mark.attendance', $campaign->id) }}">
+                <form method="POST" id="submitAttendence" action="{{ route('admin.mark.community-attendance', $community->id) }}">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="starts_at">
@@ -83,18 +83,21 @@
                                         @foreach ($users as $user)
 
                                         @php
-                                        $flag = \App\Models\Flag::where(['user_id'=>$user->id,'campaign_id'=>$campaign->id])->get()->first();
-                                        $start = \App\Models\CampaignAttendance::where(['date'=>\Carbon\Carbon::now()->format('d-m-Y') , 'user_id' => $user->id , 'campaign_id' => $campaign->id ])->get()->first();
-                                        $end = \App\Models\CampaignAttendance::where(['date'=>\Carbon\Carbon::now()->format('d-m-Y') , 'user_id' => $user->id , 'campaign_id' => $campaign->id ])->get()->first();
+                                        $flag = \App\Models\Flag::where(['user_id'=>$user->id,'activity_id'=>$community->id])->get()->first();
+                                        $start = \App\Models\CommunityAttendence::where(['date'=>\Carbon\Carbon::now()->format('d-m-Y') , 'email' => $user->email , 'activity_id' => $community->id ])->get()->first();
+                                        $end  = \App\Models\CommunityAttendence::where(['date'=>\Carbon\Carbon::now()->format('d-m-Y') , 'email' => $user->email , 'activity_id' => $community->id ])->get()->first();
                                         @endphp
                                         <tr>
                                             <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                             <td>
-                                                <input type="checkbox" id="attendance_{{ $user->id }}" class="switch" name="attendance[]" value="{{ $user->id }}" data-switch="success" {{ in_array($user->id, $present_users) ? "checked" : "" }} />
+
+                                                <input type="checkbox" id="attendance_{{ $user->id }}" class="switch" name="attendance[]" value="{{ $user->id }}" data-switch="success" {{ in_array($user->email, $present_users) ? "checked" : "" }} />
                                                 <label for="attendance_{{ $user->id }}" data-on-label="Yes" data-off-label="No"></label>
                                             </td>
+
                                             <td>{{ !is_null( $start ) ? $start->starts_at : 'NA' }} </td>
                                             <td>{{ !is_null( $end ) ? $end->ends_at : 'NA' }}</td>
+
                                             <td>
                                                 @if( is_null($flag) )
                                                 <a href="#" class="showreason" uid="{{ $user->id}}" style="font-size: 25px; color:black;"><i class="mdi mdi-flag-outline"></i></a>
@@ -112,7 +115,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <!-- <button type="submit" class="btn btn-sm btn-success">Update Attendance</button> -->
+                                <!-- <button type="submit" class="btn btn-sm btn-success" >Update Attendance</button> -->
                                 <button type="button" class="btn btn-primary float-start" data-toggle="modal" data-target="#exampleModal"> Add user </button>
                                 <button type="button" class="btn btn-info float-start ms-1" data-toggle="modal" data-target="#exampleModalExisting"> Add existing user </button>
 
@@ -138,7 +141,7 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.campagin-user') }}" method="POST" id="userform">
                         @csrf
-                        <input type="hidden" name="campagin" value="{{ $campaign->id }}">
+                        <input type="hidden" name="activity" value="{{ $community->id }}">
                         <div class="form-group">
                             <label for="firstname" class="col-form-label"> Firstname </label>
                             <input type="text" class="form-control" required name="firstname" id="firstname" placeholder="Enter firstname">
@@ -239,9 +242,6 @@
         </div>
     </div>
 
-
-    <!----Add existing user------>
-
     <!-- Modal Time -->
     <div class="modal fade" id="exampleModalTime" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelTime" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -280,6 +280,8 @@
     </div>
 
 
+    <!----Add existing user------>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModalExisting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -293,8 +295,8 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.campagin-user') }}" method="POST" id="userformExist">
                         @csrf
-                        <input type="hidden" name="campagin" value="{{ $campaign->id }}">
-
+                        <input type="hidden" name="activity" value="{{ $community->id }}">
+                        <input type="hidden" name="activity" value="{{ $community->id }}">
                         <div class="form-group">
                             <label for="firstname" class="col-form-label"> Select user </label>
                             <select class="form-control" required name="user_id">
@@ -335,7 +337,7 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.flag') }}" method="POST" id="flagForm">
                         @csrf
-                        <input type="hidden" name="campaign_id" value="{{ $campaign->id }}">
+                        <input type="hidden" name="activity_id" value="{{ $community->id }}">
                         <input type="hidden" name="user_id" value="" id="uid">
                         <div class="form-group">
                             <textarea class="form-control" required name="reason" placeholder="Enter Reason"></textarea>
