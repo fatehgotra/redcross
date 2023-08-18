@@ -1,14 +1,14 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="{{ route('admin.dashboard') }}" class="logo text-center logo-light">
+    <!-- <a href="{{ route('admin.dashboard') }}" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo" height="50px">
         </span>
         <span class="logo-sm">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo" class="img-fluid" height="50px">
         </span>
-    </a>
+    </a> -->
 
     <!-- LOGO -->
     <a href="{{ route('admin.dashboard') }}" class="logo text-center logo-dark">
@@ -235,7 +235,7 @@
                     <span> Learning </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="{{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') || request()->is('admin/learning/mcqs') || request()->is('admin/learning/mcqs/*') || request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'collapse show' : 'collapse' }}" id="learning">
+                <div class="{{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') || request()->is('admin/learning/mcqs') || request()->is('admin/learning/mcqs/*') || request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') || request()->is('admin/learning/chat-requests') || request()->is('admin/learning/chat-requests/*') ? 'collapse show' : 'collapse' }}" id="learning">
                     <ul class="side-nav-second-level">
                         <li class="{{ request()->is('admin/learning/courses') || request()->is('admin/learning/courses/*') ? 'menuitem-active' : '' }}">
                             <a href="{{ route('admin.courses.index') }}">Courses</a>
@@ -245,6 +245,9 @@
                         </li>
                         <li class="{{ request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'menuitem-active' : '' }}">
                             <a href="{{ route('admin.videos.index') }}">Videos</a>
+                        </li>
+                        <li class="{{ request()->is('admin/learning/chat-requests') || request()->is('admin/learning/chat-requests/*') ? 'menuitem-active' : '' }}">
+                            <a href="{{ route('admin.ticket-list') }}">Chat Request</a>
                         </li>
                     </ul>
                 </div>

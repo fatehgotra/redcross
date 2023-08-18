@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 @section('title', 'Chat Tickets')
 @section('head')
 <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -186,7 +186,7 @@
                     }
                 })
                 $.ajax({
-                    url: "{{ url('userstoreConversations') }}",
+                    url: "{{ route('admin.storeConversations') }}",
                     method: 'post',
                     data: {
                         message_id: $('[name="message_id"]').val(),
@@ -217,7 +217,7 @@
                     $('.conversation-list').html('');
                     $.each(data, function(i, v) {
                         $('.conversation-list').append(`
-                                <li ${(v.flex != 1) ? 'class="clearfix"' : 'class="clearfix odd"'} style="overflow: visible">
+                                <li ${(v.flex == 1) ? 'class="clearfix"' : 'class="clearfix odd"'} style="overflow: visible">
                                     <div class="chat-avatar">
                                     <img src="{{ asset('/assets/images/speech.png') }}" alt="Female">
                                     </div>

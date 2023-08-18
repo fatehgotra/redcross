@@ -19,9 +19,9 @@
     @include('user.includes.flash-message')
     <div class="row mb-3">
 
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
             <a href="{{ route('chat') }}" class="btn btn-info"> Start Chat </a>
-        </div> -->
+        </div>
 
         <div class="col-md-12">
             <form action="" class="float-end">

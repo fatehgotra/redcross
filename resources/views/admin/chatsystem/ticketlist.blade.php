@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 @section('title', 'Chat Tickets')
 @section('head')
 <link href="{{ asset('assets/css/vendor/dataTables.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
@@ -13,7 +13,7 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Learning</a></li>
-                        <li class="breadcrumb-item active">Courses</li>
+                        <li class="breadcrumb-item active">Chat</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Chat Ticket List</h4>
@@ -24,14 +24,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12 text-end">
-                            <a href="{{ route('chat') }}" class="btn btn-sm btn-dark float-end">Add
-                                Chat Ticket</a>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12 table-responsive">
@@ -53,7 +46,7 @@
                                         <td>{{ $p->description }}</td>
                                         <td>
                                             @if($p->status == 1)
-                                            <a href="/user/chat-view-ticket/{{ base64_encode($p->id) }}/{{ base64_encode($p->created_by) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>
+                                            <a href="{{ route('admin.chat-view-ticket',$p->id) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>
                                                 @else
                                                 <span class="text-success"> Closed </span>
                                                 @endif
@@ -63,7 +56,7 @@
                                     @endforeach
                                     @else
                                     <tr>
-                                        <td>No Recent Ticket </td>
+                                        <td>No Chat Request Found</td>
                                     </tr>
                                     @endif
                                 </tbody>

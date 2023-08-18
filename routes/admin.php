@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\MemberDetailController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
+use App\Http\Controllers\Admin\AdminCourseChatController;
+use App\Http\Controllers\Admin\ChatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -350,4 +352,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     */
     Route::get('site-settings',[AdminSettingsController::class,'siteSetting'])->name('site-settings');
     Route::post('setting-save',[AdminSettingsController::class,'saveSetting'])->name('setting-save');
+
+    /** Chat */
+    Route::get('/learning/chat-requests', [ChatController::class, 'ticketlist'])->name('ticket-list');
+    Route::get('/chat-view-ticket/{id}',[ChatController::class,'showuser'])->name('chat-view-ticket');
+    Route::post('storeConversations', [ChatController::class,'store'])->name('storeConversations');
 });

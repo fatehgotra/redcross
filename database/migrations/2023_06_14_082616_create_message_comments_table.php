@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_chat', function (Blueprint $table) {
-            $table->id();
-
-            $table->unsignedBigInteger('created_by');
-            $table->string('enquiry_type');
-            $table->longText('description')->nullable();
-            $table->string('status');
-
+        Schema::create('message_comments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('message_id');
+            $table->string('user_id');
+            $table->integer('flex')->default(1);
+            $table->mediumText('message');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_chat');
+        Schema::dropIfExists('message_comments');
     }
 };

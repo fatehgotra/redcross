@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 @section('title', 'Create Chat Ticket')
 @section('content')
 <div class="container-fluid">

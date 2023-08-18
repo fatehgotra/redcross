@@ -14,9 +14,8 @@ class CourseChat extends Model
     protected $fillable = [
 
         'created_by',
-        'subject',
-        'body',
-        'priority',
+        'enquiry_type',
+        'description',
         'status'
 
     ];

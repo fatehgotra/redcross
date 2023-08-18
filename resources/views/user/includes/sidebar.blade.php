@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="{{ route('home') }}" class="logo text-center logo-light">
+    <!-- <a href="{{ route('home') }}" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
                 height="50px">
@@ -10,7 +10,7 @@
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
                 class="img-fluid" height="50px">
         </span>
-    </a>
+    </a> -->
 
     <!-- LOGO -->
     <a href="{{ route('home') }}" class="logo text-center logo-dark">
@@ -44,14 +44,27 @@
             </li>
 
             <li class="side-nav-item {{ request()->is('learning/courses') || request()->is('learning/courses/*') ? 'menuitem-active' : '' }}">
-                <a href="{{ route('learning.courses') }}" class="side-nav-link">
+                <a data-bs-toggle="collapse" href="#sidebarLearning" aria-expanded="false"
+                    aria-controls="sidebarLearning" class="side-nav-link">
                     <svg class="shrink-0" width="22" height="22" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                    <span class="ms-2"> Learning </span>
+                    <span> Learning </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="sidebarLearning">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{ route('learning.courses') }}">Courses</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('ticket-list') }}">Chat</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
 
             <li class="side-nav-item {{ request()->is('alerts') || request()->is('alerts/*') ? 'menuitem-active' : '' }}">
                 <a href="{{ route('alerts.index') }}" class="side-nav-link">

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\CourseChat;
 use App\Models\Message;
@@ -9,19 +11,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CourseChatController extends Controller
+class ChatController extends Controller
 {
     public function __construct()
     {
         //$this->middleware(['auth', 'approved']);
-       // $this->middleware('auth');
-       // $this->middleware(['role:admin|course-coordinator']);
+       $this->middleware('auth:admin');
+       $this->middleware(['role:admin|course-coordinator']);
     }
 
     public function index()
     {
         $user = User::where('id', Auth::user()->id)->get()->first();
-        return view('user.chatsystem.chatform', compact('user'));
+        return view('admin.chatsystem.chatform', compact('user'));
     }
     //
 
@@ -50,8 +52,8 @@ class CourseChatController extends Controller
 
     public function ticketlist()
     {
-        $tickets = CourseChat::where('created_by',Auth()->user()->id)->orderBy('id', 'desc')->get();
-        return view('user.chatsystem.ticketlist', compact('tickets'));
+        $tickets = CourseChat::orderBy('id', 'desc')->get();
+        return view('admin.chatsystem.ticketlist', compact('tickets'));
     }
 
     public function list()
@@ -74,15 +76,15 @@ class CourseChatController extends Controller
     public function store(Request $request)
     {
         $conversation = new MessageComment;
-        $conversation->user_id = Auth()->user()->id;
+        $conversation->user_id =0 ;
         $conversation->message = $request->message;
-        $conversation->flex = (Auth::user() == null) ? 0 :1;
+        $conversation->flex = 0;
         $conversation->message_id = $request->message_id;
         $conversation->save();
 
-        $chat_support = CourseChat::where('id', '=',  $request->support_id)->first();
-        $chat_support->status = 1;
-        $chat_support->save();
+        // $chat_support = CourseChat::where('id', '=',  $request->support_id)->first();
+        // $chat_support->status = 1;
+        // $chat_support->save();
 
         return response()->json($conversation);
     }
@@ -111,6 +113,7 @@ class CourseChatController extends Controller
         if (Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first()) {
 
             $message_info = Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first();
+            
         } else if (Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first()) {
 
             $message_info = Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first();
@@ -133,30 +136,18 @@ class CourseChatController extends Controller
         return view('admin.CourseChat.view', compact('support', 'user_messages', 'conversations', 'message_info'));
     }
 
-    public function showuser($sid, $user)
+    public function showuser($sid)
     {
-        $sid = base64_decode($sid);
-        $user = base64_decode($user);
 
         $support = CourseChat::where('id', $sid)->with('user')->get()->first();
 
         $auth_user = 1;
 
-        // check if user and auth already have a message if not create
-        if (Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first()) {
+        $message_info = Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first();
 
-            $message_info = Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first();
-        } else if (Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first()) {
+        if( is_null($message_info) ) {
 
-            $message_info = Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first();
-        } else {
-
-            $message_info = Message::create(
-                [
-                    'sender_id' => 1,
-                    'receiver_id' => $sid
-                ]
-             );
+            return redirect()->route('admin.ticket-list')->with('error','No conversation in this request');
         }
 
         $user_messages = User::where('id', '!=', 1)->get();
@@ -165,7 +156,7 @@ class CourseChatController extends Controller
 
         $conversations =  MessageComment::where(['message_id' => $message_info->id])->get();
 
-        return view('user.chatsystem.view', compact('support', 'user_messages', 'conversations', 'message_info'));
+        return view('admin.chatsystem.view', compact('support', 'user_messages', 'conversations', 'message_info'));
     }
 
     public function getConversations(Request $request)

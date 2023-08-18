@@ -188,7 +188,7 @@ Route::get('chat',[CourseChatController::class,'index'])->name('chat');
 
 Route::get('ticket', [CourseChatController::class, 'index'])->name('ticket');
 Route::post('chat-request', [CourseChatController::class, 'chat_request'])->name('chat-request');
-Route::get('ticket-list', [CourseChatController::class, 'ticketlist'])->name('ticket-list');
+Route::get('/learning/ticket-list', [CourseChatController::class, 'ticketlist'])->name('ticket-list');
 Route::get('user/chat-view-ticket/{id}/{user}',[CourseChatController::class,'showuser'])->name('chat-view-ticket');
 // Route::resource('messages', 'CourseChatController');userComment
 Route::post('userstoreConversations', [CourseChatController::class,'userComment'])->name('userstoreConversations');
