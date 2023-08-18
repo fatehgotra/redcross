@@ -18,8 +18,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('campaign_id')->unsigned()->index()->nullable();
             $table->foreign('campaign_id')->references('id')->on('campaigns')->onDelete('cascade');
-            $table->string('starts_at');
-            $table->string('ends_at');
             $table->timestamps();
         });
     }

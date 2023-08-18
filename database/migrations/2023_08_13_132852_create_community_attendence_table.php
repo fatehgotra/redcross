@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('email');
             $table->string('date')->nullable();
             $table->string('activity_id')->nullable();
-            $table->string('starts_at');
-            $table->string('ends_at');
             $table->unsignedBigInteger('added_by');
             $table->timestamps();
         });

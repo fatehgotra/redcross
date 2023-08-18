@@ -47,24 +47,12 @@
                         <div class="card-body">
                             {!! $campaign->description !!}
                         </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-6">
-                                    <span class="badge badge-outline-success text-center">Starts On: <br>{{ \Carbon\Carbon::parse($campaign->starts_at)->format('M d, Y') }}</span>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <span class="badge badge-outline-danger text-center">Ends On: <br>{{ \Carbon\Carbon::parse($campaign->ends_at)->format('M d, Y') }}</span>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
-                <form method="POST"  id="submitAttendence"  action="{{ route('admin.mark.attendance', $campaign->id) }}">
+                <form method="POST" id="submitAttendence" action="{{ route('admin.mark.attendance', $campaign->id) }}">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="starts_at">
-                    <input type="hidden" name="ends_at">
-                    <input type="hidden" name="time_user">
                     <div class="card-body">
                         <div class="row">
 
@@ -74,8 +62,6 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Present</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
                                             <th>Add Flag </th>
                                         </tr>
                                     </thead>
@@ -93,8 +79,6 @@
                                                 <input type="checkbox" id="attendance_{{ $user->id }}" class="switch" name="attendance[]" value="{{ $user->id }}" data-switch="success" {{ in_array($user->id, $present_users) ? "checked" : "" }} />
                                                 <label for="attendance_{{ $user->id }}" data-on-label="Yes" data-off-label="No"></label>
                                             </td>
-                                            <td>{{ !is_null( $start ) ? $start->starts_at : 'NA' }} </td>
-                                            <td>{{ !is_null( $end ) ? $end->ends_at : 'NA' }}</td>
                                             <td>
                                                 @if( is_null($flag) )
                                                 <a href="#" class="showreason" uid="{{ $user->id}}" style="font-size: 25px; color:black;"><i class="mdi mdi-flag-outline"></i></a>
@@ -112,7 +96,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <!-- <button type="submit" class="btn btn-sm btn-success">Update Attendance</button> -->
+                                <button type="submit" class="btn btn-sm btn-success">Update Attendance</button>
                                 <button type="button" class="btn btn-primary float-start" data-toggle="modal" data-target="#exampleModal"> Add user </button>
                                 <button type="button" class="btn btn-info float-start ms-1" data-toggle="modal" data-target="#exampleModalExisting"> Add existing user </button>
 
@@ -241,44 +225,6 @@
 
 
     <!----Add existing user------>
-
-    <!-- Modal Time -->
-    <div class="modal fade" id="exampleModalTime" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelTime" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelTime">Add Hours</h5>
-                    <button type="button" class="close btn btn-danger" onclick="{ $('#exampleModalTime').modal('hide'); }" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <form action="{{ route('admin.campagin-user') }}" method="POST" id="userform">
-                        @csrf
-                        <input type="hidden" name="time_attend_user">
-
-                        <div class="form-group">
-                            <label for="firstname" class="col-form-label"> Attendence Start Time </label>
-                            <input type="time" name="st_at" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="firstname" class="col-form-label"> Attendence End Time </label>
-                            <input type="time" name="et_at" class="form-control">
-                        </div>
-
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="{ $('#exampleModalTime').modal('hide'); }" data-dismiss="modal">Close</button>
-                    <button type="submit" form="userform" class="btn btn-primary addTime">Update Attendence</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModalExisting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -442,45 +388,7 @@
             $('#flagModalShow').modal('toggle');
         });
 
-        $('.switch').on('change', function(e) {
-
-            if ($(this).is(':checked') == true) {
-                $('input[name="time_attend_user"]').val($(this).val());
-                $('#exampleModalTime').modal('show');
-
-            } else {
-
-                $('#submitAttendence').submit();
-            }
-        });
-
-        $('.addTime').on('click', function(e) {
-
-            let st = $('input[name="st_at"]').val();
-            let et = $('input[name="et_at"]').val();
-            let tu = $('input[name="time_attend_user"]').val();
-
-            $('input[name="starts_at"]').val(tConvert(st));
-            $('input[name="ends_at"]').val(tConvert(et));
-            $('input[name="time_user"]').val(tu);
-
-            $('#submitAttendence').submit();
-
-        });
-
 
     });
-
-    function tConvert(time) {
-        // Check correct time format and split into components
-        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-        if (time.length > 1) { // If time format correct
-            time = time.slice(1); // Remove full string match value
-            time[5] = +time[0] < 12 ? ':00 AM' : ':00 PM'; // Set AM/PM
-            time[0] = +time[0] % 12 || 12; // Adjust hours
-        }
-        return time.join(''); // return adjusted time or original string
-    }
 </script>
 @endpush

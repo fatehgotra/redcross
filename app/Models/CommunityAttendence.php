@@ -16,8 +16,6 @@ class CommunityAttendence extends Model
         'email',
         'activity_id',
         'date',
-        'starts_at',
-        'ends_at',
         'added_by',
     ];
 

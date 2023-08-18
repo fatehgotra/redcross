@@ -34,14 +34,6 @@
                             <p> {{ $activity->name }} </p>
                         </div>
 
-                        <div class="col-md-4">
-                            <b>Starts At</b>
-                            <p> {{ \Carbon\Carbon::parse($activity->starts_at)->format('M d,Y') }} </p>
-                        </div>
-                        <div class="col-md-4">
-                            <b>Ends At</b>
-                            <p> {{ \Carbon\Carbon::parse($activity->ends_at)->format('M d,Y') }} </p>
-                        </div>
                     </div>
 
                     <div class="row">

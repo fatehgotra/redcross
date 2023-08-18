@@ -14,8 +14,6 @@ class CommunityActivity extends Model
     protected $fillable = [
         'name',
         'breif',
-        'starts_at',
-        'ends_at',
         'submit_by',
         'submit_to',
         'status',

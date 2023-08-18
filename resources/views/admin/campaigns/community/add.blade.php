@@ -53,20 +53,7 @@
                             <code id="description-error" class="text-danger">{{ $message }}</code>
                             @enderror
                         </div>
-                        <div class="col-md-6 mb-2">
-                            <label for="starts_at" class="form-label">Start Date <span class="text-danger">*</span></label>
-                            <input id="starts_at" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" class="form-control" name="starts_at" value="{{ old('starts_at') }}" autocomplete="starts_at" placeholder="Start Date">
-                            @error('starts_at')
-                            <code id="description-error" class="text-danger">{{ $message }}</code>
-                            @enderror
-                        </div>
-                        <div class="col-md-6 mb-2">
-                            <label for="ends_at" class="form-label">End Date <span class="text-danger">*</span></label>
-                            <input id="ends_at" type="text" data-provide="datepicker" data-date-format="yyyy-mm-dd" class="form-control" name="ends_at" value="{{ old('ends_at') }}" autocomplete="ends_at" placeholder="End Date">
-                            @error('ends_at')
-                            <code id="description-error" class="text-danger">{{ $message }}</code>
-                            @enderror
-                        </div>
+                     
                         <div class="col-md-12 mb-2">
                             <label class="form-label">Submit To Division Officer<span class="text-danger">*</span></label>
                             <select id="available_days" required class="form-select select2 @error('submit_to') is-invalid @enderror" name="submit_to[]" required data-toggle="select2" data-placeholder="Select Branch Officer">

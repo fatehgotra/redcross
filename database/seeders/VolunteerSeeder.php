@@ -22,6 +22,7 @@ use App\Models\ServiceInterest;
 use App\Models\Skill;
 use App\Models\SpecialInformation;
 use App\Models\User;
+use App\Models\UserHours;
 use App\Models\ValidNationalIdentification;
 use App\Models\VolunteeringInformation;
 use Carbon\Carbon;
@@ -313,8 +314,6 @@ class VolunteerSeeder extends Seeder
 
                 'name'      => 'Community Activity ' . $i + 1,
                 'breif'     => '<h2 style="margin: 0px 0px 10px; padding: 0px; font-weight: 400; font-family: DauphinPlain; font-size: 24px; line-height: 24px;">What is Lorem Ipsum?</h2> <p style="margin: 0px 0px 15px; padding: 0px; text-align: justify; font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px;"><strong style="margin: 0px; padding: 0px;">Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
-                'starts_at' =>  Carbon::today()->format('Y-m-d'),
-                'ends_at'   =>  Carbon::today()->addDay()->format('Y-m-d'),
                 'submit_by' =>  4,
                 'submit_to' =>  3,
                 'status'    =>  ($i < 2) ? 'Approved' : 'Pending' 
@@ -332,8 +331,6 @@ class VolunteerSeeder extends Seeder
                 CommunityAttendence::create([
                     'email' => User::find( $a+2 )->email,
                     'date'  => Carbon::now()->format('d-m-Y'),
-                    'starts_at' => '10:00:00 AM',
-                    'ends_at' => '01:00:00 PM',
                     'activity_id' => $community->id,
                     'added_by' => 1,
                 ]);
@@ -348,6 +345,22 @@ class VolunteerSeeder extends Seeder
                     'community_id' => $community->id,
                     'type'         => 'doc',
                     'doc'          => $faker->randomElement(['doc1.xlsx', 'doc2.xlsx', 'doc3.xlsx', 'doc4.pdf']),
+                ]);
+            }
+        }
+
+        $active = User::where('status','approve')->take(20)->get();
+        
+        if( count($active) > 0 ){
+            foreach( $active as $user){
+                 
+                UserHours::create([
+
+                    'email'     => $user->email,
+                    'date'      => $faker->randomElement([Carbon::now()->addDay(1)->format('d-m-Y'), Carbon::now()->addDay(2)->format('d-m-Y'), Carbon::now()->addDay(3)->format('d-m-Y')]),
+                    'start_time'=> $faker->randomElement(['10:00:00 AM','11:00:00 AM']),
+                    'end_time'  => $faker->randomElement(['02:00:00 PM','03:00:00 PM']),
+                    'comment'   => $faker->randomElement(['Helping orphans','Helping Adminstartive work',' Take part in blood donation camp']),
                 ]);
             }
         }

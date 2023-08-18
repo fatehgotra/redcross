@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('breif')->nullable();
-            $table->string('starts_at')->nullable();
-            $table->string('ends_at')->nullable();
             $table->unsignedBigInteger('submit_by');
             $table->unsignedBigInteger('submit_to');
             $table->enum('status',['Pending','Approved'])->default('Pending');

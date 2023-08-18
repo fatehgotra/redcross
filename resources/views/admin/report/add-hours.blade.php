@@ -22,7 +22,7 @@
     </div>
     @include('admin.includes.flash-message')
     <div class="row">
-        
+
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
@@ -48,7 +48,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    Community Activities
+                    User Hours
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -59,17 +59,23 @@
                                         <th>Name</th>
                                         <th>Date</th>
                                         <th>Branch</th>
+                                        <th>Comment</th>
+                                        <th>Start Time </th>
+                                        <th>End Time </th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if( count($users) > 0 )
+                                    @if( count($users) > 0 )
                                     @foreach ($users as $user)
                                     @if( !is_null($user->user) )
                                     <tr>
                                         <td>{{ $user->user->firstname." ".$user->user->lastname }}</td>
                                         <td>{{ \Carbon\Carbon::parse($user->date)->format('M d, Y') }}</td>
                                         <td>{{ $user->user->branch}}</td>
+                                        <td>{{ $user->comment}}</td>
+                                        <td>{{ $user->start_time}}</td>
+                                        <td>{{ $user->end_time}}</td>
 
                                         <td>
                                             <a href="/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
@@ -77,7 +83,7 @@
                                     </tr>
                                     @endif
                                     @endforeach
-                                @endif
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -88,64 +94,16 @@
 
         <div class="col-md-6">
             <div class="container card p-4">
-            <h3 class="card-header text-center">
-                @if( isset($_GET) && isset($_GET['start']) && !is_null($_GET['start']) )
-                {{ 'Search Date : '. $_GET['start'] }}
-                @elseif( isset($_GET) && isset($_GET['event']) && !is_null($_GET['event']) )
-                 {{ 'Search Activity : '. $aname }}
-                @endif
-            </h3>
+                <h3 class="card-header text-center">
+                    @if( isset($_GET) && isset($_GET['start']) && !is_null($_GET['start']) )
+                    {{ 'Search Date : '. $_GET['start'] }}
+                    @endif
+                </h3>
                 <div id='calendar'></div>
             </div>
 
         </div>
 
-    </div>
-
-    <div class="row">
-     
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    Global Activities
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12 table-responsive">
-                            <table id="basic-datatable-global" class="table dt-responsive nowrap w-100">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>Branch</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if( count($campUsers) > 0 )
-                                    @foreach ($campUsers as $user)
-                                    @if( !is_null($user->user) )
-                                    <tr>
-                                        <td>{{ $user->user->firstname." ".$user->user->lastname }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($user->date)->format('M d, Y') }}</td>
-                                        <td>{{ $user->user->branch}}</td>
-
-                                        <td>
-                                            <a href="/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @endforeach
-                                    @endif
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-       
     </div>
 </div>
 @endsection
@@ -251,12 +209,11 @@
             }
         });
 
-        let event = @json($events);
-        console.log(event);
+
 
         var calendar = $('#calendar').fullCalendar({
             editable: true,
-            events: event,
+            events: [],
             displayEventTime: false,
             editable: true,
 
@@ -279,8 +236,8 @@
             },
 
             eventClick: function(event) {
-                
-                window.history.pushState('page', 'Add Hour Report', '?event=' + event.id+'&type='+( (event.type == 'campaign') ? 'global': 'community') );
+
+                window.history.pushState('page', 'Add Hour Report', '?event=' + event.id + '&type=' + ((event.type == 'campaign') ? 'global' : 'community'));
                 window.location.reload(true);
 
 

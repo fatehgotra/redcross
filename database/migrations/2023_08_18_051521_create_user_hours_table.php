@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campaigns', function (Blueprint $table) {
+        Schema::create('user_hours', function (Blueprint $table) {
             $table->id();
-            $table->text('title')->nullable();
-            $table->longText('description')->nullable();
-            $table->boolean('entry_closed')->default(false);
+            $table->string('email');
+            $table->string('date');
+            $table->string('start_time');
+            $table->string('end_time');
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campaigns');
+        Schema::dropIfExists('user_hours');
     }
 };

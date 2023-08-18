@@ -2,45 +2,42 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromArray;
+use App\Models\UserHours;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ExportHours implements FromArray, WithHeadings
+class ExportHours implements FromCollection, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\array
-    */
+     * @return \Illuminate\Support\array
+     */
 
-    protected $users;
+    protected $email;
 
-    function __construct($users) {
-        $this->users = $users;
+    function __construct($email)
+    {
+        $this->email = $email;
     }
 
-    public function array():array
+    public function collection()
     {
-     
-        $collect = [];
-        foreach(  $this->users as $k => $u){
-            $collect[] = [
-                'Activity' => $u['Activity'],
-                'Date'=> $u['date'],
-                'StartTime'=> $u['start_time'],
-                'EndTime'=>$u['end_time']
-            ];
-        }
-        
-        return $collect;
 
+
+        $collect = UserHours::where('email',$this->email)
+        ->select('date','start_time','end_time','comment')
+        ->get();
+
+        return $collect;
     }
 
     public function headings(): array
     {
         return [
-            'Activity',
+
             'Date',
             'StartTime',
             'EndTime',
+            'Comment',
         ];
     }
 }

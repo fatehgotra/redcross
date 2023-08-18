@@ -44,8 +44,6 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Starts At</th>
-                                        <th>Ends At</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -55,8 +53,6 @@
                                     <tr>
                                         <td>{{ $activity->id }}</td>
                                         <td>{{ $activity->name }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($activity->starts_at)->format('M d, Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($activity->ends_at)->format('M d, Y') }}</td>
                                         <td>
                                         <span class="badge @if($activity->status =='Pending') badge-outline-warning @else badge-outline-success @endif">{{ $activity->status }}</span>
                                         </td>

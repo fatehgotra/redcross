@@ -40,8 +40,6 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Title</th>
-                                            <th>Starts At</th>
-                                            <th>Ends At</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,8 +48,7 @@
                                             <tr>
                                                 <td>{{ $campaign->id }}</td>
                                                 <td>{{ $campaign->title }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($campaign->starts_at)->format('M d, Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($campaign->ends_at)->format('M d, Y') }}</td>
+                                              
                                                 <td>
                                                     <a href="#" class="dropdown-toggle arrow-none card-drop"
                                                         data-bs-toggle="dropdown" aria-expanded="false">

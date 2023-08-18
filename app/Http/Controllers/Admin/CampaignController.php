@@ -51,16 +51,12 @@ class CampaignController extends Controller
         $request->validate([
             'title'         => 'required',
             'description'   => 'required',
-            'starts_at'     => 'required',
-            'ends_at'       => 'required',
             'entry_closed'  => 'required'
         ]);
 
         Campaign::create([
             'title'         => $request->title,
             'description'   => $request->description,
-            'starts_at'     => $request->starts_at,
-            'ends_at'       => $request->ends_at,
             'entry_closed'  => $request->entry_closed
         ]);
 
@@ -97,16 +93,12 @@ class CampaignController extends Controller
         $request->validate([
             'title'         => 'required',
             'description'   => 'required',
-            'starts_at'     => 'required',
-            'ends_at'       => 'required',
             'entry_closed'  => 'required'
         ]);
 
         Campaign::find($id)->update([
             'title'         => $request->title,
             'description'   => $request->description,
-            'starts_at'     => $request->starts_at,
-            'ends_at'       => $request->ends_at,
             'entry_closed'  => $request->entry_closed
         ]);
 
@@ -124,39 +116,17 @@ class CampaignController extends Controller
 
     public function markAttendance(Request $request, $id)
     {
-        //dd($request->all());
-        $time_ar = [];
-        $ca = CampaignAttendance::where('date', Carbon::now()->format('d-m-Y'))->where('campaign_id', $id)->get();
-        foreach ($ca as $c) {
-            $time_ar[$c->user_id] = [
-                'starts_at' => $c->starts_at,
-                'ends_at' => $c->ends_at,
-            ];
-        }
+       
 
         CampaignAttendance::where('date', Carbon::now()->format('d-m-Y'))->where('campaign_id', $id)->delete();
         if (!empty($request->attendance) && is_array($request->attendance)) {
             foreach ($request->attendance as $key => $attendance) {
                 CampaignAttendance::create([
                     'date' => Carbon::now()->format('d-m-Y'),
-                    'starts_at' => isset($time_ar[$attendance]) ? $time_ar[$attendance]['starts_at'] : '',
-                    'ends_at' => isset($time_ar[$attendance]) ? $time_ar[$attendance]['ends_at'] : '',
                     'user_id' => $attendance,
                     'campaign_id' => $id
                 ]);
             }
-        }
-
-        if (!is_null($request->time_user)) {
-          
-            CampaignAttendance::where([
-                'campaign_id' => $id,
-                'date' => Carbon::now()->format('d-m-Y'),
-                'user_id' => $request->time_user,
-            ])->update([
-                'starts_at' => $request->starts_at,
-                'ends_at'   => $request->ends_at
-            ]);
         }
 
         return redirect()->back()->with('sucess', 'Attendance updated successfully!');
@@ -164,15 +134,6 @@ class CampaignController extends Controller
 
     public function markCommunityAttendance(Request $request, $id)
     {
-
-        $time_ar = [];
-        $ca = CommunityAttendence::where('date', Carbon::now()->format('d-m-Y'))->where('activity_id', $id)->get();
-        foreach ($ca as $c) {
-            $time_ar[$c->email] = [
-                'starts_at' => $c->starts_at,
-                'ends_at' => $c->ends_at,
-            ];
-        }
        
         CommunityAttendence::where('date', Carbon::now()->format('d-m-Y'))->where('activity_id', $id)->delete();
         if (!empty($request->attendance) && is_array($request->attendance)) {
@@ -182,24 +143,12 @@ class CampaignController extends Controller
                     'date' => Carbon::now()->format('d-m-Y'),
                     'email' => $email ,
                     'activity_id' => $id,
-                    'starts_at' => isset(  $time_ar[$email] ) ?  $time_ar[$email]['starts_at'] : '',
-                    'ends_at'   => isset(  $time_ar[$email] ) ?  $time_ar[$email]['ends_at'] : '',
                     'added_by'  => Auth::guard('admin')->id(),
                 ]);
             }
         }
 
-        if (!is_null($request->time_user)) {
-         
-            CommunityAttendence::where([
-                'activity_id' => $id,
-                'date' => Carbon::now()->format('d-m-Y'),
-                'email' => User::find($request->time_user)->email,
-            ])->update([
-                'starts_at' => $request->starts_at,
-                'ends_at'   => $request->ends_at
-            ]);
-        }
+       
         return redirect()->back()->with('sucess', 'Attendance updated successfully!');
     }
 
@@ -381,8 +330,6 @@ class CampaignController extends Controller
 
             'name'      => $request->name,
             'breif'     => $request->breif,
-            'starts_at' => $request->starts_at,
-            'ends_at'   => $request->ends_at,
             'submit_by' => Auth::guard('admin')->id(),
             'submit_to' => $request->submit_to[0],
 

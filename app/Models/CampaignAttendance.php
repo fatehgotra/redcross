@@ -12,8 +12,6 @@ class CampaignAttendance extends Model
     protected $fillable = [
         'date',
         'user_id',
-        'starts_at',
-        'ends_at',
         'campaign_id'
     ];
 
