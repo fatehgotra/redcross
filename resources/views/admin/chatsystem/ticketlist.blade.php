@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                
+
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12 table-responsive">
@@ -33,6 +33,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Course Name</th>
+                                        <th>Description</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -46,12 +47,23 @@
                                         <td>{{ $p->description }}</td>
                                         <td>
                                             @if($p->status == 1)
-                                            <a href="{{ route('admin.chat-view-ticket',$p->id) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>
-                                                @else
-                                                <span class="text-success"> Closed </span>
-                                                @endif
+                                            <span class="badge badge-outline-warning"> Open </span>
+                                            @else
+                                            <span class="badge badge-outline-success"> Closed </span>
+                                            @endif
 
                                         </td>
+                                        <td>
+                                            @if( $p->status == 1)
+                                            <a href="{{ route('admin.chat-view-ticket',$p->id) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></a>
+                                            @endif
+                                            <a onclick="confirmDelete({{ $p->id }})" class="mdi mdi-delete-circle-outline" style="font-size:27px;cursor:pointer"></a>
+                                        </td>
+                                        
+                                        <form action="{{ route('admin.delete-ticket',$p->id ) }}" id="delete-form{{$p->id}}" method="post" >
+                                            @csrf
+                                            </form>
+
                                     </tr>
                                     @endforeach
                                     @else
@@ -96,6 +108,23 @@
             ]
         });
     });
+
+    function confirmDelete(no) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form' + no).submit();
+                }
+            })
+        };
+
 </script>
 
 @endpush

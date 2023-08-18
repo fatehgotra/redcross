@@ -27,11 +27,14 @@
                 <div class="card-body">
                     <div class="container card-header">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <h4 class="header-title mb-3">Conversation</h4>
                             </div>
+                            <div class="col-md-6">
+                            <a href="{{ route('admin.ticket-list') }}" class="btn btn-sm btn-dark float-end">Back</a>
+                            </div>
                         </div>
-
+                
 
                         <div class="row">
                             <div class="col-sm-9">
@@ -74,6 +77,10 @@
 
                                 <div class="media-body mb-3 mt-3">
                                     <div class="media-body mb-3">
+                                        <button onclick="markClose({{ $support->id }})" class="btn btn-outline-success">Mark Close</button>
+                                    </div>
+
+                                    <div class="media-body mb-3">
                                         <h5 class="mt-0 mb-1">#Chat ID</h5>
                                         <p class="text-dark">{{ $support->id }}</p>
                                     </div>
@@ -88,44 +95,11 @@
                                     </span>
                                 </div>
 
+                                <form action="{{ route('admin.mark-ticket-close',$support->id ) }}" id="close-form{{$support->id}}" method="post" >
+                                  @csrf
+                                </form>
 
 
-                                @if(!empty($support->files))
-
-                                <div class="media-body mb-3">
-                                    <h5 class="mt-0 mb-1">Attachment</h5>
-
-                                    @foreach( $support->files as $file )
-
-                                    <div class="card mb-2 shadow-none border">
-                                        <div class="p-1">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="avatar-sm">
-                                                        <span class="avatar-title rounded">
-                                                            File
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col pl-0">
-                                                    <a href="javascript:void(0);" class="text-muted font-weight-bold">{{ $file->filename }}</a>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <!-- Button -->
-                                                    <a href="{{ asset('/assets/images').'/'.$file->filename }}" data-toggle="tooltip" data-placement="bottom" title="" class="btn btn-link text-muted btn-lg p-0" data-original-title="Download" download="">
-                                                        <i class="uil uil-cloud-download"></i>
-                                                    </a>
-                                                    <a href="/ticket/delete-attachment/{{ $file->id }}" data-toggle="tooltip" data-placement="bottom" title="" class="btn btn-link text-danger btn-lg p-0" data-original-title="Delete">
-                                                        <i class="uil uil-multiply"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @endforeach
-                                </div>
-                                @endif
                             </div>
                         </div>
 
@@ -177,6 +151,24 @@
     </script>
 
     <script type="text/javascript">
+        function markClose(no) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, close it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('close-form' + no).submit();
+                }
+            })
+        };
+    </script>
+
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#submitMessage').click(function(e) {
                 e.preventDefault();
@@ -200,23 +192,23 @@
             });
 
             var timer = setInterval(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-            var value = $('[name="message_id"]').val();
-            var user = $('[name="user_id"]').val();
-            $.ajax({
-                url: "{{ url('getConversations') }}",
-                method: "get",
-                data: {
-                    id: value
-                },
-                success: function(data) {
-                    $('.conversation-list').html('');
-                    $.each(data, function(i, v) {
-                        $('.conversation-list').append(`
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                })
+                var value = $('[name="message_id"]').val();
+                var user = $('[name="user_id"]').val();
+                $.ajax({
+                    url: "{{ url('getConversations') }}",
+                    method: "get",
+                    data: {
+                        id: value
+                    },
+                    success: function(data) {
+                        $('.conversation-list').html('');
+                        $.each(data, function(i, v) {
+                            $('.conversation-list').append(`
                                 <li ${(v.flex == 1) ? 'class="clearfix"' : 'class="clearfix odd"'} style="overflow: visible">
                                     <div class="chat-avatar">
                                     <img src="{{ asset('/assets/images/speech.png') }}" alt="Female">
@@ -232,20 +224,20 @@
                                 </div>
                             </li>
                         `);
-                    })
+                        })
 
-                    var scrollDown = $('#ko');
-                    if (scrollDown[0] != undefined) {
-                        var height = scrollDown[0].scrollHeight;
-                        //scrollDown.scrollTop(height);
-                    } else if (data.length == 1) {
-                        //window.location.reload(0);
+                        var scrollDown = $('#ko');
+                        if (scrollDown[0] != undefined) {
+                            var height = scrollDown[0].scrollHeight;
+                            //scrollDown.scrollTop(height);
+                        } else if (data.length == 1) {
+                            //window.location.reload(0);
+                        }
+
                     }
+                });
 
-                }
-            });
-
-             }, 1000);
+            }, 1000);
 
             // $('#ko').on('scroll', function() { 
             //     clearInterval(timer);
@@ -254,9 +246,9 @@
             var input = document.getElementById("message_typing");
             input.addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
-                    
+
                     event.preventDefault();
-                   
+
                     document.getElementById("submitMessage").click();
                 }
             });
@@ -264,4 +256,6 @@
 
         })
     </script>
+
+
     @endpush

@@ -357,4 +357,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/learning/chat-requests', [ChatController::class, 'ticketlist'])->name('ticket-list');
     Route::get('/chat-view-ticket/{id}',[ChatController::class,'showuser'])->name('chat-view-ticket');
     Route::post('storeConversations', [ChatController::class,'store'])->name('storeConversations');
+    Route::post('mark-ticket-close/{id}',[ChatController::class,'markClose'])->name('mark-ticket-close');
+    Route::post('delete-ticket/{id}',[ChatController::class,'deleteTicket'])->name('delete-ticket');
 });

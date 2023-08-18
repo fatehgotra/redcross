@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <!-- <a href="{{ route('home') }}" class="logo text-center logo-light">
+    <a href="{{ route('home') }}" class="logo text-center logo-light">
         <span class="logo-lg">
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
                 height="50px">
@@ -10,7 +10,7 @@
             <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
                 class="img-fluid" height="50px">
         </span>
-    </a> -->
+    </a>
 
     <!-- LOGO -->
     <a href="{{ route('home') }}" class="logo text-center logo-dark">

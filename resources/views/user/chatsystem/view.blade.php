@@ -27,8 +27,11 @@
                 <div class="card-body">
                     <div class="container card-header">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <h4 class="header-title mb-3">Conversation</h4>
+                            </div>
+                            <div class="col-md-6">
+                            <a href="{{ route('ticket-list') }}" class="btn btn-sm btn-dark float-end">Back</a>
                             </div>
                         </div>
 
@@ -88,44 +91,6 @@
                                     </span>
                                 </div>
 
-
-
-                                @if(!empty($support->files))
-
-                                <div class="media-body mb-3">
-                                    <h5 class="mt-0 mb-1">Attachment</h5>
-
-                                    @foreach( $support->files as $file )
-
-                                    <div class="card mb-2 shadow-none border">
-                                        <div class="p-1">
-                                            <div class="row align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="avatar-sm">
-                                                        <span class="avatar-title rounded">
-                                                            File
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col pl-0">
-                                                    <a href="javascript:void(0);" class="text-muted font-weight-bold">{{ $file->filename }}</a>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <!-- Button -->
-                                                    <a href="{{ asset('/assets/images').'/'.$file->filename }}" data-toggle="tooltip" data-placement="bottom" title="" class="btn btn-link text-muted btn-lg p-0" data-original-title="Download" download="">
-                                                        <i class="uil uil-cloud-download"></i>
-                                                    </a>
-                                                    <a href="/ticket/delete-attachment/{{ $file->id }}" data-toggle="tooltip" data-placement="bottom" title="" class="btn btn-link text-danger btn-lg p-0" data-original-title="Delete">
-                                                        <i class="uil uil-multiply"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @endforeach
-                                </div>
-                                @endif
                             </div>
                         </div>
 

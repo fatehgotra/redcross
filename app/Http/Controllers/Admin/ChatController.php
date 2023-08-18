@@ -16,8 +16,8 @@ class ChatController extends Controller
     public function __construct()
     {
         //$this->middleware(['auth', 'approved']);
-       $this->middleware('auth:admin');
-       $this->middleware(['role:admin|course-coordinator']);
+        $this->middleware('auth:admin');
+        $this->middleware(['role:admin|course-coordinator']);
     }
 
     public function index()
@@ -29,7 +29,7 @@ class ChatController extends Controller
 
     public function chat_request(Request $request)
     {
-      
+
         $id = Auth::user()->id;
 
         $this->validate($request, [
@@ -38,14 +38,14 @@ class ChatController extends Controller
         ]);
 
         $args = [
-           
+
             'enquiry_type'  => $request->enquiry_type,
             'description' => $request->description,
             'created_by'  => $id,
             'status' => '1'
         ];
 
-        
+
         CourseChat::create($args);
         return redirect()->route('ticket-list')->with('success', 'Ticket has been created successfully');
     }
@@ -76,7 +76,7 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $conversation = new MessageComment;
-        $conversation->user_id =0 ;
+        $conversation->user_id = 0;
         $conversation->message = $request->message;
         $conversation->flex = 0;
         $conversation->message_id = $request->message_id;
@@ -113,7 +113,6 @@ class ChatController extends Controller
         if (Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first()) {
 
             $message_info = Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first();
-            
         } else if (Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first()) {
 
             $message_info = Message::where(['sender_id' => $user, 'receiver_id' => $auth_user])->first();
@@ -145,9 +144,14 @@ class ChatController extends Controller
 
         $message_info = Message::where(['sender_id' => $auth_user, 'receiver_id' => $sid])->first();
 
-        if( is_null($message_info) ) {
+        if (is_null($message_info)) {
 
-            return redirect()->route('admin.ticket-list')->with('error','No conversation in this request');
+            $message_info = Message::create(
+                [
+                    'sender_id' => 1,
+                    'receiver_id' => $sid
+                ]
+            );
         }
 
         $user_messages = User::where('id', '!=', 1)->get();
@@ -163,5 +167,17 @@ class ChatController extends Controller
     {
         $conversations =  MessageComment::where(['message_id' => $request->id])->with('user')->get();
         return $conversations;
+    }
+
+    public function markClose($id)
+    {
+        CourseChat::where('id', $id)->update(['status' => 0]);
+        return redirect()->route('admin.ticket-list')->with('success', 'Ticket Close successfully!');
+    }
+
+    public function deleteTicket($id)
+    {
+        CourseChat::find($id)->delete();
+        return redirect()->route('admin.ticket-list')->with('success', 'Ticket deleted successfully!');
     }
 }

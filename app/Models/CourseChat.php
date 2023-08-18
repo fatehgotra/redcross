@@ -30,4 +30,21 @@ class CourseChat extends Model
         return $this->hasMany(SupportReplies::class, 'support_id');
     }
 
+    public function messages(){
+
+        return $this->hasOne(Message::class,'receiver_id','created_by');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($chat) {
+           
+           $msg = Message::where('receiver_id',$chat->id)->get()->first();
+           Message::where('receiver_id',$chat->id)->delete();
+           MessageComment::where('message_id',$msg->id)->delete();
+           
+        });
+    }
+
 }
