@@ -39,7 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Course Name</th>
+                                        <th>Enquiry Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -50,7 +50,16 @@
                                     <tr>
                                         <td>#{{ $p->id }}</td>
                                         <td>{{ $p->enquiry_type }}</td>
-                                        <td>{{ $p->description }}</td>
+
+                                        <td>
+                                            @if($p->status == 1)
+                                            <span class="badge badge-outline-warning"> Open </span>
+                                            @else
+                                            <span class="badge badge-outline-success"> Closed </span>
+                                            @endif
+
+                                        </td>
+                                       
                                         <td>
                                             @if($p->status == 1)
                                             <a href="/user/chat-view-ticket/{{ base64_encode($p->id) }}/{{ base64_encode($p->created_by) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>

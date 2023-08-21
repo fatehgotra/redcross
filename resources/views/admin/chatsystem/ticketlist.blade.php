@@ -32,8 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Course Name</th>
-                                        <th>Description</th>
+                                        <th>Enquiry Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -44,7 +43,6 @@
                                     <tr>
                                         <td>#{{ $p->id }}</td>
                                         <td>{{ $p->enquiry_type }}</td>
-                                        <td>{{ $p->description }}</td>
                                         <td>
                                             @if($p->status == 1)
                                             <span class="badge badge-outline-warning"> Open </span>
