@@ -109,14 +109,22 @@ class LearningController extends Controller
             'unattempted'    => $unattempted
         ]);
 
-        UserReward::updateOrCreate([
-            'course_id' => $id,
-            'user_id' => Auth::user()->id,
-            'reward_for' => 'test'
-        ], [            
-            'points'    => Course::find($id)->test_reward_points
-        ]);
-         
+        $attempt            = TestAttempt::find( $response->test_attempt_id );
+
+        $percentage = ($attempt->correct / count($attempt->responses) * 100);
+        
+        if( $percentage >= 80 ){
+
+            UserReward::updateOrCreate([
+                'course_id' => $id,
+                'user_id' => Auth::user()->id,
+                'reward_for' => 'test'
+            ], [            
+                'points'    => Course::find($id)->test_reward_points
+            ]);
+
+        }
+       
         return redirect()->route('learning.result', $response->test_attempt_id)->with('success', 'Test has been submitted successfully');
 
     }

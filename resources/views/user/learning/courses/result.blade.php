@@ -122,7 +122,7 @@ $ends_at = \Carbon\Carbon::parse($attempt->ends_at);
                             <div class="card tilebox-one">
                                 <div class="card-body">
 
-                                    @if($percentage > 80)
+                                    @if($percentage >= 80)
                                     <h2 class="m-b-20 text-success">Pass</h2>
                                     @else
                                     <h2 class="m-b-20 text-danger">Fail</h2>
