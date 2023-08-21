@@ -78,7 +78,7 @@
                                         <td>{{ $user->end_time}}</td>
 
                                         <td>
-                                            <a href="/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
+                                            <a href="{{ url('/') }}/admin/volunteer/personal-information/{{ $user->user->id }}" target="_blank"><i class="mdi mdi-eye"></i></a>
                                         </td>
                                     </tr>
                                     @endif

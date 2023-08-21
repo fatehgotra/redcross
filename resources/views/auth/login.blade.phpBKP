@@ -24,10 +24,10 @@
 
                     <!-- Logo -->
                     <div class="auth-brand mb-2">
-                        <a href="/" class="logo-dark">
+                        <a href="{{ url('/') }}" class="logo-dark">
                             <span><img src="{{ asset('assets/images/logo.png') }}" alt="" class="img-fluid"></span>
                         </a>
-                        <a href="/" class="logo-light">
+                        <a href="{{ url('/') }}" class="logo-light">
                             <span><img src="{{ asset('assets/images/logo.png') }}" alt="" class="img-fluid"></span>
                         </a>
                     </div>

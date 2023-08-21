@@ -3,7 +3,7 @@
 
         <!-- logo -->
         <div class="text-center">
-        <a href="/" class="navbar-brand me-lg-4">
+        <a href="{{ url('/') }}" class="navbar-brand me-lg-4">
             <img src="{{ asset('assets/images/logo.png') }}" alt="" class="logo-dark" />
         </a>
         </div>

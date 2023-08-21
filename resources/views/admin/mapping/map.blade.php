@@ -298,7 +298,7 @@
                 let adr = (usr[u].contact_information) ? usr[u].contact_information.resedential_address : 'NA';
                 let cls = (usr[u].status == 'approve') ? 'text-success' : ((usr[u].status == 'pending') ? 'text-warning' : 'text-danger');
                 html += '<li class="lic">';
-                html += '<a href="/admin/volunteer/lodge-information/' + usr[u].id + '" target="_blank"><b><i class="mdi mdi-account-hard-hat"></i>' + usr[u].firstname + " " + usr[u].lastname + '<span class="float-end ' + cls + '"> Approved </span></b></a>';
+                html += '<a href="admin/volunteer/lodge-information/' + usr[u].id + '" target="_blank"><b><i class="mdi mdi-account-hard-hat"></i>' + usr[u].firstname + " " + usr[u].lastname + '<span class="float-end ' + cls + '"> Approved </span></b></a>';
                 html += '<br><span><i class="mdi mdi-magnify"></i>Role : ' + usr[u].role + '</span>';
                 html += '<br><span><i class="mdi mdi-mail"></i>Email : ' + usr[u].email + '</span>';
                 html += '<br><span><i class="mdi mdi-phone"></i>Contact : ' + usr[u].phone + '</span>';
