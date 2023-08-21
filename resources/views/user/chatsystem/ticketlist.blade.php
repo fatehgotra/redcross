@@ -62,7 +62,7 @@
                                        
                                         <td>
                                             @if($p->status == 1)
-                                            <a href="/user/chat-view-ticket/{{ base64_encode($p->id) }}/{{ base64_encode($p->created_by) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>
+                                            <a href="user/chat-view-ticket/{{ base64_encode($p->id) }}/{{ base64_encode($p->created_by) }}" class="mdi mdi-eye-circle-outline" style="font-size:27px;cursor:pointer"></span>
                                                 @else
                                                 <span class="text-success"> Closed </span>
                                                 @endif
