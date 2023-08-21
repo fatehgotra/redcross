@@ -33,7 +33,8 @@
                                 <option value=""> -- Select users type-- </option>
                                 <option value="all"> All </option>
                                 <option value="volunteer"> Volunteers </option>
-                                <option value="member"> Members </option>
+                                <option value="volboth"> Volunteer + Both </option>
+                                <option value="memboth"> Members + Both </option>
                             </select>
                         </div>
                         <div class="col-md-3">

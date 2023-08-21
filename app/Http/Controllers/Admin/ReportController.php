@@ -40,6 +40,8 @@ class ReportController extends Controller
             $users = match ($type) {
                 'all'        =>  $users->where('role', '=', 'volunteer')->orWhere('role', '=', 'member')->orWhere('role', '=', 'both'),
                 'volunteer'  =>  $users->where('role', '=', 'volunteer'),
+                'volboth'    =>  $users->whereIn('role',['volunteer','both']),
+                'memboth'    =>  $users->whereIn('role',['both','member']),
                 'member'     =>  $users->where('role', '=', 'member'),
             };
 
@@ -53,11 +55,11 @@ class ReportController extends Controller
         } else if ($values == "" && $cndn != "na") {
 
             $users = match ($cndn) {
-                'pending'        => ($type == 'all') ? $users->where('status', '=', 'pending') : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'pending') : $users->where('role', '=', 'member')->where('status', '=', 'pending')),
-                'approved'       => ($type == 'all') ? $users->where('status', '=', 'approve') : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'approve') : $users->where('role', '=', 'member')->where('status', '=', 'approve')),
-                'declined'       => ($type == 'all') ? $users->where('status', '=', 'decline') : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'decline') : $users->where('role', '=', 'member')->where('status', '=', 'decline')),
-                'active'         => ($type == 'all') ? $users->whereHas('rewards')->orwhereDate('expiry_date', '>=', Carbon::now()) : (($type == 'volunteer')  ? $users->where('role', '=', 'volunteer')->whereHas('rewards')->orwhereDate('expiry_date', '>=', Carbon::now()) : $users->where('role', '=', 'member')->whereHas('rewards')->orwhereDate('expiry_date', '>=', Carbon::now())),
-                'inactive'       => ($type == 'all') ? $users->whereDoesntHave('rewards')->orwhereDate('expiry_date', '<', Carbon::now()) : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->whereDoesntHave('rewards')->orwhereDate('expiry_date', '>=', Carbon::now()) : $users->where('role', '=', 'member')->whereDoesntHave('rewards')->orwhereDate('expiry_date', '<', Carbon::now())),
+                'pending'        => ($type == 'all') ? $users->where('status', '=', 'pending') : ( ($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'pending') : ( $type == 'volboth' ? $users->whereIn( 'role',['volunteer','both'] )->where('status','pending') : ( $type == 'memboth' ? $users->whereIn('role',['member','both'])->where('status','pending') : $users->where('role', '=', 'member')->where('status', '=', 'pending') ) ) ),
+                'approved'       => ($type == 'all') ? $users->where('status', '=', 'approve') : ( ($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'approve') : ( $type == 'volboth' ? $users->whereIn( 'role',['volunteer','both'] )->where('status','approve') : ( $type == 'memboth' ? $users->whereIn('role',['member','both'])->where('status','approve') : $users->where('role', '=', 'member')->where('status', '=', 'approve') ) ) ),
+                'declined'       => ($type == 'all') ? $users->where('status', '=', 'decline') : ( ($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'decline') : ( $type == 'volboth' ? $users->whereIn( 'role',['volunteer','both'] )->where('status','decline') : ( $type == 'memboth' ? $users->whereIn('role',['member','both'])->where('status','decline') : $users->where('role', '=', 'member')->where('status', '=', 'decline') ) ) ),
+                'active'         => ($type == 'all') ? $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities') : ( ($type == 'volunteer')  ? $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities')->where('role', '=', 'volunteer') : ( ( $type == 'volboth' ? $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities')->whereIn('role',['volunteer','both'])   : ( (  $type == 'memboth' ? $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities')->whereIn('role',['member','both']) :  $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities')->where('role', '=', 'member') ) ) ) ) ),
+                'inactive'       => ($type == 'all') ? $users->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities') : ( ($type == 'volunteer')  ? $users->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities')->where('role', '=', 'volunteer') : ( ( $type == 'volboth' ? $users->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities')->whereIn('role',['volunteer','both'])  : ( (  $type == 'memboth' ? $users->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities')->whereIn('role',['member','both']) :  $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities')->where('role', '=', 'member') ) ) ) ) ),
             };
 
             $users = $users->get();
@@ -72,6 +74,8 @@ class ReportController extends Controller
             $users = match ($type) {
                 'all'        =>  $users = $users,
                 'volunteer'  =>  $users->where('role', '=', 'volunteer'),
+                'volboth'    =>  $users->whereIn('role',['volunteer','both']),
+                'memboth'    =>  $users->whereIn('role',['both','member']),
                 'member'     =>  $users->where('role', '=', 'member'),
             };
 
