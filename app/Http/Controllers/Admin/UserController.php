@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\ApprovalHistory;
 use App\Models\Country;
 use App\Models\User;
+use App\Notifications\AdminItselfNotify;
 use App\Notifications\ApprovalNotification;
 use App\Notifications\DeclineNotification;
 use Carbon\Carbon;
@@ -167,7 +169,14 @@ class UserController extends Controller
 
     public function changeStatus(Request $request, $id)
     {
+        $user = User::find( $id );
+
+       
+        $admins = Admin::where('branch','like','%'.$user->branch.'%');
+        
+
         $roles = Auth::guard('admin')->user()->getRoleNames()->toArray();
+
 
         if (in_array('hq', $roles)) {
 
@@ -221,7 +230,23 @@ class UserController extends Controller
                 ]);
 
                 $user = User::find($id);
+                
                 $user->notify(new ApprovalNotification('division-manager'));
+
+                $admins = $admins->whereHas(
+                    'roles', function($q){
+                        $q->where('name', 'hq');
+                    }
+                )->get();
+                
+                if( count($admins) > 0 ){
+
+                    foreach( $admins as $ad){
+
+                        $ad->notify(new AdminItselfNotify($user) );
+                    }
+                }
+
                 return redirect()->back()->with('success', 'Volunteer approved successfully!');
             } else {
                 $user = User::find($id);
@@ -229,7 +254,11 @@ class UserController extends Controller
                 return redirect()->back()->with('success', 'Volunteer declined successfully!');
             }
 
+            $admins = $admins->get();
+
         } elseif (in_array('branch-level', $roles)) {
+
+          
             User::find($id)->update([
                 'status'        => $request->status,
                 'approved_by'   => 'Branch Level',
@@ -253,12 +282,30 @@ class UserController extends Controller
                 ]);
                 $user = User::find($id);
                 $user->notify(new ApprovalNotification('branch-level'));
+
+                $admins = $admins->whereHas(
+                    'roles', function($q){
+                        $q->where('name', 'division-manager');
+                    }
+                )->get();
+                
+                if( count($admins) > 0 ){
+
+                    foreach( $admins as $ad){
+
+                        $ad->notify(new AdminItselfNotify($user) );
+                    }
+                }
+
                 return redirect()->back()->with('success', 'Volunteer approved successfully!');
+
             } else {
                 $user = User::find($id);
                 $user->notify(new DeclineNotification('branch-level'));
                 return redirect()->back()->with('success', 'Volunteer declined successfully!');
             }
+
+            
         } else {
             abort(403);
         }
