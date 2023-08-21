@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -18,9 +19,12 @@ class CheckApproved
 
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->check() && (auth()->user()->status !== 'approve') && (auth()->user()->approved_by !== 'HQ')){           
-
+     //  dd( auth()->check() );
+        if(auth()->check() && (auth()->user()->status == 'approve') && (auth()->user()->approved_by == 'HQ')){           
+           
             $lodgment = Session::get('lodgement-information');
+
+            if( auth()->user()->expiry_date <= Carbon::now()->format('Y-m-d')){
 
             if(auth()->user()->role == 'volunteer' || ( isset($lodgment) && $lodgment['role'] == 'volunteer' ) ){
                 Auth::logout();
@@ -36,6 +40,17 @@ class CheckApproved
                 
                 return redirect()->route('payment-details')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
             }
+        } 
+        return $next($request);
+
+            //return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
+
+        }  else {
+
+            Auth::logout();
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
 
             return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
 
