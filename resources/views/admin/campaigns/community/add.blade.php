@@ -53,7 +53,7 @@
                             <code id="description-error" class="text-danger">{{ $message }}</code>
                             @enderror
                         </div>
-                     
+
                         <div class="col-md-12 mb-2">
                             <label class="form-label">Submit To Division Officer<span class="text-danger">*</span></label>
                             <select id="available_days" required class="form-select select2 @error('submit_to') is-invalid @enderror" name="submit_to[]" required data-toggle="select2" data-placeholder="Select Branch Officer">
@@ -77,12 +77,13 @@
                         </div>
                         <div class="col-md-12 mb-2">
                             <label for="entry_closed" class="form-label"> Attendees <span class="text-danger">*</span></label>
+                            <button type="button" class="btn btn-primary float-end mb-2" data-toggle="modal" data-target="#exampleModal"> Add user </button>
                             <select id="available_days" class="form-select select2 @error('available_days') is-invalid @enderror" name="attendees[]" required data-toggle="select2" data-placeholder="Select Attendees" multiple>
                                 <option value="">Select Attendees</option>
 
                                 @if( count($users) > 0 )
                                 @foreach( $users as $usr)
-                                <option value="{{ $usr->id }}">{{ $usr->firstname." ".$usr->lastname }}</option>
+                                <option value="{{ $usr->id }}">{{ $usr->firstname." ".$usr->lastname }} | {{ $usr->email }}</option>
                                 @endforeach
                                 @endif
 
@@ -124,8 +125,130 @@
         </div>
     </div>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+                <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('admin.campagin-user-new') }}" method="POST" id="userform">
+                    @csrf
+                  
+                    <div class="form-group">
+                        <label for="firstname" class="col-form-label"> Firstname </label>
+                        <input type="text" class="form-control" required name="firstname" id="firstname" placeholder="Enter firstname">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="col-form-label"> Lastname </label>
+                        <input type="text" class="form-control" required name="lastname" id="lastname" placeholder="Enter lastname">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-form-label"> Email </label>
+                        <input type="email" class="form-control" required name="email" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-form-label"> password </label>
+                        <input type="password" class="form-control" required name="password" id="password" placeholder="choose password">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="col-form-label"> Phone </label>
+                        <input type="number" class="form-control" required name="phone" id="phone" placeholder="Enter phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-form-label"> role </label>
+                        <select class="form-control" required name="role">
+                            <option value=""> --select role --</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="member">Member</option>
+                            <option value="both">both</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="col-form-label"> Branch </label>
+                        <select id="branch" required class="form-select " name="branch">
+                            <option value="">Nearest Branch</option>
+                            <optgroup label="Central / Eastern">
+                                <option value="Rotuma">
+                                    Rotuma
+                                </option>
+                                <option value="Levuka">
+                                    Levuka
+                                </option>
+                                <option value="Suva">
+                                    Suva
+                                </option>
+                            </optgroup>
+                            <optgroup label="Western">
+                                <option value="Sigatoka">
+                                    Sigatoka
+                                </option>
+                                <option value="Nadi">
+                                    Nadi
+                                </option>
+                                <option value="Lautoka">
+                                    Lautoka
+                                </option>
+                                <option value="Ba">
+                                    Ba
+                                </option>
+                                <option value="Tavua">
+                                    Tavua
+                                </option>
+                                <option value="Rakiraki">
+                                    Rakiraki
+                                </option>
+                                <option value="Nalawa">
+                                    Nalawa
+                                </option>
+                            </optgroup>
+                            <optgroup label="Northern">
+                                <option value="Bua">
+                                    Bua
+                                </option>
+                                <option value="Seaqaqa">
+                                    Seaqaqa
+                                </option>
+                                <option value="Savusavu">
+                                    Savusavu
+                                </option>
+                                <option value="Labasa">
+                                    Labasa
+                                </option>
+                                <option value="Taveuni">
+                                    Taveuni
+                                </option>
+                                <option value="Rabi">
+                                    Rabi
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="userform" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----Add existing user------>
+
 @endsection
 @push('scripts')
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.1.9/tinymce.min.js"></script>
 <script>
     tinymce.init({

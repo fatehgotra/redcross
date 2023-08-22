@@ -213,6 +213,24 @@ class CampaignController extends Controller
         }
     }
 
+    public function campaginNewUserAdd(Request $request){
+
+       
+        $user = User::create([
+            'firstname' => $request->firstname,
+            'lastname'  => $request->lastname,
+            'email'     => $request->email,
+            'phone'     => $request->phone,
+            'password'  => Hash::make($request->password),
+            'role'      => $request->role,
+            'branch'    => $request->branch,
+        ]);
+
+
+        return redirect()->back()->with('success', 'User added successfully!');
+
+    }
+
     public function AddFlag(Request $request)
     {
 
@@ -406,4 +424,5 @@ class CampaignController extends Controller
 
         return redirect()->back()->with('success', 'Activity approved successfully.');
     }
+
 }

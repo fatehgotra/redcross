@@ -294,6 +294,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::post('campagin-user',[CampaignController::class,'campaginUserAdd'])->name('campagin-user');
 
+    Route::post('campagin-user-new',[CampaignController::class,'campaginNewUserAdd'])->name('campagin-user-new');
+
     Route::post('flag',[CampaignController::class,'AddFlag'])->name('flag');
 
     Route::get('community',[CampaignController::class,'community'])->name('community');

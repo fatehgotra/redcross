@@ -34,6 +34,7 @@
                                 <option value="all"> All </option>
                                 <option value="volunteer"> Volunteers </option>
                                 <option value="volboth"> Volunteer + Both </option>
+                                <option value="member"> Members </option>
                                 <option value="memboth"> Members + Both </option>
                             </select>
                         </div>
