@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for="title" class="form-label">Based on </label>
-                            <select class="form-control" name="condition">
+                            <select class="form-control" id="cndn" name="condition">
                                 <option value=""> -- Based on -- </option>
                                 <option value="na"> Not required </option>
                                 <option value="location"> Location </option>
@@ -54,17 +54,32 @@
                                 <option value="inactive"> Inactive </option>
                             </select>
                         </div>
+
+                        <div class="col-md-3">
+                            <label for="title" class="form-label">Based on condition </label>
+                            <select class="form-control" name="based_condition" id="based_condition" disabled>
+                                <option value=""> -- Based on condition -- </option>
+                                <option value="na"> Not required </option>
+                                <option value="location"> Location </option>
+                                <option value="gender"> Gender </option>
+                                <option value="expertise"> Expertise </option>
+                                <option value="branch"> Branch </option>
+                            </select>
+                        </div>
+
                         <div class="col-md-3">
                             <label for="title" class="form-label">Values <span class="text-danger">*</span>
                                 <small>multiples seprated (,)</small>
                             </label>
-                            <input type="text" name="values" class="form-control" placeholder="Add values">
+                            <input type="text" name="values" id="values" class="form-control" placeholder="Add values">
                         </div>
 
-                        <div class="col-md-3 mt-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 mt-3">
                             <button class="form-control btn btn-info gbtn"> Generate </button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -102,12 +117,44 @@
 
 <script>
     jQuery(document).ready(function($) {
+
+        $('#cndn').change(function() {
+            let val = $(this).val();
+            if (val == "pending" || val == "approved" || val == "declined" || val == "active" || val == "inactive") {
+                $('#based_condition').removeAttr('disabled');
+
+            } else if (val == 'na') {
+                $('input[name="values"]').val('');
+
+            } else {
+                $('#based_condition').val('');
+                $('#based_condition').attr('disabled', true);
+            }
+
+        });
+
+        // $('#based_condition').change(function() {
+        //     let bv = $(this).val();
+        //     if (bv == 'na') {
+        //         $('input[name="values"]').val('');
+        //     }
+        // });
+
+        // $('#values').on('keyup', function() {
+        //    let bval =  $('#based_condition').val();
+
+        //    if(bval == "na"){
+
+        //    }
+        // });
+
         $('.gbtn').click(function(e) {
             e.preventDefault();
 
             let type = $('select[name="type"]').val();
             let cndn = $('select[name="condition"]').val();
             let values = $('input[name="values"]').val();
+            let based = $('#based_condition').val();
 
             if (type == "") {
                 alert("Please select type");
@@ -118,22 +165,41 @@
                 alert("Please select based on");
                 return;
             }
+            if (cndn == "na") {
+                values=""
+                
+            }
 
             if ((cndn == "location" || cndn == "expertise" || cndn == "gender" || cndn == "branch") && values == "") {
                 alert("Fill values in this case if multiple seprate by a comma(,)");
                 return;
             }
             if (cndn == "pending" || cndn == "approved" || cndn == "declined" || cndn == "active" || cndn == "inactive") {
-                values = "";
+                if (based == "") {
+                    alert('Please select something in based on condition');
+                    return;
+                } else if (based != 'na' && values == "") {
+
+                    alert('Need to add value(s) in this case');
+                    return;
+                } else if (based == 'na') {
+
+                    values = "";
+                }
+
+
+            } else {
+                $('#based_condition').attr('disabled', true);
             }
 
             let data = {
                 _token: "{{ csrf_token() }}",
                 type,
                 cndn,
+                based,
                 values,
             };
-
+        
             var url = "{{ route('admin.export-excel') }}?" + $.param(data);
 
             window.location = url;
