@@ -33,12 +33,13 @@ class CheckApproved
                 $request->session()->regenerateToken();
                 return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
             }else{
+                $id = Auth::user()->id;
                 Auth::logout();
                 $request->session()->invalidate();
 
                 $request->session()->regenerateToken();
                 
-                return redirect()->route('payment-details')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
+                return redirect()->route('payment-details',compact('id'))->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
             }
         } 
         return $next($request);
@@ -46,13 +47,22 @@ class CheckApproved
             //return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
 
         }  else {
+           
+            if(auth()->user()->role == 'volunteer' || ( isset($lodgment) && $lodgment['role'] == 'volunteer' ) ){
+                Auth::logout();
+                $request->session()->invalidate();
 
-            Auth::logout();
-            $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
+            }else{
+                $id = Auth::user()->id;
+                Auth::logout();
+                $request->session()->invalidate();
 
-            $request->session()->regenerateToken();
-
-            return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
+                $request->session()->regenerateToken();
+                
+                return redirect()->route('payment-details',compact('id'))->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
+            }
 
         }
 

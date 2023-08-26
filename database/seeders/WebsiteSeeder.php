@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Account;
 use Faker\Generator;
 use App\Models\Admin;
 use Illuminate\Support\Str;
@@ -126,6 +127,64 @@ class WebsiteSeeder extends Seeder
         ]);
 
         $coordinator->assignRole('course-coordinator');
+
+        /*Bank account*/
+
+        Account::create([
+            'bank'=>'Australia, New Zealand Bank (ANZ)',
+            'branch'=>'Lautoka',
+            'account'=>'2464416',
+            'account_name'=>'The Fiji Red Cross Society Lautoka Branch',
+        ]);
+
+        Account::create([
+            'bank'=>'Bank of Baroda',
+            'branch'=>'Ba',
+            'account'=>'9103 01 00008435',
+            'account_name'=>'The Fiji Red Cross Society Ba Branch',
+        ]);
+
+        Account::create([
+            'bank'=>'Bank of the South Pacific (BSP)',
+            'branch'=>'Tavua',
+            'account'=>'85691850',
+            'account_name'=>'The Fiji Red Cross Society Tavua Branch',
+        ]);
+
+        Account::create([
+            'bank'=>'Westpac',
+            'branch'=>'Nalawa',
+            'account'=>'9803314351',
+            'account_name'=>'The Fiji Red Cross Society Nalawa Branch',
+        ]);
+
+        Account::create([
+            'bank'=>'Westpac',
+            'branch'=>'Labasa',
+            'account'=>'9801823239',
+            'account_name'=>'FRCS - Labasa',
+        ]);
+
+        Account::create([
+            'bank'=>'Bank of the South Pacific (BSP)',
+            'branch'=>'Tavueni',
+            'account'=>'7625584',
+            'account_name'=>'Red Cross Society Fund',
+        ]);
+
+        Account::create([
+            'bank'=>'Westpac',
+            'branch'=>'Savusavu',
+            'account'=>'9800453095',
+            'account_name'=>'FRCS Savusavu Branch',
+        ]);
+
+        Account::create([
+            'bank'=>'Australia, New Zealand Bank (ANZ)',
+            'branch'=>'Bua',
+            'account'=>'8458780',
+            'account_name'=>'Fiji Red Cross Bua Branch',
+        ]);
 
        
     }

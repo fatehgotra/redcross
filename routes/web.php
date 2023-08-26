@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Learning\CourseController;
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MyAccountController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CourseChatController;
@@ -33,9 +34,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-Route::get('/payment-details', function () {
-    return view('payment-detail');
-})->name('payment-details');
+Route::get('/payment-details',[LoginController::class,'paymentDetail'])->name('payment-details');
 
 Auth::routes();
 
