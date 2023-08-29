@@ -7,6 +7,7 @@ use App\Models\CourseDocument;
 use App\Models\Question;
 use App\Models\TestAttempt;
 use App\Models\TestResponse;
+use App\Models\User;
 use App\Models\UserReward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -135,5 +136,15 @@ class LearningController extends Controller
         $responses          = TestResponse::with('question')->where('test_attempt_id', $id)->get();
         
         return view('user.learning.courses.result', compact('attempt', 'responses'));
+    }
+
+    public function certificate( $id, $cid , $attempt ){
+        
+        $id = base64_decode( $id );
+        $user   = User::find( $id );
+        $course =  Course::find( base64_decode($cid) );
+        $test   = TestAttempt::find( base64_decode($attempt) );
+       
+        return view('user.learning.courses.certificate',compact('user','course','test') );
     }
 }

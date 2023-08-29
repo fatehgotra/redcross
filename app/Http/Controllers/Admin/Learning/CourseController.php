@@ -127,13 +127,4 @@ class CourseController extends Controller
         return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully!');
     }
 
-    public function certificate( $id, $cid , $attempt ){
-        
-        $id = base64_decode( $id );
-        $user   = User::find( $id );
-        $course =  Course::find( base64_decode($cid) );
-        $test   = TestAttempt::find( base64_decode($attempt) );
-       
-        return view('user.learning.courses.certificate',compact('user','course','test') );
-    }
 }

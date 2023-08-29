@@ -177,7 +177,9 @@ Route::get('/expiry-schedule', function () {
 })->name('expiry-schedule');
 
 //certificate
-Route::get('certificate/{id}/{course_id}/{attempt}',[CourseController::class,'certificate'])->name('certificate');
+Route::get('certificate/{id}/{course_id}/{attempt}',[LearningController::class,'certificate'])->name('certificate');
+
+//survey
 Route::get('user-survey/{id}/{uid}',[VolunteerController::class,'userSurvey'])->name('user-survey');
 Route::post('submit-survey',[VolunteerController::class,'submitSurvey'])->name('submit-survey');
 
