@@ -98,6 +98,13 @@
                     <span class="ms-2"> Activites </span>
                 </a>
             </li>
+
+            <li class="side-nav-item {{ request()->is('survey') || request()->is('survey/*') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('survey.list') }}" class="side-nav-link">
+                   <i class="mdi mdi-bulletin-board"></i>
+                    <span class="ms-2"> Survey </span>
+                </a>
+            </li>
            
 
             <li class="side-nav-item">

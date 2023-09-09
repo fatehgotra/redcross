@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserSurvey;
 use App\Notifications\SendSurvey;
 use Illuminate\Http\Request;
 use MattDaneshvar\Survey\Contracts\Survey;
@@ -135,6 +136,15 @@ class AdminSurveysController extends Controller
 
         if (isset($users) && count($users) > 0) {
             foreach ($users as $user) {
+
+                UserSurvey::create([
+                    'survey' => $survey->name,
+                    'survey_id'=>$survey->id,
+                    'user_id'=> $user->id,
+                    'link'   => route('user-survey',['id' => base64_encode($survey->id),'uid' => base64_encode($user->id) ] ),
+                    'status' => 0
+                ]);
+
                 $user->notify(new SendSurvey($survey));
             }
         }

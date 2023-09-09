@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserSurvey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use MattDaneshvar\Survey\Models\Entry;
 use MattDaneshvar\Survey\Models\Survey;
@@ -561,6 +563,14 @@ class VolunteerController extends Controller
             return redirect()->back()->with('error', 'Your response is already recorded for this survey!');
         }
 
+        UserSurvey::where([
+            'user_id' => $request->uid,
+            'survey_id' => $request->id
+
+        ])->update([
+            'status' => 1
+        ]);
+
         $survey = Survey::with('questions')->find($request->id);
 
 
@@ -569,5 +579,14 @@ class VolunteerController extends Controller
         (new Entry)->for($survey)->by($user)->fromArray($answers)->push();
 
         return redirect()->back()->with('success', 'Thanks for your submission, your response recorded successfully!');
+    }
+
+    public function SurveyList(){
+
+        $uid = Auth::user()->id;
+
+        $survey = UserSurvey::where('user_id',$uid)->get();
+        
+        return view('user.survey.list',compact('survey'));
     }
 }

@@ -34,10 +34,10 @@ class ReportController extends Controller
         $cndn   = $request->cndn;
         $values = $request->values;
         $based  = $request->based;
-        $users = User::with('lodgementInformation', 'skills', 'personalInformation');
+        $users = User::with('lodgementInformation', 'skills', 'personalInformation','ServiceInterest');
 
         if (!is_null($based)) {
-
+           
             if ($based == 'na') {
 
 
@@ -89,7 +89,7 @@ class ReportController extends Controller
                         $users = $users->where('status', $cndn)->withWhereHas('ServiceInterest', function ($q) use ($ev) {
 
                             for ($i = 0; $i < count($ev); $i++) {
-                                $q->orWhere('other_skills', 'like', '%' . $ev[$i] . '%');
+                                $q->Where('other_skills', 'like', '%' . $ev[$i] . '%');
                             }
                         });
                     }
@@ -117,7 +117,7 @@ class ReportController extends Controller
                             $users = $users->withWhereHas('ServiceInterest', function ($q) use ($ev) {
 
                                 for ($i = 0; $i < count($ev); $i++) {
-                                    $q->orWhere('other_skills', 'like', '%' . $ev[$i] . '%');
+                                    $q->Where('other_skills', 'like', '%' . $ev[$i] . '%');
                                 }
                             });
                         }
@@ -163,7 +163,7 @@ class ReportController extends Controller
         /*******/
 
         if ($cndn == 'na') {
-
+          
             $users = match ($type) {
                 'all'        =>  $users->where('role', '=', 'volunteer')->orWhere('role', '=', 'member')->orWhere('role', '=', 'both'),
                 'volunteer'  =>  $users->where('role', '=', 'volunteer'),
@@ -180,7 +180,7 @@ class ReportController extends Controller
 
             //return response()->json(['users' => $users]);
         } else if ($values == "" && $cndn != "na") {
-
+          
             $users = match ($cndn) {
                 'pending'        => ($type == 'all') ? $users->where('status', '=', 'pending') : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'pending') : ($type == 'volboth' ? $users->whereIn('role', ['volunteer', 'both'])->where('status', 'pending') : ($type == 'memboth' ? $users->whereIn('role', ['member', 'both'])->where('status', 'pending') : $users->where('role', '=', 'member')->where('status', '=', 'pending')))),
                 'approved'       => ($type == 'all') ? $users->where('status', '=', 'approve') : (($type == 'volunteer') ? $users->where('role', '=', 'volunteer')->where('status', '=', 'approve') : ($type == 'volboth' ? $users->whereIn('role', ['volunteer', 'both'])->where('status', 'approve') : ($type == 'memboth' ? $users->whereIn('role', ['member', 'both'])->where('status', 'approve') : $users->where('role', '=', 'member')->where('status', '=', 'approve')))),
@@ -195,9 +195,9 @@ class ReportController extends Controller
 
             return $output;
         } else {
-
+          
             $ev = explode(',', $values);
-
+           
             $users = match ($type) {
                 'all'        =>  $users = $users,
                 'volunteer'  =>  $users->where('role', '=', 'volunteer'),
@@ -205,7 +205,7 @@ class ReportController extends Controller
                 'memboth'    =>  $users->whereIn('role', ['both', 'member']),
                 'member'     =>  $users->where('role', '=', 'member'),
             };
-
+           
             if ($cndn == 'location' || $cndn == 'branch') {
 
                 $users = $users->WhereIn('branch', $ev);
@@ -219,11 +219,11 @@ class ReportController extends Controller
             }
 
             if ($cndn == 'expertise') {
-
+               
                 $users = $users->withWhereHas('ServiceInterest', function ($q) use ($ev) {
 
                     for ($i = 0; $i < count($ev); $i++) {
-                        $q->orWhere('other_skills', 'like', '%' . $ev[$i] . '%');
+                        $q->Where('other_skills', 'like', '%' . $ev[$i] . '%');
                     }
                 });
             }

@@ -180,8 +180,11 @@ Route::get('/expiry-schedule', function () {
 Route::get('certificate/{id}/{course_id}/{attempt}',[LearningController::class,'certificate'])->name('certificate');
 
 //survey
+Route::get('survey',[VolunteerController::class,'SurveyList'])->name('survey.list');
 Route::get('user-survey/{id}/{uid}',[VolunteerController::class,'userSurvey'])->name('user-survey');
 Route::post('submit-survey',[VolunteerController::class,'submitSurvey'])->name('submit-survey');
+
+
 
 //chat
 
