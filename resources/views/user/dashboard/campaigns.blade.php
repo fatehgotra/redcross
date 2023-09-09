@@ -82,3 +82,40 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function confirmJoin() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to join this activity!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Join activity!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('join-form').submit();
+                }
+            })
+        };
+    </script>
+    <script type="text/javascript">
+    function confirmExit() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to leave this activity!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Leave activity!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('leave-form').submit();
+            }
+        })
+    };
+</script>
+@endpush
