@@ -125,27 +125,7 @@
                 </div>
             </li>
 
-            <li class="side-nav-item {{ request()->is('admin/generate-report') || request()->is('admin/generate-report/*') ? 'menuitem-active' : '' }}">
-                <a data-bs-toggle="collapse" href="#report" aria-expanded="false" aria-controls="report" class="side-nav-link">
-                    <i class="mdi mdi-book-open-page-variant-outline"></i>
-                    <span> Reports </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="{{ request()->is('admin/generate-report') || request()->is('admin/generate-report/*') || request()->is('admin/hours') || request()->is('admin/hours/*') ? 'collapse show' : 'collapse'   }}" id="report">
-                    <ul class="side-nav-second-level">
-                        @role('admin')
-                        <li class="{{ request()->is('admin/generate-report') || request()->is('admin/generate-report/*') ? 'menuitem-active' : '' }}">
-                            <a href="{{ route('admin.generate-report') }}">Generate Report</a>
-                        </li>
-                        @endrole
-                        <li class="{{ request()->is('admin/hours') || request()->is('admin/hours/*') ? 'menuitem-active' : '' }}">
-                            <a href="{{ route('admin.hours') }}">Add Hours Report</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </li>
-
+      
             @endrole
 
             @role('admin|branch-level|division-manager|hq|community-head')
@@ -166,14 +146,8 @@
                             <a href="{{ route('admin.campaigns.index') }}">Global Activities </a>
                         </li>
                         @endrole
-                        <li class="{{ request()->is('admin/community') || request()->is('admin/community/*')   ? 'menuitem-active' : ''  }}">
-                            <a href="{{ route('admin.community') }}"> Community Activity </a>
-                        </li>
-                        @role('community-head')
-                        <li class="{{ request()->is('admin/community-activity') || request()->is('admin/community-activity/*')   ? 'menuitem-active' : ''  }}">
-                            <a href="{{ route('admin.community-activity') }}"> Add Community Activity </a>
-                        </li>
-                        @endrole
+                      
+                      
                     </ul>
                 </div>
 
@@ -208,19 +182,7 @@
             </li>
 
 
-            <li class="side-nav-item {{ request()->is('admin/survey-forms') || request()->is('admin/survey-forms/*') ? 'menuitem-active' : '' }}">
-                <a href="{{ route('admin.survey-forms') }}" class="side-nav-link">
-                    <i class="mdi mdi-bulletin-board"></i>
-                    <span> Surveys </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item {{ request()->is('admin/mapping') || request()->is('admin/mapping/*') ? 'menuitem-active' : '' }}">
-                <a href="{{ route('admin.mapping') }}" class="side-nav-link">
-                    <i class="mdi mdi-map"></i>
-                    <span> Interactive Map</span>
-                </a>
-            </li>
+         
 
             @endrole
 
@@ -246,9 +208,7 @@
                         <li class="{{ request()->is('admin/learning/videos') || request()->is('admin/learning/videos/*') ? 'menuitem-active' : '' }}">
                             <a href="{{ route('admin.videos.index') }}">Videos</a>
                         </li>
-                        <li class="{{ request()->is('admin/learning/chat-requests') || request()->is('admin/learning/chat-requests/*') ? 'menuitem-active' : '' }}">
-                            <a href="{{ route('admin.ticket-list') }}">Chat Request</a>
-                        </li>
+                      
                     </ul>
                 </div>
             </li>
