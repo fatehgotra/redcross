@@ -19,13 +19,24 @@ class CheckApproved
 
     public function handle(Request $request, Closure $next)
     {
-     //  dd( auth()->check() );
+
+        if(auth()->check() && (auth()->user()->status == 'approve') && (auth()->user()->approved_by == 'HQ')){  
+            
+            if( auth()->user()->expiry_date <= Carbon::now()->format('Y-m-d')  ){
+                return redirect()->route('index')->with('error', 'Your Account is expired , Please contact admin or your branch to enable it.');
+            } 
+            else{
+                return $next($request);
+            }
+
+        }
+       
         if(auth()->check() && (auth()->user()->status == 'approve') && (auth()->user()->approved_by == 'HQ')){           
-           
+          
             $lodgment = Session::get('lodgement-information');
-
+            
             if( auth()->user()->expiry_date <= Carbon::now()->format('Y-m-d')){
-
+               
             if(auth()->user()->role == 'volunteer' || ( isset($lodgment) && $lodgment['role'] == 'volunteer' ) ){
                 Auth::logout();
                 $request->session()->invalidate();
@@ -42,6 +53,7 @@ class CheckApproved
                 return redirect()->route('payment-details',compact('id'))->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done. In the meanwhile please pay membership fees.');
             }
         } 
+       
         return $next($request);
 
             //return redirect()->route('index')->with('error', 'Your Account is pending for approval. You will be notified via email once all approvals are done.');
@@ -49,6 +61,7 @@ class CheckApproved
         }  else {
            
             if(auth()->user()->role == 'volunteer' || ( isset($lodgment) && $lodgment['role'] == 'volunteer' ) ){
+
                 Auth::logout();
                 $request->session()->invalidate();
 
@@ -65,6 +78,7 @@ class CheckApproved
             }
 
         }
+    
 
         return $next($request);
     }

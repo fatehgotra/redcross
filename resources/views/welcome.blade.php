@@ -4,7 +4,7 @@
 @include('admin.includes.flash-message')
 <section>
     <div class="container py-3">
-        <img src="{{ asset('assets/images/banner.jpg') }}" alt="" class="img-fluid">
+        <img src="{{ asset('assets/images/Banner Template Registration.png') }}" alt="" class="img-fluid">
     </div>
 </section>
 <section>

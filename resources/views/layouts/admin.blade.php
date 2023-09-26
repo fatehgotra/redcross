@@ -21,7 +21,7 @@
     <div class="wrapper">
 
         <!-- ========== Left Sidebar Start ========== -->
-        @include('admin.includes.sidebar')
+        @include('admin.includes.sidebar') 
         <!-- ========== Left Sidebar End ============ -->
 
         <!-- ========== Content Section Start ======= -->

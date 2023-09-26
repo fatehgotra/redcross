@@ -39,7 +39,7 @@ class RenewMembershipNotification extends Notification
         ->line('Welcome to ' . config('app.name', 'Laravel'))
         ->line('Attention Please!')
         ->line('Your Redcross membership will be expiring on '. $notifiable->expiry_date)
-        ->line('Please renew the membership before the above menntioned expiry date')
+        ->line('Please renew the membership before the above mentioned expiry date')
         ->line('You can send the membership fee on the payment details by clicking below on Payment Details button.')
         ->action('Payment Details', route('payment-details'))
         ->line('Thank you for using ' . config('app.name', 'Laravel'));
