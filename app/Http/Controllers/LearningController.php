@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Jenssegers\Agent\Agent;
 
 class LearningController extends Controller
 {
@@ -160,6 +161,12 @@ class LearningController extends Controller
     }
 
     public function certificate( $id, $cid ,$cert_id ){
+
+        $agent = new Agent();
+
+        if( !$agent->isDesktop() ){
+           return redirect()->back()->with('error','Please download it in desktop or laptop.');
+        }
         
         $id = base64_decode( $id );
         $user   = User::find( $id );
