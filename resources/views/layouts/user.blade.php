@@ -34,7 +34,7 @@
         <!-- ========== Content Section End ========= -->
 
     </div>
-    @include('user.includes.end-bar')
+    
     @include('user.includes.script')
 </body>
 
