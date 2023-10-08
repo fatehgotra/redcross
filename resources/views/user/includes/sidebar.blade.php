@@ -61,6 +61,9 @@
                         <li>
                             <a href="{{ route('ticket-list') }}">Chat</a>
                         </li>
+                        <li>
+                            <a href="{{ route('certificates') }}">Certificates</a>
+                        </li>
                     </ul>
                 </div>
             </li>

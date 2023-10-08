@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductSkuController;
 use App\Http\Controllers\UpdateController;
 use App\Http\Controllers\VolunteerController;
+use Database\Seeders\LearningSeeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -177,7 +178,9 @@ Route::get('/expiry-schedule', function () {
 })->name('expiry-schedule');
 
 //certificate
-Route::get('certificate/{id}/{course_id}/{attempt}',[LearningController::class,'certificate'])->name('certificate');
+Route::get('certificate/{id}/{course_id}/{cert_id}',[LearningController::class,'certificate'])->name('certificate');
+
+Route::get('certificates',[LearningController::class,'certificates'])->name('certificates');
 
 //survey
 Route::get('survey',[VolunteerController::class,'SurveyList'])->name('survey.list');

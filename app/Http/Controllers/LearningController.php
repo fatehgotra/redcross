@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\certificate;
 use App\Models\Course;
 use App\Models\CourseDocument;
 use App\Models\Question;
@@ -135,21 +136,43 @@ class LearningController extends Controller
     {
         $attempt            = TestAttempt::find($id);
         $responses          = TestResponse::with('question')->where('test_attempt_id', $id)->get();
+
+        $_check = certificate::where(['course_id'=>$attempt->course_id,'user_id'=>$attempt->user_id])->first();
+        $_per  =  ($attempt->correct / count($attempt->responses) * 100);
+
+        $cert = null;
+
+        if( is_null($_check) && $_per >= 80 ){
+
+        $cid = base64_decode($attempt->course_id);
+        $uid = base64_decode($attempt->user_id);
+
+        $cert = certificate::create([
+
+            'user_id'     =>$attempt->user_id,
+            'course_id'   => $attempt->course_id,
+            'course_name' => Course::find( $attempt->course_id )->name,
+        ]);
+
+        }
         
-        return view('user.learning.courses.result', compact('attempt', 'responses'));
+        return view('user.learning.courses.result', compact('attempt', 'responses','cert'));
     }
 
-    public function certificate( $id, $cid , $attempt ){
+    public function certificate( $id, $cid ,$cert_id ){
         
         $id = base64_decode( $id );
         $user   = User::find( $id );
         $course =  Course::find( base64_decode($cid) );
-        $test   = TestAttempt::find( base64_decode($attempt) );
+        $cert = certificate::find( base64_decode($cert_id) );
 
-        // $customPaper = array(0,0,567.100,283.80);
-        // $pdf = PDF::loadView('user.learning.courses.certificate',compact('user','course','test'))->setPaper($customPaper);;
-        // return $pdf->stream('resume.pdf');
+        return view('user.learning.courses.certificate',compact('user','course','cert') );
+    }
 
-         return view('user.learning.courses.certificate',compact('user','course','test') );
+    public function certificates(){
+
+        $certificates = certificate::where('user_id',Auth::user()->id)->get();
+
+        return view('user.learning.certificates',compact('certificates'));
     }
 }
