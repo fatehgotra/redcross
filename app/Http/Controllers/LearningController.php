@@ -12,6 +12,7 @@ use App\Models\UserReward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class LearningController extends Controller
 {
@@ -144,7 +145,11 @@ class LearningController extends Controller
         $user   = User::find( $id );
         $course =  Course::find( base64_decode($cid) );
         $test   = TestAttempt::find( base64_decode($attempt) );
-       
-        return view('user.learning.courses.certificate',compact('user','course','test') );
+
+        // $customPaper = array(0,0,567.100,283.80);
+        // $pdf = PDF::loadView('user.learning.courses.certificate',compact('user','course','test'))->setPaper($customPaper);;
+        // return $pdf->stream('resume.pdf');
+
+         return view('user.learning.courses.certificate',compact('user','course','test') );
     }
 }

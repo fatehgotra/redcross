@@ -97,12 +97,22 @@ class ReportController extends Controller
 
                     if ($cndn == 'active') {
 
-                        $users = $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities');
+                        if ($based == 'location' || $based == 'branch') {
+ 
+                            $users = $users->WhereIn('branch', $ev);
+
+                        }
+
+
+                        $users = $users->whereHas('rewards')->orWhereHas('campagin')->orWhereHas('activities');                
 
                         if ($based == 'location' || $based == 'branch') {
-
+ 
                             $users = $users->WhereIn('branch', $ev);
+
                         }
+
+                
 
                         if ($based == 'gender') {
 
@@ -122,6 +132,11 @@ class ReportController extends Controller
                             });
                         }
                     } else if ($cndn == 'inactive') {
+
+                        if ($based == 'location' || $based == 'branch') {
+
+                            $users = $users->WhereIn('branch', $ev);
+                        }
 
                         $users = $users->where('status', 'approve')->whereDoesntHave('campagin')->whereDoesntHave('rewards')->whereDoesntHave('activities');
 

@@ -45,7 +45,7 @@ $ends_at = \Carbon\Carbon::parse($attempt->ends_at);
                     <div class="media align-items-center">
                         <div class="media-body">
                             <h3 class="m-0 font-weight-normal cta-box-title"><b>{{ $attempt->course->name }}</b>
-                            @if( $percentage >= 80 )
+                            @if( $percentage >= 1 )
                                 <a href="{{ route('certificate', ['id' => base64_encode($attempt->user_id), 'course_id' => base64_encode($attempt->course->id), 'attempt'=>base64_encode($attempt->id) ] ) }}" class="btn btn-info" style="float:right"> Get Certificate </a>
                             @endif
                             </h3>
