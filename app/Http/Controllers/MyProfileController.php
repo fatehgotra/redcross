@@ -13,6 +13,7 @@ use App\Models\MobileBankingInformation;
 use App\Models\PersonalBankingInformation;
 use App\Models\PersonalInformation;
 use App\Models\Qualification;
+use App\Models\Receipts;
 use App\Models\RefereeInformation;
 use App\Models\ServiceInterest;
 use App\Models\Skill;
@@ -568,5 +569,12 @@ class MyProfileController extends Controller
         }     
 
         return redirect()->back()->with('success', 'Consents and Checks updated successfully');
+    }
+
+    public function receiptForm(){
+
+        $receipts = Receipts::where('email',Auth::user()->email)->get();
+
+        return view('user.my-profile.receipt-form',compact('receipts'));
     }
 }

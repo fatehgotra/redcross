@@ -56,6 +56,9 @@
                                 <a class="nav-link active show" href="{{ route('my-profile.consents-and-checks.form') }}">
                                     <i class="me-1 dripicons-chevron-right"></i>Consent and Checks
                                 </a>
+                                <a class="nav-link" href="{{ route('my-profile.receipts.form') }}">
+                                    <i class="me-1 dripicons-chevron-right"></i>Receipts
+                                </a>
                             </div>
                         </div>
                     </div>

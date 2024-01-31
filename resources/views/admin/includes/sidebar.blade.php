@@ -125,6 +125,13 @@
                 </div>
             </li>
 
+            <li class="side-nav-item {{ request()->is('admin/receipt-upload') || request()->is('admin/receipt-upload/*') ? 'menuitem-active' : '' }}">
+                <a href="{{ route('admin.receipt-upload') }}"  class="side-nav-link">
+                    <i class="mdi mdi-book-open-page-variant-outline"></i>
+                    <span> Upload Receipts </span>
+                </a>
+            </li>
+
             <li class="side-nav-item {{ request()->is('admin/generate-report') || request()->is('admin/generate-report/*') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#report" aria-expanded="false" aria-controls="report" class="side-nav-link">
                     <i class="mdi mdi-book-open-page-variant-outline"></i>

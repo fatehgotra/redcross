@@ -456,10 +456,10 @@ class VolunteerController extends Controller
             'agree_to_code_of_conduct'                => 'required',
             'agree_to_child_protection_policy'        => 'required',
             'age_under_18'                            => 'required',
-            'statutory_declaration_attached'          => 'required',
-            'code_of_conduct_attached'                => 'required',
-            'signed_child_protection_policy_attached' => 'required',
-            'professional_volunteer'                  => 'required',
+            // 'statutory_declaration_attached'          => 'required',
+            // 'code_of_conduct_attached'                => 'required',
+            // 'signed_child_protection_policy_attached' => 'required',
+            // 'professional_volunteer'                  => 'required',
             'base_location'                           => 'required',
         ];
 

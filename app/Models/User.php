@@ -153,5 +153,9 @@ class User extends Authenticatable
 
         return $this->hasMany(CampaignUser::class,'user_id','id');
     }
+
+    public function receipts(){
+        return $this->hasMany(Receipts::class,'email','email');
+    }
    
 }

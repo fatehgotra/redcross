@@ -215,7 +215,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <label for="statutory_declaration_attached" class="col-form-label">Statutory Declaration Attached <span
                                         class="text-danger">*</span></label>
                                 <select id="statutory_declaration_attached"
@@ -335,7 +335,7 @@
                                 @error('professional_volunteer_attachment')
                                     <small id="professional_volunteer_attachment-error" class="text-danger">{{ $message }}</small>
                                 @enderror
-                            </div>
+                            </div> -->
                             <div class="col-lg-12">
                                 <label for="base_location" class="col-form-label">Base Location <span
                                         class="text-danger">*</span></label>

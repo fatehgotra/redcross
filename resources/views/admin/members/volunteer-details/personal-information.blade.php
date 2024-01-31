@@ -71,6 +71,10 @@
                                 href="{{ route('admin.member-detail.consents-and-checks.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Consent and Checks
                             </a>
+                            <a class="nav-link"
+                                href="{{ route('admin.member-detail.receipt.form', $user->id) }}">
+                                <i class="me-1 dripicons-chevron-right"></i>Receipts
+                            </a>
                         </div>
                     </div>
                 </div>

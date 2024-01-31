@@ -71,6 +71,10 @@
                                 href="{{ route('admin.member-detail.consents-and-checks.form', $user->id) }}">
                                 <i class="me-1 dripicons-chevron-right"></i>Consent and Checks
                             </a>
+                            <a class="nav-link"
+                                href="{{ route('admin.member-detail.receipt.form', $user->id) }}">
+                                <i class="me-1 dripicons-chevron-right"></i>Receipts
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -238,12 +242,16 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <div class="col-lg-6">
+                            
+                            <form method="post" enctype="multipart/form-data"  action="{{ route('admin.uploadstats') }}" class="formin">
+                            @csrf
+                            <input type="hidden" name="uid" value="{{ $user->id }}">
+                            <div class="col-lg-3">
                                 <label for="statutory_declaration_attached" class="col-form-label">Statutory
                                     Declaration Attached <span class="text-danger">*</span></label>
                                 <select id="statutory_declaration_attached"
                                     class="form-select @error('statutory_declaration_attached') is-invalid @enderror"
-                                    name="statutory_declaration_attached" disabled>
+                                    name="statutory_declaration_attached">
                                     <option value="">Select</option>
                                     <option value="Yes"
                                         {{ old('statutory_declaration_attached', isset($checks) ? $checks->statutory_declaration_attached : '') == 'Yes' ? 'selected' : '' }}>
@@ -259,12 +267,12 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 p-1">
                                 <label for="statutory_declaration" class="col-form-label">Upload Statutory Declaration</label>
                                 <div class="input-group">
                                     <input id="statutory_declaration" type="file"
                                         class="form-control @error('statutory_declaration') is-invalid @enderror" name="statutory_declaration"
-                                        disabled>
+                                        >
                                     @isset($checks->statutory_declaration)
                                         <a href="{{ asset('storage/uploads/users/'.$user->id.'/checks'.'/'. $checks->statutory_declaration) }}"
                                             download="" class="btn btn-warning download-label"><i
@@ -275,12 +283,20 @@
                                     <small id="statutory_declaration-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3 mt-4">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+
+                            <form method="post" enctype="multipart/form-data"  action="{{ route('admin.uploadstats') }}" class="formin">
+                            @csrf
+                            <input type="hidden" name="uid" value="{{ $user->id }}">
+                            <div class="col-lg-3">
                                 <label for="code_of_conduct_attached" class="col-form-label">Code of Conduct Attached
                                     <span class="text-danger">*</span></label>
                                 <select id="code_of_conduct_attached"
                                     class="form-select @error('code_of_conduct_attached') is-invalid @enderror"
-                                    name="code_of_conduct_attached" disabled>
+                                    name="code_of_conduct_attached" >
                                     <option value="">Select</option>
                                     <option value="Yes"
                                         {{ old('code_of_conduct_attached', isset($checks) ? $checks->code_of_conduct_attached : '') == 'Yes' ? 'selected' : '' }}>
@@ -296,12 +312,12 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 p-1">
                                 <label for="code_of_conduct" class="col-form-label">Upload Code of Conduct</label>
                                 <div class="input-group">
                                     <input id="code_of_conduct" type="file"
                                         class="form-control @error('code_of_conduct') is-invalid @enderror" name="code_of_conduct"
-                                        disabled>
+                                        >
                                     @isset($checks->code_of_conduct)
                                         <a href="{{ asset('storage/uploads/users/'.$user->id.'/checks'.'/'. $checks->code_of_conduct) }}"
                                             download="" class="btn btn-warning download-label"><i
@@ -312,12 +328,20 @@
                                     <small id="code_of_conduct-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3 mt-4">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+
+                            <form method="post" enctype="multipart/form-data" action="{{ route('admin.uploadstats') }}" class="formin">
+                            @csrf
+                            <input type="hidden" name="uid" value="{{ $user->id }}">
+                            <div class="col-lg-3">
                                 <label for="signed_child_protection_policy_attached" class="col-form-label">Signed
                                     Child Protection Policy Attached <span class="text-danger">*</span></label>
                                 <select id="signed_child_protection_policy_attached"
                                     class="form-select @error('signed_child_protection_policy_attached') is-invalid @enderror"
-                                    name="signed_child_protection_policy_attached" disabled>
+                                    name="signed_child_protection_policy_attached" >
                                     <option value="">Select</option>
                                     <option value="Yes"
                                         {{ old('signed_child_protection_policy_attached', isset($checks) ? $checks->signed_child_protection_policy_attached : '') == 'Yes' ? 'selected' : '' }}>
@@ -333,12 +357,12 @@
                                         class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 p-1">
                                 <label for="signed_child_protection_policy" class="col-form-label">Upload Signed Child Protection Policy</label>
                                 <div class="input-group">
                                     <input id="signed_child_protection_policy" type="file"
                                         class="form-control @error('signed_child_protection_policy') is-invalid @enderror" name="signed_child_protection_policy"
-                                        disabled>
+                                        >
                                     @isset($checks->signed_child_protection_policy)
                                         <a href="{{ asset('storage/uploads/users/'.$user->id.'/checks'.'/'. $checks->signed_child_protection_policy) }}"
                                             download="" class="btn btn-warning download-label"><i
@@ -349,11 +373,19 @@
                                     <small id="signed_child_protection_policy-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3 mt-4">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
+
+                            <form method="post" enctype="multipart/form-data"  action="{{ route('admin.uploadstats') }}" class="formin">
+                           @csrf
+                           <input type="hidden" name="uid" value="{{ $user->id }}">
+                            <div class="col-lg-3">
                                 <label for="professional_volunteer" class="col-form-label">Professional Volunteer <span
                                         class="text-danger">*</span></label>
                                 <select id="professional_volunteer" class="form-select @error('professional_volunteer') is-invalid @enderror"
-                                    name="professional_volunteer" disabled>
+                                    name="professional_volunteer">
                                     <option value="">Select</option>
                                     <option value="Yes"
                                         {{ old('professional_volunteer', isset($checks) ? $checks->professional_volunteer : '') == 'Yes' ? 'selected' : '' }}>
@@ -368,12 +400,12 @@
                                     <small id="professional_volunteer-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 p-1">
                                 <label for="professional_volunteer_attachment" class="col-form-label">Upload Professional Volunteer Attachment</label>
                                 <div class="input-group">
                                     <input id="professional_volunteer_attachment" type="file"
                                         class="form-control @error('professional_volunteer_attachment') is-invalid @enderror" name="professional_volunteer_attachment"
-                                        disabled>
+                                        >
                                     @isset($checks->professional_volunteer_attachment)
                                         <a href="{{ asset('storage/uploads/users/'.$user->id.'/checks'.'/'. $checks->professional_volunteer_attachment) }}"
                                             download="" class="btn btn-warning download-label"><i
@@ -384,6 +416,10 @@
                                     <small id="professional_volunteer_attachment-error" class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+                            <div class="col-lg-3 mt-4">
+                                <button class="btn btn-primary">Save</button>
+                            </div>
+                            </form>
                             <div class="col-lg-12">
                                 <label for="base_location" class="col-form-label">Base Location <span
                                         class="text-danger">*</span></label>
@@ -472,6 +508,13 @@
         </div>
         </form>
     </div>
+    <style>
+        .formin{
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+        }
+    </style>
     @include('admin.members.volunteer-details.modals.child-protection-policy')
     @include('admin.members.volunteer-details.modals.code-of-conduct')
     @include('admin.members.volunteer-details.modals.decline-modal')

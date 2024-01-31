@@ -134,6 +134,8 @@ Route::post('my-profile/banking-information', [MyProfileController::class, 'bank
 Route::get('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecksForm'])->name('my-profile.consents-and-checks.form');
 Route::post('my-profile/consents-and-checks', [MyProfileController::class, 'consentsAndChecks'])->name('my-profile.consents-and-checks');
 
+Route::get('my-profile/receipts',[MyProfileController::class,'receiptForm'])->name('my-profile.receipts.form');
+
 /* Learning Routes */
 Route::get('learning/courses', [LearningController::class, 'courses'])->name('learning.courses');
 

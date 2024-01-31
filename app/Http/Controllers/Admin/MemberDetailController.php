@@ -96,6 +96,13 @@ class MemberDetailController extends Controller
         $checks     = User::find($id)->checks;
         $referees   = User::find($id)->referees;
         return view('admin.members.volunteer-details.consents-and-checks', compact('user', 'consents', 'checks', 'referees'));
-    }   
+    }
 
+    public function receiptForm($id)
+    {
+
+        $user       = User::find($id);
+        $receipts = User::find($id)->receipts;
+        return view('admin.members.volunteer-details.receipt-form', compact('user', 'receipts'));
+    }
 }

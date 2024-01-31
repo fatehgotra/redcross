@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VolunteerDetailController;
 use App\Http\Controllers\Admin\AdminCourseChatController;
 use App\Http\Controllers\Admin\ChatController;
+use App\Models\AdminSettings;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -248,6 +249,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     /* Member Information > Consent and checks (Tab 9)*/
     Route::get('member/consents-and-checks/{id}', [MemberDetailController::class, 'consentsAndChecksForm'])->name('member-detail.consents-and-checks.form');
 
+    Route::get('member/receipts/{id}', [MemberDetailController::class, 'receiptForm'])->name('member-detail.receipt.form');
+
     Route::put('member/change-status/{id}', [MemberController::class, 'changeStatus'])->name('member.change-status');
 
     /*
@@ -361,4 +364,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('storeConversations', [ChatController::class,'store'])->name('storeConversations');
     Route::post('mark-ticket-close/{id}',[ChatController::class,'markClose'])->name('mark-ticket-close');
     Route::post('delete-ticket/{id}',[ChatController::class,'deleteTicket'])->name('delete-ticket');
+
+    Route::get('receipt-upload',[AdminSettingsController::class,'receiptUpload'])->name('receipt-upload');
+
+    Route::post('add-receipt',[AdminSettingsController::class,'addReceipt'])->name('add-receipt');
+
+    Route::post('uploadstats',[AdminSettingsController::class,'uploadStats'])->name('uploadstats');
 });
